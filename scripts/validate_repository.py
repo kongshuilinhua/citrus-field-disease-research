@@ -9,7 +9,8 @@ FORBIDDEN_PARTS = {"datasets", "runs", "weights", "checkpoints", "wandb"}
 SKIP_PARTS = {".git", "__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache"}
 REQUIRED = {
     "README.md", "AGENTS.md", "coordination/PROJECT_STATE.md", "coordination/DECISIONS.md",
-    "coordination/CURRENT_ROUND.md", "coordination/REPORT_TEMPLATE.md", "data/DATA_MANIFEST.csv",
+    "coordination/USER_REQUIREMENTS.md", "coordination/HISTORY_INDEX.md", "coordination/CURRENT_ROUND.md",
+    "coordination/REPORT_TEMPLATE.md", "data/DATA_MANIFEST.csv",
     "models/MODEL_MANIFEST.csv",
 }
 REPORT_HEADINGS = {

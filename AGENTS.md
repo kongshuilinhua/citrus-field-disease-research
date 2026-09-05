@@ -10,10 +10,14 @@
 每个 Agent 必须依次阅读：
 
 1. `README.md`
-2. `docs/项目接手文档.md`
-3. `coordination/PROJECT_STATE.md`
-4. `coordination/DECISIONS.md`
-5. `coordination/CURRENT_ROUND.md`
+2. `coordination/USER_REQUIREMENTS.md`
+3. `coordination/HISTORY_INDEX.md`
+4. `docs/项目接手文档.md`
+5. `coordination/DECISIONS.md`
+6. `coordination/PROJECT_STATE.md`
+7. `coordination/CURRENT_ROUND.md`
+
+上述文件共同构成可迁移的项目记忆。不要依赖某个Agent客户端的私有memory、聊天记录或本机缓存；仓库中没有记录的事实不能假定其他Agent知道。
 
 只接受 `coordination/CURRENT_ROUND.md` 中状态为 `ready` 的任务。若范围、路径或验证命令标为未知，任务视为 `blocked`。
 
@@ -73,4 +77,3 @@ reports/YYYY-MM-DD/<agent-or-task-name>.md
 3. 规定的验证命令已经运行并记录结果。
 4. 无未说明的数据、接口或实验协议漂移。
 5. PR经过协调者检查并合并。
-

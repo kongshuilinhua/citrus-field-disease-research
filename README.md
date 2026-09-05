@@ -7,10 +7,12 @@
 按以下顺序阅读：
 
 1. `AGENTS.md`：协作边界和强制报告规则。
-2. `docs/项目接手文档.md`：研究背景、已有实验、数据和风险。
-3. `coordination/PROJECT_STATE.md`：当前唯一正式状态。
-4. `coordination/DECISIONS.md`：已经确认的决策。
-5. `coordination/CURRENT_ROUND.md`：当前任务、修改范围和可复制提示词。
+2. `coordination/USER_REQUIREMENTS.md`：用户当前有效诉求和偏好。
+3. `coordination/HISTORY_INDEX.md`：项目时间线和历史证据入口。
+4. `docs/项目接手文档.md`：研究背景、已有实验、数据和风险。
+5. `coordination/DECISIONS.md`：已经确认的决策。
+6. `coordination/PROJECT_STATE.md`：当前唯一正式状态。
+7. `coordination/CURRENT_ROUND.md`：当前任务、修改范围和可复制提示词。
 
 完成任务后，必须在 `reports/YYYY-MM-DD/` 下新增独立报告，并通过仓库校验。Agent 之间不会自动通信；Git、Issue、PR和报告文件是唯一协作媒介。
 
@@ -48,4 +50,3 @@ python scripts/validate_repository.py
 纯净背景分类已经接近饱和，真实问题集中在复杂田间背景、跨品种/跨拍摄者泛化、相似症状、少样本和病名可靠性。YOLO既不预设为唯一主线，也不被排除；应与分类、Faster R-CNN、DETR/RT-DETR、分割和多任务方案按同一协议比较。
 
 本仓库暂不提供公开许可证。未经项目负责人确认，不得公开自采数据或重新分发第三方数据和论文。
-
