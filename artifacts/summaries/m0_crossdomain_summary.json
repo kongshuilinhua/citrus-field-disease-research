@@ -1,0 +1,56 @@
+{
+  "efficientnet_b0": {
+    "strict5_acc": 0.22377622377622378,
+    "restricted2_acc": 0.4825174825174825,
+    "n_overlap": 143,
+    "byclass": {
+      "greening": {
+        "healthy": 6,
+        "greening": 15,
+        "canker": 19,
+        "melanose": 2,
+        "black_spot": 1
+      },
+      "healthy": {
+        "canker": 11,
+        "greening": 48,
+        "melanose": 24,
+        "healthy": 17
+      }
+    }
+  },
+  "resnet50": {
+    "strict5_acc": 0.8251748251748252,
+    "restricted2_acc": 0.958041958041958,
+    "n_overlap": 143,
+    "byclass": {
+      "greening": {
+        "greening": 21,
+        "healthy": 3,
+        "canker": 19
+      },
+      "healthy": {
+        "healthy": 97,
+        "canker": 1,
+        "greening": 2
+      }
+    }
+  },
+  "mobilenet_v3_large": {
+    "strict5_acc": 0.48951048951048953,
+    "restricted2_acc": 0.7342657342657343,
+    "n_overlap": 143,
+    "byclass": {
+      "greening": {
+        "melanose": 15,
+        "healthy": 2,
+        "greening": 26
+      },
+      "healthy": {
+        "melanose": 32,
+        "greening": 24,
+        "healthy": 44
+      }
+    }
+  }
+}

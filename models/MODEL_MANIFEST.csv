@@ -1,0 +1,10 @@
+model_id,task,data,metric,metric_value,weight_local_path,weight_uploaded,notes
+efficientnet_b0_mendeley,五类分类,Mendeley val,Accuracy,95.7983%,C:\Users\Windows11\Desktop\新版柑橘\复现_baseline\results\best_efficientnet_b0.pt,no,Macro-F1 97.2849%;无独立test
+resnet50_mendeley,五类分类,Mendeley val,Accuracy,95.7983%,C:\Users\Windows11\Desktop\新版柑橘\复现_baseline\results\best_resnet50.pt,no,Macro-F1 97.2484%;跨CitrusUAT最稳
+mobilenetv3_mendeley,五类分类,Mendeley val,Accuracy,94.9580%,C:\Users\Windows11\Desktop\新版柑橘\复现_baseline\results\best_mobilenet_v3_large.pt,no,Macro-F1 96.7353%
+vit_b16_four_class,四类分类,四类测试99张,Accuracy,97.9798%,C:\Users\Windows11\Desktop\新版柑橘\复现_论文\results_vit\best_vit_b16.pt,no,测试集参与选模；不能作严格独立测试
+yolov8n_cls_citrusuat,十二类分类,CitrusUAT val,Top-1,99.4737%,见原机复现目录,no,同数据集验证指标
+scidb_yolov8n,十五类检测,SciDB test,mAP50,92.3633%,D:\病虫害论文\复现实验记录\full_reproduction_20260726_0011,no,mAP50-95 85.2715%
+scidb_threechannel_rebuild,十五类检测,SciDB test,mAP50,80.2351%,D:\病虫害论文\复现实验记录\full_reproduction_20260726_0011,no,低保真重建
+scidb_author_code,十五类检测,SciDB test,mAP50,91.3641%,D:\病虫害论文\复现实验记录\full_reproduction_20260726_0011,no,mAP50-95 84.0533%
+

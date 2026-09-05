@@ -1,0 +1,52 @@
+name: 研究任务
+description: 创建文献、数据、方法或实验研究任务
+title: "[Research] "
+labels: ["research"]
+body:
+  - type: dropdown
+    id: task_type
+    attributes:
+      label: 任务类型
+      options:
+        - 文献调研
+        - 数据审计
+        - 方法设计
+        - 实验实现
+        - 结果复核
+        - 文档同步
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: 目标
+      description: 写出本任务要回答的具体问题。
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: 允许修改路径
+      description: 每行一个路径。
+    validations:
+      required: true
+  - type: textarea
+    id: forbidden
+    attributes:
+      label: 禁止修改路径
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: 验证命令
+    validations:
+      required: true
+  - type: checkboxes
+    id: report
+    attributes:
+      label: 报告要求
+      options:
+        - label: 我会新增独立报告文件并填写证据、验证、阻塞和下游影响。
+          required: true
+

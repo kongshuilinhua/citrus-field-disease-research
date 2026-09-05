@@ -1,0 +1,29 @@
+{
+  "model": "efficientnet_b0",
+  "classes": [
+    "black_spot",
+    "canker",
+    "greening",
+    "healthy",
+    "melanose"
+  ],
+  "best_epoch": 3,
+  "accuracy": 0.957983193277311,
+  "macro_f1": 0.9728490185287104,
+  "train_n": 490,
+  "val_n": 119,
+  "train_per_class": {
+    "black_spot": 137,
+    "canker": 131,
+    "greening": 164,
+    "healthy": 47,
+    "melanose": 11
+  },
+  "val_per_class": {
+    "black_spot": 34,
+    "canker": 32,
+    "greening": 40,
+    "healthy": 11,
+    "melanose": 2
+  }
+}

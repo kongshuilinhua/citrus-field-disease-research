@@ -1,0 +1,24 @@
+name: validate-repository
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: 校验仓库内容
+        run: python scripts/validate_repository.py
+      - name: 校验PR报告文件
+        if: github.event_name == 'pull_request'
+        run: |
+          git diff --name-only "origin/${{ github.base_ref }}...HEAD" > changed_files.txt
+          python scripts/validate_repository.py --changed-files changed_files.txt
+

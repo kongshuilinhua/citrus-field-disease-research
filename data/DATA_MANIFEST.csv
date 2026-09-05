@@ -1,0 +1,14 @@
+dataset_id,name,role,local_status,local_path,official_url,license,format_or_annotation,notes
+self_field_20260722,胡柚田间自采图190张,目标域,已归档,D:\病虫害论文\自采数据\胡柚田间_20260722,,私有未授权公开,JPG+机器预标注Excel,两位拍摄者；标签待专家复核；原图不上传GitHub
+mendeley_citrus_3f83gxmv57,Mendeley Citrus,源域,本地已有,C:\Users\Windows11\Desktop\新版柑橘\datasets\1\Citrus,https://data.mendeley.com/datasets/3f83gxmv57/2,CC BY 4.0,分类目录,759张；叶609果150
+citrusuat_8294078,CitrusUAT,受控目标域,本地已有,C:\Users\Windows11\Desktop\新版柑橘\复现_论文\citrusuat_cls,https://zenodo.org/records/8294078,见官方页面,分类+叶片掩膜,953张；HLB经qPCR；不是复杂田间背景
+scidb_citrus_field,福建SciDB柑橘田间集,复杂田间目标域,本地已有,D:\病虫害论文\福建 SciDB 柑橘田间集,https://doi.org/10.57760/sciencedb.j00001.00947,见官方页面,YOLO检测标注,约9896张15类；转换后train7192 val898 test602
+plantseg_v3,PlantSeg,跨作物分割预训练,本地压缩包已有,D:\病虫害论文\plantsegv3.zip,https://doi.org/10.5281/zenodo.17719108,CC BY-NC 4.0,病斑分割掩膜,真实场景跨作物；使用前核验版本和类别
+citdet,CitDet,果实检测辅助,本地已有,D:\病虫害论文\_大文件归档,https://robotic-vision-lab.github.io/citdet/,CC BY-NC-SA 4.0,果实检测框,579张约3.2万框；不是病斑检测
+sweet_orange_f7cr74mwpj,甜橙叶多格式数据,新增分类源域,待下载,,https://data.mendeley.com/datasets/f7cr74mwpj/1,CC BY 4.0,分类+多格式标注,5813张11类；优先核验原图版本
+pomelo_vk7dnf8nrj,Citrus maxima柚叶集,柚类迁移辅助,待下载,,https://data.mendeley.com/datasets/vk7dnf8nrj/2,CC BY 4.0,分类目录,总4502但真实原图仅868；只使用Raw Images
+zenodo_11148332,Citrus Leaf Disease Dataset,病斑检测辅助,待下载,,https://zenodo.org/records/11148332,见官方页面,640x640检测标注,1944张；炭疽溃疡潜叶蛾
+ccl20,CCL'20,病斑检测辅助,待下载,,https://www.kaggle.com/datasets/downloader007/ccl20,原作者数据许可,检测框,2684张；Kaggle账号下载
+abcgmp_fhbvmpcyy2,ABCGMP柑橘子集,分类补充,待下载,,https://data.mendeley.com/datasets/fhbvmpcyy2/2,CC BY 4.0,分类目录,约750张；可能包含公共数据重复
+digigreen_crop_disease,Digital Green Crop Disease,真实农户外测,可在线下载,,https://huggingface.co/datasets/DigiGreen/Crop_Disease_Images,CC BY 4.0,JPG+CSV,柑橘仅12条；适合外测不适合主训练
+

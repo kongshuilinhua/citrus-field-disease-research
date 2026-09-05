@@ -1,0 +1,52 @@
+# 数据、图片与压缩包
+datasets/
+data/raw/
+data/images/
+data/private/
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+*.gz
+
+# 模型与训练产物
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.engine
+weights/
+checkpoints/
+runs/
+outputs/
+wandb/
+
+# 论文与大型办公文件
+*.pdf
+*.docx
+*.pptx
+
+# Python与工具缓存
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# 系统和临时文件
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+~$*
+
+# 本机路径与私密配置
+.env
+.env.*
+!.env.example
+configs/paths.local.*
+secrets/
+
