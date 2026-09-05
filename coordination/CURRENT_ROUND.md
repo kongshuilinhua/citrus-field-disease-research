@@ -31,7 +31,7 @@ coordination/DECISIONS.md（普通Agent只读）
 
 ### 跨作物文献Agent
 
-Dispatch Status: ready
+Dispatch Status: completed
 
 对应GitHub Issue：#1
 
@@ -86,7 +86,7 @@ rg -n "DOI|数据|代码|背景|标注|局限" reports/2026-09-05/cross-crop-met
 
 #### Report Result
 
-Waiting.
+已完成方法全景扩展：42篇高质量/强相关论文、24个方法家族，形成六个可独立成题的方向和六模型先导筛选矩阵。报告：`reports/2026-09-05/method-landscape-expanded.md`；证据表：`research/inbox/method-landscape-evidence.csv`。仓库校验通过。
 
 ### 数据与标签Agent
 
@@ -276,12 +276,12 @@ git status --short
 
 ## Current Next Instruction
 
-跨作物文献Agent与数据标签Agent可以并行执行各自完整Dispatch Prompt。
+下一步执行数据与标签Agent的完整Dispatch Prompt。方法方案Agent继续等待数据审计报告。
 
 ## Next Instructions
 
-同上。两个上游报告通过验收后，由协调者解锁方法方案Agent。
+数据标签报告通过验收后，由协调者解锁方法方案Agent。
 
 ## Coordinator Conclusion
 
-本轮处于调研并行阶段。文献Agent和数据标签Agent为ready；方法Agent和实验Agent为blocked。
+跨作物文献Agent已completed；数据标签Agent为ready；方法Agent和实验Agent为blocked。
