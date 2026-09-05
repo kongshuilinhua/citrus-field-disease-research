@@ -13,6 +13,7 @@
 
 ## 已完成
 
+- GitHub私有协作仓库已建立，主分支为 `main`，仓库校验Actions已通过。
 - 公开柑橘数据集核验与去重判断。
 - Mendeley三骨干分类基线和CitrusUAT跨数据集评测。
 - ViT、YOLOv8n-cls、DANN、SimCLR、Leaf-Only-SAM和SciDB检测实验。
@@ -45,3 +46,4 @@
 
 文献Agent和数据Agent分别提交完整报告并通过校验后，才允许方法Agent给出最终方案排序。实验Agent在方法方案和标签协议稳定前保持阻塞。
 
+当前GitHub任务：Issue #1（跨作物方法调研）与Issue #2（数据与标签可行性审计）。

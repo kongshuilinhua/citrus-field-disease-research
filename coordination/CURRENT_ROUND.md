@@ -33,6 +33,8 @@ coordination/DECISIONS.md（普通Agent只读）
 
 Dispatch Status: ready
 
+对应GitHub Issue：#1
+
 #### Work Content
 
 调研2024—2026年水稻、玉米、小麦、番茄、苹果、葡萄、棉花、花生等作物中的监督分类、Faster R-CNN、DETR/RT-DETR、病斑分割、Transformer、Mamba和分类—分割—严重度多任务方法。重点比较真实背景、标签成本、独立跨场景验证和可复现性。
@@ -89,6 +91,8 @@ Waiting.
 ### 数据与标签Agent
 
 Dispatch Status: ready
+
+对应GitHub Issue：#2
 
 #### Work Content
 
@@ -281,4 +285,3 @@ git status --short
 ## Coordinator Conclusion
 
 本轮处于调研并行阶段。文献Agent和数据标签Agent为ready；方法Agent和实验Agent为blocked。
-

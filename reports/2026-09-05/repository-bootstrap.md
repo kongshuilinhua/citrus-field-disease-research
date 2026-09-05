@@ -49,7 +49,6 @@ rg --files .
 
 ## 未完成或阻塞
 
-- GitHub远程仓库尚未创建和推送；需在完成最终本地校验后执行。
 - 主分支保护或GitHub Ruleset取决于账号支持情况，创建远程后再核验。
 - 完整数据和权重仍在原机外部存储；异地Agent只能通过清单了解状态，除非用户另行提供远程数据存储。
 
@@ -61,8 +60,13 @@ rg --files .
 
 ## 下一步建议
 
-1. 运行最终仓库校验。
-2. 初始化Git并提交。
-3. 创建GitHub私有仓库并推送。
-4. 检查Actions、Issue模板和仓库可见性。
-5. 从 `coordination/CURRENT_ROUND.md` 分派文献Agent与数据Agent。
+1. 将Issue #1分派给跨作物文献Agent。
+2. 将Issue #2分派给数据与标签Agent。
+3. 两个报告通过验收后，由协调者解锁方法方案Agent。
+
+## 远程验收结果
+
+- 私有仓库：`https://github.com/kongshuilinhua/citrus-field-disease-research`
+- 默认分支：`main`
+- 首次Actions：`validate-repository`，结论为 `success`。
+- 已创建Issue #1“跨作物方法调研”和Issue #2“数据与标签可行性审计”。
