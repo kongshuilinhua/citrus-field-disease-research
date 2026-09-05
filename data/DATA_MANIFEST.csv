@@ -11,4 +11,4 @@ zenodo_11148332,Citrus Leaf Disease Dataset,病斑检测辅助,待下载,,https:
 ccl20,CCL'20,病斑检测辅助,待下载,,https://www.kaggle.com/datasets/downloader007/ccl20,原作者数据许可,检测框,2684张；Kaggle账号下载
 abcgmp_fhbvmpcyy2,ABCGMP柑橘子集,分类补充,待下载,,https://data.mendeley.com/datasets/fhbvmpcyy2/2,CC BY 4.0,分类目录,约750张；可能包含公共数据重复
 digigreen_crop_disease,Digital Green Crop Disease,真实农户外测,可在线下载,,https://huggingface.co/datasets/DigiGreen/Crop_Disease_Images,CC BY 4.0,JPG+CSV,柑橘仅12条；适合外测不适合主训练
-
+orange_hlb_jgkh2jxbwt,Orange Leaves Images Dataset for HLB,受控橙叶分类辅助,已确认可下载,,https://data.mendeley.com/datasets/jgkh2jxbwt/3,CC BY 4.0,分类目录+原图和标准化图,649张；HLB症状270健康379；两个ZIP端点2026-09-06实测HTTP 200；未见PCR确诊说明

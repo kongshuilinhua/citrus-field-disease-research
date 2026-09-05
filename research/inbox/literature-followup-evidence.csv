@@ -1,0 +1,19 @@
+id,family,title,year,venue,url,code_status,transfer_value,cost,priority
+N01,reliability,MRC-Net: a reliable plant disease classification framework with multi-frequency state-space enhancement and conformal prediction,2026,Frontiers in Plant Science,https://doi.org/10.3389/fpls.2026.1895287,no public code,共形预测集输出对应疑似黄龙病拒识需求，训练推理一体化设计可参考,medium,A
+N02,reliability,Enhancing decision support in crop production: Analyzing conformal prediction for uncertainty quantification,2025,Computers and Electronics in Agriculture,https://doi.org/10.1016/j.compag.2025.110559,unclear,归纳共形预测在农业决策的风险可控预测集流程,low,A
+N03,open_vocab,Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection,2024,ECCV,https://arxiv.org/abs/2303.05499,official code,文本提示零样本器官级预标注与unknown候选挖掘,medium,A
+N04,open_vocab,YOLO-World: Real-Time Open-Vocabulary Object Detection,2024,CVPR,https://arxiv.org/abs/2401.17270,official code,实时开放词汇预标注候选，速度优于Grounding DINO,low,B
+N05,auto_label,Grounded-SAM-2 Auto-Labeling Pipeline / Roboflow Autodistill,2024,GitHub,https://github.com/IDEA-Research/Grounded-SAM-2,official repo,开放词汇框+SAM掩膜自动预标注管线，人工只做确认修正,low,A
+N06,noisy_label,Confident Learning: Estimating Uncertainty in Dataset Labels (cleanlab),2021,JAIR/NeurIPS-WS,https://arxiv.org/abs/1911.00068,official code,农民初标标签审计与专家复核优先级排序,low,A
+N07,noisy_label,Co-teaching: Robust Training of Deep Neural Networks with Extremely Noisy Labels,2018,NeurIPS,https://arxiv.org/abs/1804.06872,official code,标签噪声严重时的双网络抗噪训练备选,medium,B
+N08,mllm,Plant Disease Detection through Multimodal Large Language Models (GPT-4o),2025,arXiv,https://arxiv.org/abs/2504.20419,no code,专家辅助描述与标注建议工具，不能作识别主线或真值,high,C
+N09,mllm,AgriGPT: A Strong Plant Disease Detection Model via Visual-Language,2025,Springer LNCS,https://link.springer.com/chapter/10.1007/978-981-96-9921-6_20,unclear,多模态病害识别框架参考，幻觉与端侧部署硬伤,high,C
+N10,mllm,A large language model for multimodal identification of crop diseases and pests,2025,Scientific Reports,https://doi.org/10.1038/s41598-025-01908-0,unclear,同上，仅作趋势了解,high,C
+N11,mamba,PSMamba: Progressive Self-supervised Vision Mamba for Plant Disease,2025,arXiv,https://arxiv.org/html/2512.14309v1,unclear,自监督预训练方向的状态空间模型，可作预训练候选,medium,B
+N12,mamba,Mamba-YOLO-ML: A State-Space Model-Based Approach for Mulberry Leaf Disease Detection,2025,Plants,https://pmc.ncbi.nlm.nih.gov/articles/PMC12252342/,code unclear,换骨干堆模块，无问题依据，排除,low,exclude
+N13,citrus_hlb,HLB-YOLO: A Real-Time Citrus Huanglongbing Detection Model with Dynamic Head,2025,Applied Fruit Science,https://doi.org/10.1007/s10341-025-01647-6,dataset public,无PCR确诊的症状级检测参照与反例，印证黄化不等于黄龙病,low,B
+N14,citrus_data,Chi et al. A dataset of field symptoms for identifying citrus huanglongbing,2025,China Science Data,https://www.csdata.org/p/998/,dataset public,公开柑橘黄龙病田间症状数据集，移交数据Agent核验许可证与标注依据,low,A
+N15,pest_benchmark,IP102: A Large-Scale Benchmark Dataset for Insect Pest Recognition,2019,CVPR,https://github.com/xpwu95/IP102,official data,层级害虫分类体系与天然长尾，可借鉴分层标签设计,low,B
+N16,foundation,Foundation vision models in agriculture: DINOv2 LoRA and efficient adaptation,2025,Computers and Electronics in Agriculture,https://www.sciencedirect.com/science/article/pii/S0168169925010063,unclear,DINOv2+LoRA参数高效微调的农业实证，支持二阶段细分类方案,low,A
+N17,hlb_spectral,A cross-cultivar hyperspectral framework for huanglongbing detection,2026,Spectrochimica Acta Part A,https://www.sciencedirect.com/science/article/pii/S1386142525014970,unclear,高光谱设备与App场景不符，仅作跨品种域差旁证，排除,high,exclude
+N18,ssl_3d,Automated 3D Segmentation of Plant Organs via the Plant-MAE,2025,Plant Phenomics,https://www.sciencedirect.com/science/article/pii/S264365152500055X,unclear,3D点云与2D近景App场景无关，排除,high,exclude
