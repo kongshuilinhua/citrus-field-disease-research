@@ -9,10 +9,11 @@
 1. `AGENTS.md`：协作边界和强制报告规则。
 2. `coordination/USER_REQUIREMENTS.md`：用户当前有效诉求和偏好。
 3. `coordination/HISTORY_INDEX.md`：项目时间线和历史证据入口。
-4. `docs/项目接手文档.md`：研究背景、已有实验、数据和风险。
-5. `coordination/DECISIONS.md`：已经确认的决策。
-6. `coordination/PROJECT_STATE.md`：当前唯一正式状态。
-7. `coordination/CURRENT_ROUND.md`：当前任务、修改范围和可复制提示词。
+4. `docs/项目现状_20261119.md`：最新研究现状（检测矩阵、可靠性、阴性结果、缺口）。
+5. `docs/项目接手文档.md`：研究背景、已有实验、数据和风险（实验状态部分已过时）。
+6. `coordination/DECISIONS.md`：已经确认的决策。
+7. `coordination/PROJECT_STATE.md`：当前唯一正式状态。
+8. `coordination/CURRENT_ROUND.md`：当前任务、修改范围和可复制提示词。
 
 完成任务后，必须在 `reports/YYYY-MM-DD/` 下新增独立报告，并通过仓库校验。Agent 之间不会自动通信；Git、Issue、PR和报告文件是唯一协作媒介。
 
@@ -47,6 +48,8 @@ python scripts/validate_repository.py
 
 ## 当前研究判断
 
-纯净背景分类已经接近饱和，真实问题集中在复杂田间背景、跨品种/跨拍摄者泛化、相似症状、少样本和病名可靠性。YOLO既不预设为唯一主线，也不被排除；应与分类、Faster R-CNN、DETR/RT-DETR、分割和多任务方案按同一协议比较。
+纯净背景分类已经接近饱和，实际研究主线为**复杂田间目标检测 + 可靠性（拒识与候选复核）**。SciDB 上已有可复现的三条件基线与七架构检测矩阵，主要瓶颈是分类而非定位，可靠性机制（三信号融合、15% 拒识净增益）成立。
+
+但 2026-10-27 起的方法改进尝试尚无一项稳定超过强基线；testB/testC 是同一批对象的历史探索集，不是独立验证；胡柚专家真值与设备配对数据仍缺，不报告胡柚准确率。详见 `docs/项目现状_20261119.md`。
 
 本仓库暂不提供公开许可证。未经项目负责人确认，不得公开自采数据或重新分发第三方数据和论文。
