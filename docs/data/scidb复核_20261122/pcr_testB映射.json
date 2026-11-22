@@ -1,0 +1,57 @@
+{
+ "testB图像数": 602,
+ "PCR匹配数": 598,
+ "PCR+匹配": 137,
+ "PCR-匹配": 461,
+ "未匹配数": 3,
+ "未匹配样例": [
+  [
+   "PCR+",
+   "1-1- (19).jpg",
+   20
+  ],
+  [
+   "PCR-",
+   "0-0- (2).jpg",
+   20
+  ],
+  [
+   "PCR-",
+   "0-9- (15).jpg",
+   16
+  ]
+ ],
+ "交叉表": {
+  "PCR+": {
+   "S2 Healthy leaf": 39,
+   "S11 Citrus greasy spot": 10,
+   "S3 Blotchy mottling": 39,
+   "S4 Red nose fruit": 22,
+   "S5 Zinc deficiency": 13,
+   "S6 Vein yellowing": 12,
+   "S8 Magnesium deficiency": 2
+  },
+  "PCR-": {
+   "S2 Healthy leaf": 3,
+   "S9 Boron deficiency": 43,
+   "S10 Anthracnose": 43,
+   "S11 Citrus greasy spot": 33,
+   "S14 Canker": 43,
+   "S0 others": 43,
+   "S1 Healthy fruit": 43,
+   "S13 Sooty mould": 43,
+   "S3 Blotchy mottling": 3,
+   "S4 Red nose fruit": 20,
+   "S5 Zinc deficiency": 30,
+   "S6 Vein yellowing": 31,
+   "S7 Uniform yellowing": 43,
+   "S8 Magnesium deficiency": 40
+  },
+  "未匹配": {
+   "S2 Healthy leaf": 1,
+   "S3 Blotchy mottling": 1,
+   "S4 Red nose fruit": 1,
+   "S8 Magnesium deficiency": 1
+  }
+ }
+}

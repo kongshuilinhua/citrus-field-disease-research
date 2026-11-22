@@ -1,0 +1,187 @@
+{
+ "val": {
+  "样本数": 898,
+  "dHash<=4 命中数": 112,
+  "dHash<=8 命中数": 255,
+  "最近样例": [
+   [
+    0,
+    "Bval_3-HLB-1-229.jpg",
+    "Btrain_3-HLB-1-202.jpg"
+   ],
+   [
+    0,
+    "Bval_3-HLB-1-313.jpg",
+    "Btrain_3-HLB-1-218.jpg"
+   ],
+   [
+    0,
+    "Bval_3-HLB-2-195.jpg",
+    "Btrain_3-HLB-2-203.jpg"
+   ],
+   [
+    0,
+    "Bval_val_PS_L50_16.jpg",
+    "Btrain_PS_L50_S4_185.jpg"
+   ],
+   [
+    0,
+    "Cval_3-HLB-7-3.jpg",
+    "Ctrain_3-HLB-7-1.jpg"
+   ],
+   [
+    0,
+    "Cval_3-HLB-8-69.jpg",
+    "Ctrain_3-HLB-8-72.jpg"
+   ],
+   [
+    0,
+    "Cval_3-HLB-9-225.jpg",
+    "Ctrain_3-HLB-7-216.jpg"
+   ],
+   [
+    0,
+    "Cval_3-HLB-9-50.jpg",
+    "Ctrain_3-HLB-9-45.jpg"
+   ]
+  ]
+ },
+ "testA": {
+  "样本数": 602,
+  "dHash<=4 命中数": 61,
+  "dHash<=8 命中数": 154,
+  "最近样例": [
+   [
+    0,
+    "testA_t0_29.jpg",
+    "Btrain_3-HLB-1-185.jpg"
+   ],
+   [
+    0,
+    "testA_t0_30.jpg",
+    "Btrain_3-HLB-1-221.jpg"
+   ],
+   [
+    0,
+    "testA_t0_34.jpg",
+    "Btrain_3-HLB-1-488.jpg"
+   ],
+   [
+    0,
+    "testA_t1_17.jpg",
+    "Btrain_PS_L50_S4_27.jpg"
+   ],
+   [
+    0,
+    "testA_t1_26.jpg",
+    "Btrain_3-HLB-2-203.jpg"
+   ],
+   [
+    0,
+    "testA_t3_26.jpg",
+    "Ctrain_3-HLB-9-111.jpg"
+   ],
+   [
+    0,
+    "testA_t3_67.jpg",
+    "Ctrain_3-HLB-9-237.jpg"
+   ],
+   [
+    0,
+    "testA_t5_18.jpg",
+    "Ctrain_3-HLB-7-194.jpg"
+   ]
+  ]
+ },
+ "testB": {
+  "样本数": 602,
+  "dHash<=4 命中数": 0,
+  "dHash<=8 命中数": 4,
+  "最近样例": [
+   [
+    6,
+    "t0_1_23.jpg",
+    "Ctrain_3-HLB-9-594.jpg"
+   ],
+   [
+    7,
+    "t13_1_24.jpg",
+    "Dtrain_3-HLB-14-97.jpg"
+   ],
+   [
+    8,
+    "t13_1_26.jpg",
+    "Dtrain_PS_L50_1295.jpg"
+   ],
+   [
+    8,
+    "t14_1_27.jpg",
+    "Btrain_PS_L50_S4_111.jpg"
+   ]
+  ]
+ },
+ "testC": {
+  "样本数": 602,
+  "dHash<=4 命中数": 78,
+  "dHash<=8 命中数": 288,
+  "最近样例": [
+   [
+    0,
+    "0_2_1_172.JPG",
+    "Ctrain_3-HLB-9-221.jpg"
+   ],
+   [
+    0,
+    "0_2_1_45.JPG",
+    "Ctrain_PS_L50_128.jpg"
+   ],
+   [
+    1,
+    "0_2_1_183.JPG",
+    "Ctrain_3-HLB-9-470.jpg"
+   ],
+   [
+    1,
+    "0_2_1_577.jpg",
+    "Btrain_3-HLB-1-176.jpg"
+   ],
+   [
+    1,
+    "15_2_1_1.JPG",
+    "Ctrain_3-HLB-9-470.jpg"
+   ],
+   [
+    1,
+    "15_2_1_3.JPG",
+    "Ctrain_3-HLB-8-165.jpg"
+   ],
+   [
+    1,
+    "h (30).JPG",
+    "Dtrain_3-HLB-11-101.jpg"
+   ],
+   [
+    2,
+    "15_2_1_371.jpg",
+    "Btrain_3-HLB-1-176.jpg"
+   ]
+  ]
+ },
+ "缺失类别id": {
+  "train": [
+   0
+  ],
+  "val": [
+   0
+  ],
+  "testA": [
+   0
+  ],
+  "testB": [
+   14
+  ],
+  "testC": [
+   14
+  ]
+ }
+}
