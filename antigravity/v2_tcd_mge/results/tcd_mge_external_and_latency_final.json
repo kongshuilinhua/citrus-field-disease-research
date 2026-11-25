@@ -1,0 +1,249 @@
+{
+  "实验名称": "TCD-MGE_外部真实果园封口盲测与单趟实时延迟最终核验",
+  "耗时秒": 102.34,
+  "实测单图延迟_ms": {
+    "native_yolov8n": {
+      "val": {
+        "mean_ms": 17.13,
+        "p95_ms": 21.1
+      },
+      "testC": {
+        "mean_ms": 16.23,
+        "p95_ms": 18.41
+      }
+    },
+    "full_dinov2": {
+      "val": {
+        "mean_ms": 28.93,
+        "p95_ms": 31.7
+      },
+      "testC": {
+        "mean_ms": 29.67,
+        "p95_ms": 34.09
+      }
+    },
+    "ours_tcdmge": {
+      "val": {
+        "mean_ms": 40.08,
+        "p95_ms": 55.6
+      },
+      "testC": {
+        "mean_ms": 49.16,
+        "p95_ms": 53.85
+      }
+    }
+  },
+  "外部果园盲测汇总_3种子": {
+    "B0_YOLOv8n_Native": {
+      "det_2cls_AP50": "39.97±0.43",
+      "det_2cls_AP50_seeds": [
+        40.14,
+        39.48,
+        40.28
+      ],
+      "det_2cls_AP50_95": "25.79±0.42",
+      "det_3cls_AP50": "25.28±0.53",
+      "det_3cls_AP50_seeds": [
+        25.39,
+        25.75,
+        24.7
+      ],
+      "det_3cls_AP50_95": "16.19±0.52",
+      "esc_hi_pct_mean": 86.58
+    },
+    "B1_Full_DINOv2_Hard": {
+      "det_2cls_AP50": "41.81±2.08",
+      "det_2cls_AP50_seeds": [
+        43.75,
+        39.62,
+        42.07
+      ],
+      "det_2cls_AP50_95": "27.35±1.39",
+      "det_3cls_AP50": "26.64±1.67",
+      "det_3cls_AP50_seeds": [
+        28.53,
+        26.04,
+        25.36
+      ],
+      "det_3cls_AP50_95": "17.29±1.30",
+      "esc_hi_pct_mean": 86.58
+    },
+    "B3_Static_Posterior_Fuse": {
+      "det_2cls_AP50": "42.05±1.86",
+      "det_2cls_AP50_seeds": [
+        43.69,
+        40.03,
+        42.44
+      ],
+      "det_2cls_AP50_95": "27.42±1.28",
+      "det_3cls_AP50": "26.99±1.19",
+      "det_3cls_AP50_seeds": [
+        28.34,
+        26.55,
+        26.08
+      ],
+      "det_3cls_AP50_95": "17.46±1.03",
+      "esc_hi_pct_mean": 86.58
+    },
+    "Ours_TCDMGE_Selective": {
+      "det_2cls_AP50": "44.87±2.10",
+      "det_2cls_AP50_seeds": [
+        46.69,
+        42.57,
+        45.34
+      ],
+      "det_2cls_AP50_95": "28.96±1.47",
+      "det_3cls_AP50": "29.24±1.12",
+      "det_3cls_AP50_seeds": [
+        30.51,
+        28.82,
+        28.38
+      ],
+      "det_3cls_AP50_95": "18.77±0.99",
+      "esc_hi_pct_mean": 86.58
+    }
+  },
+  "外部果园逐种子明细": [
+    {
+      "seed": 0,
+      "B0_YOLOv8n_Native": {
+        "det_2cls": {
+          "AP50": 40.14,
+          "AP50_95": 26.28
+        },
+        "det_3cls": {
+          "AP50": 25.39,
+          "AP50_95": 16.48
+        },
+        "esc_hi_pct": 88.39
+      },
+      "B1_Full_DINOv2_Hard": {
+        "det_2cls": {
+          "AP50": 43.75,
+          "AP50_95": 28.81
+        },
+        "det_3cls": {
+          "AP50": 28.53,
+          "AP50_95": 18.76
+        },
+        "esc_hi_pct": 88.39
+      },
+      "B3_Static_Posterior_Fuse": {
+        "det_2cls": {
+          "AP50": 43.69,
+          "AP50_95": 28.74
+        },
+        "det_3cls": {
+          "AP50": 28.34,
+          "AP50_95": 18.6
+        },
+        "esc_hi_pct": 88.39
+      },
+      "Ours_TCDMGE_Selective": {
+        "det_2cls": {
+          "AP50": 46.69,
+          "AP50_95": 30.46
+        },
+        "det_3cls": {
+          "AP50": 30.51,
+          "AP50_95": 19.88
+        },
+        "esc_hi_pct": 88.39
+      }
+    },
+    {
+      "seed": 1,
+      "B0_YOLOv8n_Native": {
+        "det_2cls": {
+          "AP50": 39.48,
+          "AP50_95": 25.56
+        },
+        "det_3cls": {
+          "AP50": 25.75,
+          "AP50_95": 16.51
+        },
+        "esc_hi_pct": 84.62
+      },
+      "B1_Full_DINOv2_Hard": {
+        "det_2cls": {
+          "AP50": 39.62,
+          "AP50_95": 26.05
+        },
+        "det_3cls": {
+          "AP50": 26.04,
+          "AP50_95": 16.84
+        },
+        "esc_hi_pct": 84.62
+      },
+      "B3_Static_Posterior_Fuse": {
+        "det_2cls": {
+          "AP50": 40.03,
+          "AP50_95": 26.19
+        },
+        "det_3cls": {
+          "AP50": 26.55,
+          "AP50_95": 17.2
+        },
+        "esc_hi_pct": 84.62
+      },
+      "Ours_TCDMGE_Selective": {
+        "det_2cls": {
+          "AP50": 42.57,
+          "AP50_95": 27.52
+        },
+        "det_3cls": {
+          "AP50": 28.82,
+          "AP50_95": 18.42
+        },
+        "esc_hi_pct": 84.62
+      }
+    },
+    {
+      "seed": 2,
+      "B0_YOLOv8n_Native": {
+        "det_2cls": {
+          "AP50": 40.28,
+          "AP50_95": 25.53
+        },
+        "det_3cls": {
+          "AP50": 24.7,
+          "AP50_95": 15.59
+        },
+        "esc_hi_pct": 86.72
+      },
+      "B1_Full_DINOv2_Hard": {
+        "det_2cls": {
+          "AP50": 42.07,
+          "AP50_95": 27.19
+        },
+        "det_3cls": {
+          "AP50": 25.36,
+          "AP50_95": 16.28
+        },
+        "esc_hi_pct": 86.72
+      },
+      "B3_Static_Posterior_Fuse": {
+        "det_2cls": {
+          "AP50": 42.44,
+          "AP50_95": 27.34
+        },
+        "det_3cls": {
+          "AP50": 26.08,
+          "AP50_95": 16.59
+        },
+        "esc_hi_pct": 86.72
+      },
+      "Ours_TCDMGE_Selective": {
+        "det_2cls": {
+          "AP50": 45.34,
+          "AP50_95": 28.89
+        },
+        "det_3cls": {
+          "AP50": 28.38,
+          "AP50_95": 18.0
+        },
+        "esc_hi_pct": 86.72
+      }
+    }
+  ]
+}
