@@ -1,0 +1,61 @@
+{
+  "实验名称": "Probe-B0_框保护背景光度干预与PCGrad正交投影检测先导_seed0",
+  "总耗时秒": 7169.55,
+  "最佳权重路径": "D:\\citrus_runs\\yolov8_ctx_ortho_probe_20261124_seed0\\weights\\best.pt",
+  "最佳权重SHA256": "b32fe46c49db13c30c8249015553b9d479ba5043691a3bc0e0113e92e9a1771f",
+  "原生交付零额外参数核验": true,
+  "训练期PCGrad冲突投影统计": {
+    "steps": 13380,
+    "raw_conflict_layers": 110864,
+    "post_conflict_layers": 1,
+    "total_checked": 321120
+  },
+  "原生基线_seed0": {
+    "val": {
+      "AP50_95": 90.6759,
+      "AP50": 96.2365
+    },
+    "testB": {
+      "AP50_95": 74.0637,
+      "AP50": 81.517
+    },
+    "testC": {
+      "AP50_95": 71.3278,
+      "AP50": 75.9839
+    }
+  },
+  "本探针_seed0": {
+    "val": {
+      "AP50_95": 88.8877,
+      "AP50": 94.5398,
+      "pred_count": 5752,
+      "pred_sha256": "2769924b497242214e789ba04f488ea3998d28556aa7b7d15e286482de13f6a1"
+    },
+    "testB": {
+      "AP50_95": 73.8662,
+      "AP50": 81.5659,
+      "pred_count": 5638,
+      "pred_sha256": "4d4d73d6c050c45ad50b664db6788883b20929f2e3be60c0dbf59c33bf61414a"
+    },
+    "testC": {
+      "AP50_95": 73.7864,
+      "AP50": 78.5957,
+      "pred_count": 2757,
+      "pred_sha256": "e935fbc7fffbd2834b7b4654aad1037387b768b9749a323c4e118d53e37eba2b"
+    }
+  },
+  "净变化_百分点": {
+    "val": {
+      "delta_AP50_95_pt": -1.7882,
+      "delta_AP50_pt": -1.6967
+    },
+    "testB": {
+      "delta_AP50_95_pt": -0.1975,
+      "delta_AP50_pt": 0.0489
+    },
+    "testC": {
+      "delta_AP50_95_pt": 2.4586,
+      "delta_AP50_pt": 2.6118
+    }
+  }
+}

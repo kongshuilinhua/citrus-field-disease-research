@@ -28,6 +28,7 @@
 - `src/`：基线和论文复现代码。
 - `configs/`：不含本机秘密的示例配置。
 - `artifacts/summaries/`：小型 JSON/CSV 指标摘要。
+- `antigravity/`：Antigravity 独立研究线归档（`MGS-SymTex` 跨场景小论文完整实验代码、3 种子指标摘要、300 DPI 配图与权重校验清单，与 GPT / DeepSeek 成果分目录隔离存放）。
 
 ## 大文件策略
 

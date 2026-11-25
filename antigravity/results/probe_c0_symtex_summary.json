@@ -1,0 +1,717 @@
+{
+  "实验名称": "Probe-C0_双侧非对称拓扑与光照不变高频病斑协同分类",
+  "总耗时秒": 2996.7,
+  "结果汇总": {
+    "B1_SingleStream": {
+      "params_M": 3.347,
+      "val_f1": [
+        "97.59±0.30",
+        97.59,
+        0.3
+      ],
+      "testB_f1": [
+        "81.55±2.14",
+        81.55,
+        2.14
+      ],
+      "testC_f1": [
+        "81.64±0.23",
+        81.64,
+        0.23
+      ],
+      "testB_yellow_f1": [
+        "82.98±3.35",
+        82.98,
+        3.35
+      ],
+      "testC_yellow_f1": [
+        "82.36±1.16",
+        82.36,
+        1.16
+      ],
+      "testC_s12_recall": [
+        "81.58±11.47",
+        81.58,
+        11.47
+      ],
+      "uat_known_acc": [
+        "69.17±4.65",
+        69.17,
+        4.65
+      ],
+      "uat_eim_pct": [
+        "65.59±2.37",
+        65.59,
+        2.37
+      ],
+      "seeds": [
+        {
+          "seed": 0,
+          "best_epoch": 7,
+          "params_M": 3.347,
+          "val": {
+            "acc": 97.35,
+            "macro_f1": 97.26,
+            "yellow_f1": 97.34,
+            "lesion_f1": 98.57,
+            "s12_recall": 97.78,
+            "gate_routing": null
+          },
+          "testB": {
+            "acc": 79.3,
+            "macro_f1": 79.26,
+            "yellow_f1": 79.42,
+            "lesion_f1": 85.04,
+            "s12_recall": 83.72,
+            "gate_routing": null
+          },
+          "testC": {
+            "acc": 81.69,
+            "macro_f1": 81.51,
+            "yellow_f1": 81.18,
+            "lesion_f1": 83.28,
+            "s12_recall": 89.47,
+            "gate_routing": null
+          },
+          "citrus_uat": {
+            "known_compat_acc": 74.5,
+            "healthy_acc": 81.0,
+            "greasy_spot_acc": 68.0,
+            "hlb_mottling_vein_hit": 39.53,
+            "energy_inside_leaf_mask_pct": 68.19
+          }
+        },
+        {
+          "seed": 1,
+          "best_epoch": 13,
+          "params_M": 3.347,
+          "val": {
+            "acc": 97.93,
+            "macro_f1": 97.84,
+            "yellow_f1": 98.52,
+            "lesion_f1": 99.43,
+            "s12_recall": 100.0,
+            "gate_routing": null
+          },
+          "testB": {
+            "acc": 81.97,
+            "macro_f1": 81.89,
+            "yellow_f1": 83.45,
+            "lesion_f1": 86.58,
+            "s12_recall": 81.4,
+            "gate_routing": null
+          },
+          "testC": {
+            "acc": 81.69,
+            "macro_f1": 81.51,
+            "yellow_f1": 83.5,
+            "lesion_f1": 79.48,
+            "s12_recall": 68.42,
+            "gate_routing": null
+          },
+          "citrus_uat": {
+            "known_compat_acc": 67.0,
+            "healthy_acc": 89.0,
+            "greasy_spot_acc": 45.0,
+            "hlb_mottling_vein_hit": 48.84,
+            "energy_inside_leaf_mask_pct": 65.03
+          }
+        },
+        {
+          "seed": 2,
+          "best_epoch": 16,
+          "params_M": 3.347,
+          "val": {
+            "acc": 97.7,
+            "macro_f1": 97.66,
+            "yellow_f1": 97.85,
+            "lesion_f1": 98.45,
+            "s12_recall": 100.0,
+            "gate_routing": null
+          },
+          "testB": {
+            "acc": 83.47,
+            "macro_f1": 83.51,
+            "yellow_f1": 86.07,
+            "lesion_f1": 86.34,
+            "s12_recall": 83.72,
+            "gate_routing": null
+          },
+          "testC": {
+            "acc": 81.86,
+            "macro_f1": 81.9,
+            "yellow_f1": 82.4,
+            "lesion_f1": 83.1,
+            "s12_recall": 86.84,
+            "gate_routing": null
+          },
+          "citrus_uat": {
+            "known_compat_acc": 66.0,
+            "healthy_acc": 95.0,
+            "greasy_spot_acc": 37.0,
+            "hlb_mottling_vein_hit": 46.51,
+            "energy_inside_leaf_mask_pct": 63.56
+          }
+        }
+      ]
+    },
+    "B3_MultiScale": {
+      "params_M": 3.347,
+      "val_f1": [
+        "95.82±0.90",
+        95.82,
+        0.9
+      ],
+      "testB_f1": [
+        "74.57±1.28",
+        74.57,
+        1.28
+      ],
+      "testC_f1": [
+        "69.01±1.84",
+        69.01,
+        1.84
+      ],
+      "testB_yellow_f1": [
+        "80.06±0.84",
+        80.06,
+        0.84
+      ],
+      "testC_yellow_f1": [
+        "72.30±0.88",
+        72.3,
+        0.88
+      ],
+      "testC_s12_recall": [
+        "10.53±2.64",
+        10.53,
+        2.64
+      ],
+      "uat_known_acc": [
+        "78.33±10.69",
+        78.33,
+        10.69
+      ],
+      "uat_eim_pct": [
+        "66.20±0.67",
+        66.2,
+        0.67
+      ],
+      "seeds": [
+        {
+          "seed": 0,
+          "best_epoch": 17,
+          "params_M": 3.347,
+          "val": {
+            "acc": 96.78,
+            "macro_f1": 96.71,
+            "yellow_f1": 96.68,
+            "lesion_f1": 98.54,
+            "s12_recall": 97.78,
+            "gate_routing": null
+          },
+          "testB": {
+            "acc": 75.29,
+            "macro_f1": 75.58,
+            "yellow_f1": 79.3,
+            "lesion_f1": 81.22,
+            "s12_recall": 83.72,
+            "gate_routing": null
+          },
+          "testC": {
+            "acc": 70.17,
+            "macro_f1": 68.62,
+            "yellow_f1": 71.6,
+            "lesion_f1": 62.82,
+            "s12_recall": 10.53,
+            "gate_routing": null
+          },
+          "citrus_uat": {
+            "known_compat_acc": 69.0,
+            "healthy_acc": 99.0,
+            "greasy_spot_acc": 39.0,
+            "hlb_mottling_vein_hit": 62.79,
+            "energy_inside_leaf_mask_pct": 66.92
+          }
+        },
+        {
+          "seed": 1,
+          "best_epoch": 11,
+          "params_M": 3.347,
+          "val": {
+            "acc": 95.97,
+            "macro_f1": 95.84,
+            "yellow_f1": 95.71,
+            "lesion_f1": 98.48,
+            "s12_recall": 97.78,
+            "gate_routing": null
+          },
+          "testB": {
+            "acc": 72.95,
+            "macro_f1": 73.13,
+            "yellow_f1": 79.92,
+            "lesion_f1": 79.55,
+            "s12_recall": 74.42,
+            "gate_routing": null
+          },
+          "testC": {
+            "acc": 67.8,
+            "macro_f1": 67.4,
+            "yellow_f1": 72.0,
+            "lesion_f1": 63.54,
+            "s12_recall": 7.89,
+            "gate_routing": null
+          },
+          "citrus_uat": {
+            "known_compat_acc": 76.0,
+            "healthy_acc": 79.0,
+            "greasy_spot_acc": 73.0,
+            "hlb_mottling_vein_hit": 51.16,
+            "energy_inside_leaf_mask_pct": 66.09
+          }
+        },
+        {
+          "seed": 2,
+          "best_epoch": 18,
+          "params_M": 3.347,
+          "val": {
+            "acc": 95.05,
+            "macro_f1": 94.91,
+            "yellow_f1": 96.77,
+            "lesion_f1": 95.23,
+            "s12_recall": 80.0,
+            "gate_routing": null
+          },
+          "testB": {
+            "acc": 75.29,
+            "macro_f1": 74.99,
+            "yellow_f1": 80.97,
+            "lesion_f1": 77.53,
+            "s12_recall": 53.49,
+            "gate_routing": null
+          },
+          "testC": {
+            "acc": 72.2,
+            "macro_f1": 71.01,
+            "yellow_f1": 73.29,
+            "lesion_f1": 66.89,
+            "s12_recall": 13.16,
+            "gate_routing": null
+          },
+          "citrus_uat": {
+            "known_compat_acc": 90.0,
+            "healthy_acc": 99.0,
+            "greasy_spot_acc": 81.0,
+            "hlb_mottling_vein_hit": 67.44,
+            "energy_inside_leaf_mask_pct": 65.59
+          }
+        }
+      ]
+    },
+    "B4_LocalGlobalConcat": {
+      "params_M": 3.353,
+      "val_f1": [
+        "98.15±0.17",
+        98.15,
+        0.17
+      ],
+      "testB_f1": [
+        "81.74±1.74",
+        81.74,
+        1.74
+      ],
+      "testC_f1": [
+        "80.81±1.82",
+        80.81,
+        1.82
+      ],
+      "testB_yellow_f1": [
+        "85.87±1.47",
+        85.87,
+        1.47
+      ],
+      "testC_yellow_f1": [
+        "84.42±1.67",
+        84.42,
+        1.67
+      ],
+      "testC_s12_recall": [
+        "53.51±19.40",
+        53.51,
+        19.4
+      ],
+      "uat_known_acc": [
+        "69.00±5.22",
+        69.0,
+        5.22
+      ],
+      "uat_eim_pct": [
+        "54.31±3.05",
+        54.31,
+        3.05
+      ],
+      "seeds": [
+        {
+          "seed": 0,
+          "best_epoch": 14,
+          "params_M": 3.353,
+          "val": {
+            "acc": 98.39,
+            "macro_f1": 98.27,
+            "yellow_f1": 98.84,
+            "lesion_f1": 99.43,
+            "s12_recall": 100.0,
+            "gate_routing": null
+          },
+          "testB": {
+            "acc": 80.47,
+            "macro_f1": 79.96,
+            "yellow_f1": 84.86,
+            "lesion_f1": 80.97,
+            "s12_recall": 86.05,
+            "gate_routing": null
+          },
+          "testC": {
+            "acc": 81.53,
+            "macro_f1": 81.27,
+            "yellow_f1": 83.68,
+            "lesion_f1": 81.47,
+            "s12_recall": 68.42,
+            "gate_routing": null
+          },
+          "citrus_uat": {
+            "known_compat_acc": 66.5,
+            "healthy_acc": 100.0,
+            "greasy_spot_acc": 33.0,
+            "hlb_mottling_vein_hit": 51.16,
+            "energy_inside_leaf_mask_pct": 50.93
+          }
+        },
+        {
+          "seed": 1,
+          "best_epoch": 4,
+          "params_M": 3.353,
+          "val": {
+            "acc": 98.39,
+            "macro_f1": 98.22,
+            "yellow_f1": 99.1,
+            "lesion_f1": 98.87,
+            "s12_recall": 97.78,
+            "gate_routing": null
+          },
+          "testB": {
+            "acc": 81.8,
+            "macro_f1": 81.84,
+            "yellow_f1": 87.55,
+            "lesion_f1": 84.42,
+            "s12_recall": 74.42,
+            "gate_routing": null
+          },
+          "testC": {
+            "acc": 79.66,
+            "macro_f1": 78.8,
+            "yellow_f1": 83.25,
+            "lesion_f1": 75.41,
+            "s12_recall": 31.58,
+            "gate_routing": null
+          },
+          "citrus_uat": {
+            "known_compat_acc": 65.5,
+            "healthy_acc": 98.0,
+            "greasy_spot_acc": 33.0,
+            "hlb_mottling_vein_hit": 48.84,
+            "energy_inside_leaf_mask_pct": 56.86
+          }
+        },
+        {
+          "seed": 2,
+          "best_epoch": 10,
+          "params_M": 3.353,
+          "val": {
+            "acc": 98.16,
+            "macro_f1": 97.95,
+            "yellow_f1": 99.04,
+            "lesion_f1": 98.88,
+            "s12_recall": 100.0,
+            "gate_routing": null
+          },
+          "testB": {
+            "acc": 83.81,
+            "macro_f1": 83.43,
+            "yellow_f1": 85.19,
+            "lesion_f1": 87.62,
+            "s12_recall": 90.7,
+            "gate_routing": null
+          },
+          "testC": {
+            "acc": 83.22,
+            "macro_f1": 82.36,
+            "yellow_f1": 86.33,
+            "lesion_f1": 80.53,
+            "s12_recall": 60.53,
+            "gate_routing": null
+          },
+          "citrus_uat": {
+            "known_compat_acc": 75.0,
+            "healthy_acc": 95.0,
+            "greasy_spot_acc": 55.0,
+            "hlb_mottling_vein_hit": 65.12,
+            "energy_inside_leaf_mask_pct": 55.14
+          }
+        }
+      ]
+    },
+    "Ours_SymTex_Dynamic": {
+      "params_M": 4.237,
+      "val_f1": [
+        "97.75±0.32",
+        97.75,
+        0.32
+      ],
+      "testB_f1": [
+        "82.64±0.51",
+        82.64,
+        0.51
+      ],
+      "testC_f1": [
+        "82.59±0.90",
+        82.59,
+        0.9
+      ],
+      "testB_yellow_f1": [
+        "85.42±1.74",
+        85.42,
+        1.74
+      ],
+      "testC_yellow_f1": [
+        "84.12±1.38",
+        84.12,
+        1.38
+      ],
+      "testC_s12_recall": [
+        "80.70±6.62",
+        80.7,
+        6.62
+      ],
+      "uat_known_acc": [
+        "67.00±12.93",
+        67.0,
+        12.93
+      ],
+      "uat_eim_pct": [
+        "68.38±3.59",
+        68.38,
+        3.59
+      ],
+      "seeds": [
+        {
+          "seed": 0,
+          "best_epoch": 15,
+          "params_M": 4.237,
+          "val": {
+            "acc": 97.58,
+            "macro_f1": 97.53,
+            "yellow_f1": 98.1,
+            "lesion_f1": 98.79,
+            "s12_recall": 100.0,
+            "gate_routing": {
+              "yellow_cluster_gate_mean": [
+                0.9997000098228455,
+                0.00019999999494757503,
+                0.00019999999494757503
+              ],
+              "lesion_cluster_gate_mean": [
+                0.9991999864578247,
+                0.00039999998989515007,
+                0.00039999998989515007
+              ]
+            }
+          },
+          "testB": {
+            "acc": 81.97,
+            "macro_f1": 82.06,
+            "yellow_f1": 84.96,
+            "lesion_f1": 86.59,
+            "s12_recall": 86.05,
+            "gate_routing": {
+              "yellow_cluster_gate_mean": [
+                0.9998000264167786,
+                9.999999747378752e-05,
+                9.999999747378752e-05
+              ],
+              "lesion_cluster_gate_mean": [
+                0.9994999766349792,
+                0.0003000000142492354,
+                0.00019999999494757503
+              ]
+            }
+          },
+          "testC": {
+            "acc": 81.86,
+            "macro_f1": 81.66,
+            "yellow_f1": 83.05,
+            "lesion_f1": 79.56,
+            "s12_recall": 73.68,
+            "gate_routing": {
+              "yellow_cluster_gate_mean": [
+                0.9998000264167786,
+                9.999999747378752e-05,
+                9.999999747378752e-05
+              ],
+              "lesion_cluster_gate_mean": [
+                0.9998000264167786,
+                9.999999747378752e-05,
+                9.999999747378752e-05
+              ]
+            }
+          },
+          "citrus_uat": {
+            "known_compat_acc": 78.5,
+            "healthy_acc": 83.0,
+            "greasy_spot_acc": 74.0,
+            "hlb_mottling_vein_hit": 58.14,
+            "energy_inside_leaf_mask_pct": 70.27
+          }
+        },
+        {
+          "seed": 1,
+          "best_epoch": 16,
+          "params_M": 4.237,
+          "val": {
+            "acc": 98.16,
+            "macro_f1": 98.12,
+            "yellow_f1": 98.78,
+            "lesion_f1": 99.43,
+            "s12_recall": 100.0,
+            "gate_routing": {
+              "yellow_cluster_gate_mean": [
+                0.9973999857902527,
+                0.0017999999690800905,
+                0.000699999975040555
+              ],
+              "lesion_cluster_gate_mean": [
+                0.989300012588501,
+                0.007199999876320362,
+                0.0035000001080334187
+              ]
+            }
+          },
+          "testB": {
+            "acc": 82.97,
+            "macro_f1": 82.88,
+            "yellow_f1": 87.34,
+            "lesion_f1": 87.21,
+            "s12_recall": 83.72,
+            "gate_routing": {
+              "yellow_cluster_gate_mean": [
+                0.9980000257492065,
+                0.001500000013038516,
+                0.0005000000237487257
+              ],
+              "lesion_cluster_gate_mean": [
+                0.9927999973297119,
+                0.004999999888241291,
+                0.002300000051036477
+              ]
+            }
+          },
+          "testC": {
+            "acc": 83.9,
+            "macro_f1": 83.45,
+            "yellow_f1": 83.63,
+            "lesion_f1": 86.16,
+            "s12_recall": 86.84,
+            "gate_routing": {
+              "yellow_cluster_gate_mean": [
+                0.9980999827384949,
+                0.00139999995008111,
+                0.0005000000237487257
+              ],
+              "lesion_cluster_gate_mean": [
+                0.9965000152587891,
+                0.002400000113993883,
+                0.0010999999940395355
+              ]
+            }
+          },
+          "citrus_uat": {
+            "known_compat_acc": 53.0,
+            "healthy_acc": 69.0,
+            "greasy_spot_acc": 37.0,
+            "hlb_mottling_vein_hit": 55.81,
+            "energy_inside_leaf_mask_pct": 70.62
+          }
+        },
+        {
+          "seed": 2,
+          "best_epoch": 15,
+          "params_M": 4.237,
+          "val": {
+            "acc": 97.7,
+            "macro_f1": 97.59,
+            "yellow_f1": 97.45,
+            "lesion_f1": 99.43,
+            "s12_recall": 100.0,
+            "gate_routing": {
+              "yellow_cluster_gate_mean": [
+                0.9994000196456909,
+                0.00039999998989515007,
+                0.00019999999494757503
+              ],
+              "lesion_cluster_gate_mean": [
+                0.9962000250816345,
+                0.002300000051036477,
+                0.001500000013038516
+              ]
+            }
+          },
+          "testB": {
+            "acc": 82.97,
+            "macro_f1": 82.99,
+            "yellow_f1": 83.96,
+            "lesion_f1": 88.62,
+            "s12_recall": 86.05,
+            "gate_routing": {
+              "yellow_cluster_gate_mean": [
+                0.9994999766349792,
+                0.0003000000142492354,
+                0.00019999999494757503
+              ],
+              "lesion_cluster_gate_mean": [
+                0.9977999925613403,
+                0.0013000000035390258,
+                0.0007999999797903001
+              ]
+            }
+          },
+          "testC": {
+            "acc": 82.54,
+            "macro_f1": 82.65,
+            "yellow_f1": 85.67,
+            "lesion_f1": 84.55,
+            "s12_recall": 81.58,
+            "gate_routing": {
+              "yellow_cluster_gate_mean": [
+                0.9997000098228455,
+                0.00019999999494757503,
+                9.999999747378752e-05
+              ],
+              "lesion_cluster_gate_mean": [
+                0.9987999796867371,
+                0.000699999975040555,
+                0.0005000000237487257
+              ]
+            }
+          },
+          "citrus_uat": {
+            "known_compat_acc": 69.5,
+            "healthy_acc": 89.0,
+            "greasy_spot_acc": 50.0,
+            "hlb_mottling_vein_hit": 51.16,
+            "energy_inside_leaf_mask_pct": 64.24
+          }
+        }
+      ]
+    }
+  }
+}

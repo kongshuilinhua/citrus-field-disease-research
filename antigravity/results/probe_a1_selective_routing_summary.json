@@ -1,0 +1,978 @@
+{
+  "实验名称": "Probe-A1_颈部特征流形马氏距离选择性级联",
+  "耗时秒": 210.27,
+  "严格后端": {
+    "评测版本": "共同进程严格FP32_20261109",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121",
+    "ultralytics": "8.3.245",
+    "CUDA构建版本": "12.1",
+    "cuDNN版本": 90100,
+    "矩阵乘TF32": false,
+    "卷积TF32": false,
+    "cuDNN自动调优": false,
+    "float32矩阵乘策略": "highest"
+  },
+  "教师权重SHA256": "cab2cbfbc3b57d52ce92c85c8ef716e1bd4f5cf75b3561490aa39cde3633f880",
+  "候选框最低分门限": 0.05,
+  "阈值标定说明": "所有门控阈值仅在源val预测框(score>=0.25)分布按0.85/0.80分位数无监督标定，零testB/testC信息泄漏",
+  "三种子汇总": {
+    "B0_原生单阶段": {
+      "val": {
+        "AP50_95_mean": 89.7785,
+        "AP50_95_std": 0.8212,
+        "AP50_95_seeds": [
+          90.6759,
+          89.0646,
+          89.5951
+        ],
+        "AP50_mean": 95.3111,
+        "trigger_conf25_mean_pct": 0.0,
+        "trigger_cand_mean_pct": 0.0
+      },
+      "testB": {
+        "AP50_95_mean": 71.2473,
+        "AP50_95_std": 4.1216,
+        "AP50_95_seeds": [
+          74.0637,
+          66.5167,
+          73.1614
+        ],
+        "AP50_mean": 78.6858,
+        "trigger_conf25_mean_pct": 0.0,
+        "trigger_cand_mean_pct": 0.0
+      },
+      "testC": {
+        "AP50_95_mean": 72.7706,
+        "AP50_95_std": 1.3245,
+        "AP50_95_seeds": [
+          71.3278,
+          73.9312,
+          73.0529
+        ],
+        "AP50_mean": 77.6093,
+        "trigger_conf25_mean_pct": 0.0,
+        "trigger_cand_mean_pct": 0.0
+      }
+    },
+    "B1_全量重分类_保原分": {
+      "val": {
+        "AP50_95_mean": 89.8709,
+        "AP50_95_std": 0.9587,
+        "AP50_95_seeds": [
+          90.0901,
+          88.8215,
+          90.701
+        ],
+        "AP50_mean": 95.4243,
+        "trigger_conf25_mean_pct": 100.0,
+        "trigger_cand_mean_pct": 100.0
+      },
+      "testB": {
+        "AP50_95_mean": 75.6664,
+        "AP50_95_std": 1.1924,
+        "AP50_95_seeds": [
+          77.0403,
+          75.058,
+          74.9009
+        ],
+        "AP50_mean": 83.5052,
+        "trigger_conf25_mean_pct": 100.0,
+        "trigger_cand_mean_pct": 100.0
+      },
+      "testC": {
+        "AP50_95_mean": 84.3818,
+        "AP50_95_std": 0.2033,
+        "AP50_95_seeds": [
+          84.4731,
+          84.5235,
+          84.1489
+        ],
+        "AP50_mean": 90.2262,
+        "trigger_conf25_mean_pct": 100.0,
+        "trigger_cand_mean_pct": 100.0
+      }
+    },
+    "B2_全量重分类_几何校准分": {
+      "val": {
+        "AP50_95_mean": 89.9796,
+        "AP50_95_std": 0.899,
+        "AP50_95_seeds": [
+          90.1877,
+          88.9948,
+          90.7562
+        ],
+        "AP50_mean": 95.5161,
+        "trigger_conf25_mean_pct": 100.0,
+        "trigger_cand_mean_pct": 100.0
+      },
+      "testB": {
+        "AP50_95_mean": 76.0964,
+        "AP50_95_std": 1.3931,
+        "AP50_95_seeds": [
+          77.4953,
+          76.0847,
+          74.7092
+        ],
+        "AP50_mean": 83.9962,
+        "trigger_conf25_mean_pct": 100.0,
+        "trigger_cand_mean_pct": 100.0
+      },
+      "testC": {
+        "AP50_95_mean": 85.1794,
+        "AP50_95_std": 0.3352,
+        "AP50_95_seeds": [
+          85.0047,
+          85.5659,
+          84.9676
+        ],
+        "AP50_mean": 91.0375,
+        "trigger_conf25_mean_pct": 100.0,
+        "trigger_cand_mean_pct": 100.0
+      }
+    },
+    "B3_低置信度门控_q85": {
+      "val": {
+        "AP50_95_mean": 89.8236,
+        "AP50_95_std": 0.5616,
+        "AP50_95_seeds": [
+          90.4135,
+          89.2953,
+          89.7619
+        ],
+        "AP50_mean": 95.368,
+        "trigger_conf25_mean_pct": 15.01,
+        "trigger_cand_mean_pct": 27.65
+      },
+      "testB": {
+        "AP50_95_mean": 73.0977,
+        "AP50_95_std": 2.5799,
+        "AP50_95_seeds": [
+          75.3088,
+          70.2632,
+          73.7211
+        ],
+        "AP50_mean": 80.6516,
+        "trigger_conf25_mean_pct": 37.34,
+        "trigger_cand_mean_pct": 53.98
+      },
+      "testC": {
+        "AP50_95_mean": 78.4759,
+        "AP50_95_std": 1.9663,
+        "AP50_95_seeds": [
+          76.2081,
+          79.7057,
+          79.5139
+        ],
+        "AP50_mean": 83.7658,
+        "trigger_conf25_mean_pct": 27.31,
+        "trigger_cand_mean_pct": 34.35
+      }
+    },
+    "B3_低置信度门控_q80": {
+      "val": {
+        "AP50_95_mean": 89.9284,
+        "AP50_95_std": 0.5596,
+        "AP50_95_seeds": [
+          90.199,
+          89.2849,
+          90.3012
+        ],
+        "AP50_mean": 95.4854,
+        "trigger_conf25_mean_pct": 20.03,
+        "trigger_cand_mean_pct": 31.92
+      },
+      "testB": {
+        "AP50_95_mean": 73.9933,
+        "AP50_95_std": 1.8957,
+        "AP50_95_seeds": [
+          75.6938,
+          71.9493,
+          74.3368
+        ],
+        "AP50_mean": 81.6413,
+        "trigger_conf25_mean_pct": 47.83,
+        "trigger_cand_mean_pct": 61.72
+      },
+      "testC": {
+        "AP50_95_mean": 81.3841,
+        "AP50_95_std": 1.843,
+        "AP50_95_seeds": [
+          79.256,
+          82.4391,
+          82.4573
+        ],
+        "AP50_mean": 86.9397,
+        "trigger_conf25_mean_pct": 37.57,
+        "trigger_cand_mean_pct": 43.62
+      }
+    },
+    "Ours_流形马氏门控_q85_保原分": {
+      "val": {
+        "AP50_95_mean": 89.9979,
+        "AP50_95_std": 0.8837,
+        "AP50_95_seeds": [
+          90.3233,
+          88.9976,
+          90.6728
+        ],
+        "AP50_mean": 95.5655,
+        "trigger_conf25_mean_pct": 15.01,
+        "trigger_cand_mean_pct": 22.63
+      },
+      "testB": {
+        "AP50_95_mean": 73.9449,
+        "AP50_95_std": 3.2709,
+        "AP50_95_seeds": [
+          77.2344,
+          70.6929,
+          73.9075
+        ],
+        "AP50_mean": 81.6606,
+        "trigger_conf25_mean_pct": 41.94,
+        "trigger_cand_mean_pct": 55.13
+      },
+      "testC": {
+        "AP50_95_mean": 82.3503,
+        "AP50_95_std": 1.9635,
+        "AP50_95_seeds": [
+          80.3967,
+          84.3235,
+          82.3308
+        ],
+        "AP50_mean": 87.9236,
+        "trigger_conf25_mean_pct": 36.96,
+        "trigger_cand_mean_pct": 42.4
+      }
+    },
+    "Ours_流形马氏门控_q80_保原分": {
+      "val": {
+        "AP50_95_mean": 90.1581,
+        "AP50_95_std": 0.6179,
+        "AP50_95_seeds": [
+          90.3292,
+          89.4727,
+          90.6724
+        ],
+        "AP50_mean": 95.73,
+        "trigger_conf25_mean_pct": 20.03,
+        "trigger_cand_mean_pct": 28.24
+      },
+      "testB": {
+        "AP50_95_mean": 74.5159,
+        "AP50_95_std": 2.5756,
+        "AP50_95_seeds": [
+          77.3589,
+          72.3382,
+          73.8506
+        ],
+        "AP50_mean": 82.2891,
+        "trigger_conf25_mean_pct": 48.23,
+        "trigger_cand_mean_pct": 60.65
+      },
+      "testC": {
+        "AP50_95_mean": 83.1323,
+        "AP50_95_std": 1.7599,
+        "AP50_95_seeds": [
+          81.6976,
+          85.096,
+          82.6032
+        ],
+        "AP50_mean": 88.7893,
+        "trigger_conf25_mean_pct": 44.87,
+        "trigger_cand_mean_pct": 49.82
+      }
+    },
+    "Ours_流形马氏门控_q80_几何校准": {
+      "val": {
+        "AP50_95_mean": 90.1368,
+        "AP50_95_std": 0.6207,
+        "AP50_95_seeds": [
+          90.245,
+          89.4691,
+          90.6963
+        ],
+        "AP50_mean": 95.6851,
+        "trigger_conf25_mean_pct": 20.03,
+        "trigger_cand_mean_pct": 28.24
+      },
+      "testB": {
+        "AP50_95_mean": 74.6485,
+        "AP50_95_std": 2.4489,
+        "AP50_95_seeds": [
+          77.4408,
+          72.8659,
+          73.6388
+        ],
+        "AP50_mean": 82.4309,
+        "trigger_conf25_mean_pct": 48.23,
+        "trigger_cand_mean_pct": 60.65
+      },
+      "testC": {
+        "AP50_95_mean": 83.3631,
+        "AP50_95_std": 1.8601,
+        "AP50_95_seeds": [
+          81.8351,
+          85.4343,
+          82.8198
+        ],
+        "AP50_mean": 89.0533,
+        "trigger_conf25_mean_pct": 44.87,
+        "trigger_cand_mean_pct": 49.82
+      }
+    }
+  },
+  "逐种子明细": [
+    {
+      "seed": 0,
+      "splits": {
+        "val": {
+          "B0_原生单阶段": {
+            "AP50_95": 90.6759,
+            "AP50": 96.2365,
+            "triggered_boxes": 0,
+            "total_cand_boxes": 1275,
+            "trigger_rate_cand_pct": 0.0,
+            "trigger_rate_conf25_pct": 0.0
+          },
+          "B1_全量重分类_保原分": {
+            "AP50_95": 90.0901,
+            "AP50": 95.6474,
+            "triggered_boxes": 1275,
+            "total_cand_boxes": 1275,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B2_全量重分类_几何校准分": {
+            "AP50_95": 90.1877,
+            "AP50": 95.7269,
+            "triggered_boxes": 1275,
+            "total_cand_boxes": 1275,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B3_低置信度门控_q85": {
+            "AP50_95": 90.4135,
+            "AP50": 95.9724,
+            "triggered_boxes": 338,
+            "total_cand_boxes": 1275,
+            "trigger_rate_cand_pct": 26.51,
+            "trigger_rate_conf25_pct": 15.05
+          },
+          "B3_低置信度门控_q80": {
+            "AP50_95": 90.199,
+            "AP50": 95.7586,
+            "triggered_boxes": 393,
+            "total_cand_boxes": 1275,
+            "trigger_rate_cand_pct": 30.82,
+            "trigger_rate_conf25_pct": 20.04
+          },
+          "Ours_流形马氏门控_q85_保原分": {
+            "AP50_95": 90.3233,
+            "AP50": 95.8814,
+            "triggered_boxes": 270,
+            "total_cand_boxes": 1275,
+            "trigger_rate_cand_pct": 21.18,
+            "trigger_rate_conf25_pct": 15.05
+          },
+          "Ours_流形马氏门控_q80_保原分": {
+            "AP50_95": 90.3292,
+            "AP50": 95.8879,
+            "triggered_boxes": 338,
+            "total_cand_boxes": 1275,
+            "trigger_rate_cand_pct": 26.51,
+            "trigger_rate_conf25_pct": 20.04
+          },
+          "Ours_流形马氏门控_q80_几何校准": {
+            "AP50_95": 90.245,
+            "AP50": 95.78,
+            "triggered_boxes": 338,
+            "total_cand_boxes": 1275,
+            "trigger_rate_cand_pct": 26.51,
+            "trigger_rate_conf25_pct": 20.04
+          }
+        },
+        "testB": {
+          "B0_原生单阶段": {
+            "AP50_95": 74.0637,
+            "AP50": 81.517,
+            "triggered_boxes": 0,
+            "total_cand_boxes": 1202,
+            "trigger_rate_cand_pct": 0.0,
+            "trigger_rate_conf25_pct": 0.0
+          },
+          "B1_全量重分类_保原分": {
+            "AP50_95": 77.0403,
+            "AP50": 84.7546,
+            "triggered_boxes": 1202,
+            "total_cand_boxes": 1202,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B2_全量重分类_几何校准分": {
+            "AP50_95": 77.4953,
+            "AP50": 85.2705,
+            "triggered_boxes": 1202,
+            "total_cand_boxes": 1202,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B3_低置信度门控_q85": {
+            "AP50_95": 75.3088,
+            "AP50": 82.7987,
+            "triggered_boxes": 609,
+            "total_cand_boxes": 1202,
+            "trigger_rate_cand_pct": 50.67,
+            "trigger_rate_conf25_pct": 34.91
+          },
+          "B3_低置信度门控_q80": {
+            "AP50_95": 75.6938,
+            "AP50": 83.2483,
+            "triggered_boxes": 712,
+            "total_cand_boxes": 1202,
+            "trigger_rate_cand_pct": 59.23,
+            "trigger_rate_conf25_pct": 46.21
+          },
+          "Ours_流形马氏门控_q85_保原分": {
+            "AP50_95": 77.2344,
+            "AP50": 84.9083,
+            "triggered_boxes": 640,
+            "total_cand_boxes": 1202,
+            "trigger_rate_cand_pct": 53.24,
+            "trigger_rate_conf25_pct": 41.6
+          },
+          "Ours_流形马氏门控_q80_保原分": {
+            "AP50_95": 77.3589,
+            "AP50": 85.0795,
+            "triggered_boxes": 711,
+            "total_cand_boxes": 1202,
+            "trigger_rate_cand_pct": 59.15,
+            "trigger_rate_conf25_pct": 47.75
+          },
+          "Ours_流形马氏门控_q80_几何校准": {
+            "AP50_95": 77.4408,
+            "AP50": 85.1633,
+            "triggered_boxes": 711,
+            "total_cand_boxes": 1202,
+            "trigger_rate_cand_pct": 59.15,
+            "trigger_rate_conf25_pct": 47.75
+          }
+        },
+        "testC": {
+          "B0_原生单阶段": {
+            "AP50_95": 71.3278,
+            "AP50": 75.9839,
+            "triggered_boxes": 0,
+            "total_cand_boxes": 705,
+            "trigger_rate_cand_pct": 0.0,
+            "trigger_rate_conf25_pct": 0.0
+          },
+          "B1_全量重分类_保原分": {
+            "AP50_95": 84.4731,
+            "AP50": 90.3603,
+            "triggered_boxes": 705,
+            "total_cand_boxes": 705,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B2_全量重分类_几何校准分": {
+            "AP50_95": 85.0047,
+            "AP50": 90.9202,
+            "triggered_boxes": 705,
+            "total_cand_boxes": 705,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B3_低置信度门控_q85": {
+            "AP50_95": 76.2081,
+            "AP50": 81.3198,
+            "triggered_boxes": 203,
+            "total_cand_boxes": 705,
+            "trigger_rate_cand_pct": 28.79,
+            "trigger_rate_conf25_pct": 22.53
+          },
+          "B3_低置信度门控_q80": {
+            "AP50_95": 79.256,
+            "AP50": 84.6983,
+            "triggered_boxes": 272,
+            "total_cand_boxes": 705,
+            "trigger_rate_cand_pct": 38.58,
+            "trigger_rate_conf25_pct": 33.18
+          },
+          "Ours_流形马氏门控_q85_保原分": {
+            "AP50_95": 80.3967,
+            "AP50": 85.8412,
+            "triggered_boxes": 276,
+            "total_cand_boxes": 705,
+            "trigger_rate_cand_pct": 39.15,
+            "trigger_rate_conf25_pct": 35.19
+          },
+          "Ours_流形马氏门控_q80_保原分": {
+            "AP50_95": 81.6976,
+            "AP50": 87.2489,
+            "triggered_boxes": 330,
+            "total_cand_boxes": 705,
+            "trigger_rate_cand_pct": 46.81,
+            "trigger_rate_conf25_pct": 42.75
+          },
+          "Ours_流形马氏门控_q80_几何校准": {
+            "AP50_95": 81.8351,
+            "AP50": 87.4521,
+            "triggered_boxes": 330,
+            "total_cand_boxes": 705,
+            "trigger_rate_cand_pct": 46.81,
+            "trigger_rate_conf25_pct": 42.75
+          }
+        }
+      },
+      "gate_diagnostics": {
+        "testB": {
+          "cross_domain_error_auroc_mahalanobis": 0.9456593279258401,
+          "cross_domain_error_auroc_low_conf": 0.9422108922363847,
+          "within_split_highconf_error_auroc_mahalanobis": 0.8641680802940346,
+          "within_split_highconf_error_auroc_low_conf": 0.8389348317783433
+        },
+        "testC": {
+          "cross_domain_error_auroc_mahalanobis": 0.938445872397205,
+          "cross_domain_error_auroc_low_conf": 0.9210014396572912,
+          "within_split_highconf_error_auroc_mahalanobis": 0.8451934908542909,
+          "within_split_highconf_error_auroc_low_conf": 0.8245931783931756
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "splits": {
+        "val": {
+          "B0_原生单阶段": {
+            "AP50_95": 89.0646,
+            "AP50": 94.7185,
+            "triggered_boxes": 0,
+            "total_cand_boxes": 1278,
+            "trigger_rate_cand_pct": 0.0,
+            "trigger_rate_conf25_pct": 0.0
+          },
+          "B1_全量重分类_保原分": {
+            "AP50_95": 88.8215,
+            "AP50": 94.4762,
+            "triggered_boxes": 1278,
+            "total_cand_boxes": 1278,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B2_全量重分类_几何校准分": {
+            "AP50_95": 88.9948,
+            "AP50": 94.6324,
+            "triggered_boxes": 1278,
+            "total_cand_boxes": 1278,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B3_低置信度门控_q85": {
+            "AP50_95": 89.2953,
+            "AP50": 94.9794,
+            "triggered_boxes": 331,
+            "total_cand_boxes": 1278,
+            "trigger_rate_cand_pct": 25.9,
+            "trigger_rate_conf25_pct": 14.99
+          },
+          "B3_低置信度门控_q80": {
+            "AP50_95": 89.2849,
+            "AP50": 94.968,
+            "triggered_boxes": 387,
+            "total_cand_boxes": 1278,
+            "trigger_rate_cand_pct": 30.28,
+            "trigger_rate_conf25_pct": 20.02
+          },
+          "Ours_流形马氏门控_q85_保原分": {
+            "AP50_95": 88.9976,
+            "AP50": 94.7032,
+            "triggered_boxes": 273,
+            "total_cand_boxes": 1278,
+            "trigger_rate_cand_pct": 21.36,
+            "trigger_rate_conf25_pct": 14.99
+          },
+          "Ours_流形马氏门控_q80_保原分": {
+            "AP50_95": 89.4727,
+            "AP50": 95.1909,
+            "triggered_boxes": 347,
+            "total_cand_boxes": 1278,
+            "trigger_rate_cand_pct": 27.15,
+            "trigger_rate_conf25_pct": 20.02
+          },
+          "Ours_流形马氏门控_q80_几何校准": {
+            "AP50_95": 89.4691,
+            "AP50": 95.1569,
+            "triggered_boxes": 347,
+            "total_cand_boxes": 1278,
+            "trigger_rate_cand_pct": 27.15,
+            "trigger_rate_conf25_pct": 20.02
+          }
+        },
+        "testB": {
+          "B0_原生单阶段": {
+            "AP50_95": 66.5167,
+            "AP50": 73.5518,
+            "triggered_boxes": 0,
+            "total_cand_boxes": 1265,
+            "trigger_rate_cand_pct": 0.0,
+            "trigger_rate_conf25_pct": 0.0
+          },
+          "B1_全量重分类_保原分": {
+            "AP50_95": 75.058,
+            "AP50": 82.7312,
+            "triggered_boxes": 1265,
+            "total_cand_boxes": 1265,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B2_全量重分类_几何校准分": {
+            "AP50_95": 76.0847,
+            "AP50": 83.8045,
+            "triggered_boxes": 1265,
+            "total_cand_boxes": 1265,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B3_低置信度门控_q85": {
+            "AP50_95": 70.2632,
+            "AP50": 77.5533,
+            "triggered_boxes": 704,
+            "total_cand_boxes": 1265,
+            "trigger_rate_cand_pct": 55.65,
+            "trigger_rate_conf25_pct": 40.0
+          },
+          "B3_低置信度门控_q80": {
+            "AP50_95": 71.9493,
+            "AP50": 79.3505,
+            "triggered_boxes": 818,
+            "total_cand_boxes": 1265,
+            "trigger_rate_cand_pct": 64.66,
+            "trigger_rate_conf25_pct": 52.19
+          },
+          "Ours_流形马氏门控_q85_保原分": {
+            "AP50_95": 70.6929,
+            "AP50": 78.0991,
+            "triggered_boxes": 714,
+            "total_cand_boxes": 1265,
+            "trigger_rate_cand_pct": 56.44,
+            "trigger_rate_conf25_pct": 43.53
+          },
+          "Ours_流形马氏门控_q80_保原分": {
+            "AP50_95": 72.3382,
+            "AP50": 79.8245,
+            "triggered_boxes": 775,
+            "total_cand_boxes": 1265,
+            "trigger_rate_cand_pct": 61.26,
+            "trigger_rate_conf25_pct": 49.2
+          },
+          "Ours_流形马氏门控_q80_几何校准": {
+            "AP50_95": 72.8659,
+            "AP50": 80.3483,
+            "triggered_boxes": 775,
+            "total_cand_boxes": 1265,
+            "trigger_rate_cand_pct": 61.26,
+            "trigger_rate_conf25_pct": 49.2
+          }
+        },
+        "testC": {
+          "B0_原生单阶段": {
+            "AP50_95": 73.9312,
+            "AP50": 78.6814,
+            "triggered_boxes": 0,
+            "total_cand_boxes": 710,
+            "trigger_rate_cand_pct": 0.0,
+            "trigger_rate_conf25_pct": 0.0
+          },
+          "B1_全量重分类_保原分": {
+            "AP50_95": 84.5235,
+            "AP50": 90.1328,
+            "triggered_boxes": 710,
+            "total_cand_boxes": 710,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B2_全量重分类_几何校准分": {
+            "AP50_95": 85.5659,
+            "AP50": 91.1807,
+            "triggered_boxes": 710,
+            "total_cand_boxes": 710,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B3_低置信度门控_q85": {
+            "AP50_95": 79.7057,
+            "AP50": 84.8881,
+            "triggered_boxes": 254,
+            "total_cand_boxes": 710,
+            "trigger_rate_cand_pct": 35.77,
+            "trigger_rate_conf25_pct": 29.74
+          },
+          "B3_低置信度门控_q80": {
+            "AP50_95": 82.4391,
+            "AP50": 87.8648,
+            "triggered_boxes": 317,
+            "total_cand_boxes": 710,
+            "trigger_rate_cand_pct": 44.65,
+            "trigger_rate_conf25_pct": 39.45
+          },
+          "Ours_流形马氏门控_q85_保原分": {
+            "AP50_95": 84.3235,
+            "AP50": 89.7916,
+            "triggered_boxes": 289,
+            "total_cand_boxes": 710,
+            "trigger_rate_cand_pct": 40.7,
+            "trigger_rate_conf25_pct": 35.44
+          },
+          "Ours_流形马氏门控_q80_保原分": {
+            "AP50_95": 85.096,
+            "AP50": 90.6794,
+            "triggered_boxes": 339,
+            "total_cand_boxes": 710,
+            "trigger_rate_cand_pct": 47.75,
+            "trigger_rate_conf25_pct": 43.14
+          },
+          "Ours_流形马氏门控_q80_几何校准": {
+            "AP50_95": 85.4343,
+            "AP50": 91.0199,
+            "triggered_boxes": 339,
+            "total_cand_boxes": 710,
+            "trigger_rate_cand_pct": 47.75,
+            "trigger_rate_conf25_pct": 43.14
+          }
+        }
+      },
+      "gate_diagnostics": {
+        "testB": {
+          "cross_domain_error_auroc_mahalanobis": 0.9165408364944329,
+          "cross_domain_error_auroc_low_conf": 0.9522950195804024,
+          "within_split_highconf_error_auroc_mahalanobis": 0.8066123188405797,
+          "within_split_highconf_error_auroc_low_conf": 0.8343685300207039
+        },
+        "testC": {
+          "cross_domain_error_auroc_mahalanobis": 0.9499834272456082,
+          "cross_domain_error_auroc_low_conf": 0.9453297978123963,
+          "within_split_highconf_error_auroc_mahalanobis": 0.8639989148128051,
+          "within_split_highconf_error_auroc_low_conf": 0.8348345089527943
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "splits": {
+        "val": {
+          "B0_原生单阶段": {
+            "AP50_95": 89.5951,
+            "AP50": 94.9782,
+            "triggered_boxes": 0,
+            "total_cand_boxes": 1388,
+            "trigger_rate_cand_pct": 0.0,
+            "trigger_rate_conf25_pct": 0.0
+          },
+          "B1_全量重分类_保原分": {
+            "AP50_95": 90.701,
+            "AP50": 96.1493,
+            "triggered_boxes": 1388,
+            "total_cand_boxes": 1388,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B2_全量重分类_几何校准分": {
+            "AP50_95": 90.7562,
+            "AP50": 96.1891,
+            "triggered_boxes": 1388,
+            "total_cand_boxes": 1388,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B3_低置信度门控_q85": {
+            "AP50_95": 89.7619,
+            "AP50": 95.1522,
+            "triggered_boxes": 424,
+            "total_cand_boxes": 1388,
+            "trigger_rate_cand_pct": 30.55,
+            "trigger_rate_conf25_pct": 14.99
+          },
+          "B3_低置信度门控_q80": {
+            "AP50_95": 90.3012,
+            "AP50": 95.7296,
+            "triggered_boxes": 481,
+            "total_cand_boxes": 1388,
+            "trigger_rate_cand_pct": 34.65,
+            "trigger_rate_conf25_pct": 20.02
+          },
+          "Ours_流形马氏门控_q85_保原分": {
+            "AP50_95": 90.6728,
+            "AP50": 96.1118,
+            "triggered_boxes": 352,
+            "total_cand_boxes": 1388,
+            "trigger_rate_cand_pct": 25.36,
+            "trigger_rate_conf25_pct": 14.99
+          },
+          "Ours_流形马氏门控_q80_保原分": {
+            "AP50_95": 90.6724,
+            "AP50": 96.1113,
+            "triggered_boxes": 431,
+            "total_cand_boxes": 1388,
+            "trigger_rate_cand_pct": 31.05,
+            "trigger_rate_conf25_pct": 20.02
+          },
+          "Ours_流形马氏门控_q80_几何校准": {
+            "AP50_95": 90.6963,
+            "AP50": 96.1184,
+            "triggered_boxes": 431,
+            "total_cand_boxes": 1388,
+            "trigger_rate_cand_pct": 31.05,
+            "trigger_rate_conf25_pct": 20.02
+          }
+        },
+        "testB": {
+          "B0_原生单阶段": {
+            "AP50_95": 73.1614,
+            "AP50": 80.9886,
+            "triggered_boxes": 0,
+            "total_cand_boxes": 1386,
+            "trigger_rate_cand_pct": 0.0,
+            "trigger_rate_conf25_pct": 0.0
+          },
+          "B1_全量重分类_保原分": {
+            "AP50_95": 74.9009,
+            "AP50": 83.0298,
+            "triggered_boxes": 1386,
+            "total_cand_boxes": 1386,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B2_全量重分类_几何校准分": {
+            "AP50_95": 74.7092,
+            "AP50": 82.9135,
+            "triggered_boxes": 1386,
+            "total_cand_boxes": 1386,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B3_低置信度门控_q85": {
+            "AP50_95": 73.7211,
+            "AP50": 81.6028,
+            "triggered_boxes": 771,
+            "total_cand_boxes": 1386,
+            "trigger_rate_cand_pct": 55.63,
+            "trigger_rate_conf25_pct": 37.12
+          },
+          "B3_低置信度门控_q80": {
+            "AP50_95": 74.3368,
+            "AP50": 82.325,
+            "triggered_boxes": 849,
+            "total_cand_boxes": 1386,
+            "trigger_rate_cand_pct": 61.26,
+            "trigger_rate_conf25_pct": 45.09
+          },
+          "Ours_流形马氏门控_q85_保原分": {
+            "AP50_95": 73.9075,
+            "AP50": 81.9744,
+            "triggered_boxes": 772,
+            "total_cand_boxes": 1386,
+            "trigger_rate_cand_pct": 55.7,
+            "trigger_rate_conf25_pct": 40.7
+          },
+          "Ours_流形马氏门控_q80_保原分": {
+            "AP50_95": 73.8506,
+            "AP50": 81.9632,
+            "triggered_boxes": 853,
+            "total_cand_boxes": 1386,
+            "trigger_rate_cand_pct": 61.54,
+            "trigger_rate_conf25_pct": 47.75
+          },
+          "Ours_流形马氏门控_q80_几何校准": {
+            "AP50_95": 73.6388,
+            "AP50": 81.781,
+            "triggered_boxes": 853,
+            "total_cand_boxes": 1386,
+            "trigger_rate_cand_pct": 61.54,
+            "trigger_rate_conf25_pct": 47.75
+          }
+        },
+        "testC": {
+          "B0_原生单阶段": {
+            "AP50_95": 73.0529,
+            "AP50": 78.1627,
+            "triggered_boxes": 0,
+            "total_cand_boxes": 756,
+            "trigger_rate_cand_pct": 0.0,
+            "trigger_rate_conf25_pct": 0.0
+          },
+          "B1_全量重分类_保原分": {
+            "AP50_95": 84.1489,
+            "AP50": 90.1855,
+            "triggered_boxes": 756,
+            "total_cand_boxes": 756,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B2_全量重分类_几何校准分": {
+            "AP50_95": 84.9676,
+            "AP50": 91.0117,
+            "triggered_boxes": 756,
+            "total_cand_boxes": 756,
+            "trigger_rate_cand_pct": 100.0,
+            "trigger_rate_conf25_pct": 100.0
+          },
+          "B3_低置信度门控_q85": {
+            "AP50_95": 79.5139,
+            "AP50": 85.0895,
+            "triggered_boxes": 291,
+            "total_cand_boxes": 756,
+            "trigger_rate_cand_pct": 38.49,
+            "trigger_rate_conf25_pct": 29.65
+          },
+          "B3_低置信度门控_q80": {
+            "AP50_95": 82.4573,
+            "AP50": 88.256,
+            "triggered_boxes": 360,
+            "total_cand_boxes": 756,
+            "trigger_rate_cand_pct": 47.62,
+            "trigger_rate_conf25_pct": 40.09
+          },
+          "Ours_流形马氏门控_q85_保原分": {
+            "AP50_95": 82.3308,
+            "AP50": 88.1379,
+            "triggered_boxes": 358,
+            "total_cand_boxes": 756,
+            "trigger_rate_cand_pct": 47.35,
+            "trigger_rate_conf25_pct": 40.24
+          },
+          "Ours_流形马氏门控_q80_保原分": {
+            "AP50_95": 82.6032,
+            "AP50": 88.4395,
+            "triggered_boxes": 415,
+            "total_cand_boxes": 756,
+            "trigger_rate_cand_pct": 54.89,
+            "trigger_rate_conf25_pct": 48.71
+          },
+          "Ours_流形马氏门控_q80_几何校准": {
+            "AP50_95": 82.8198,
+            "AP50": 88.6878,
+            "triggered_boxes": 415,
+            "total_cand_boxes": 756,
+            "trigger_rate_cand_pct": 54.89,
+            "trigger_rate_conf25_pct": 48.71
+          }
+        }
+      },
+      "gate_diagnostics": {
+        "testB": {
+          "cross_domain_error_auroc_mahalanobis": 0.8902796930801599,
+          "cross_domain_error_auroc_low_conf": 0.934505498391146,
+          "within_split_highconf_error_auroc_mahalanobis": 0.765612191980193,
+          "within_split_highconf_error_auroc_low_conf": 0.8299345902270103
+        },
+        "testC": {
+          "cross_domain_error_auroc_mahalanobis": 0.9393782035225767,
+          "cross_domain_error_auroc_low_conf": 0.9567406086005608,
+          "within_split_highconf_error_auroc_mahalanobis": 0.8058891093244231,
+          "within_split_highconf_error_auroc_low_conf": 0.8510754933695311
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "实验名称": "Probe-A2-Plus_无监督流形去偏与预训练未畸变子空间跨域开放集鉴别",
+  "耗时秒": 242.98,
+  "汇总_3种子": {
+    "B1_FT_Energy": {
+      "uat_known_acc": "78.17±13.25",
+      "within_domain_Known_vs_Pest_AUROC": "49.09±15.69",
+      "within_domain_Known_vs_Pest_FPR95": "86.87±8.62",
+      "within_domain_Known_vs_UnseenNutr_AUROC": "22.65±9.80",
+      "cross_domain_Val_vs_Pest_AUROC": "97.25±0.46"
+    },
+    "B2_FT_RawProto": {
+      "uat_known_acc": "78.17±13.25",
+      "within_domain_Known_vs_Pest_AUROC": "45.03±14.46",
+      "within_domain_Known_vs_Pest_FPR95": "88.89±6.91",
+      "within_domain_Known_vs_UnseenNutr_AUROC": "8.92±4.83",
+      "cross_domain_Val_vs_Pest_AUROC": "97.50±1.08"
+    },
+    "Abl1_FT_DebiasedCORAL": {
+      "uat_known_acc": "53.00±4.77",
+      "within_domain_Known_vs_Pest_AUROC": "61.24±5.21",
+      "within_domain_Known_vs_Pest_FPR95": "88.69±4.04",
+      "within_domain_Known_vs_UnseenNutr_AUROC": "53.46±2.79",
+      "cross_domain_Val_vs_Pest_AUROC": "94.09±0.47"
+    },
+    "Abl2_UndistortedPre_RawProto": {
+      "uat_known_acc": "0.00±0.00",
+      "within_domain_Known_vs_Pest_AUROC": "52.76±0.00",
+      "within_domain_Known_vs_Pest_FPR95": "98.48±0.00",
+      "within_domain_Known_vs_UnseenNutr_AUROC": "46.71±0.00",
+      "cross_domain_Val_vs_Pest_AUROC": "80.61±0.00"
+    },
+    "Ours_DDP_OSR_Undistorted_Debiased": {
+      "uat_known_acc": "20.50±0.00",
+      "within_domain_Known_vs_Pest_AUROC": "54.65±0.00",
+      "within_domain_Known_vs_Pest_FPR95": "97.27±0.00",
+      "within_domain_Known_vs_UnseenNutr_AUROC": "51.50±0.00",
+      "cross_domain_Val_vs_Pest_AUROC": "54.01±0.00"
+    }
+  },
+  "逐种子": [
+    {
+      "seed": 0,
+      "B1_FT_Energy": {
+        "uat_known_acc": 63.0,
+        "within_domain_Known_vs_Pest_AUROC": 40.1,
+        "within_domain_Known_vs_Pest_FPR95": 90.91,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 16.61,
+        "cross_domain_Val_vs_Pest_AUROC": 96.92
+      },
+      "B2_FT_RawProto": {
+        "uat_known_acc": 63.0,
+        "within_domain_Known_vs_Pest_AUROC": 43.58,
+        "within_domain_Known_vs_Pest_FPR95": 93.03,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 8.39,
+        "cross_domain_Val_vs_Pest_AUROC": 98.16
+      },
+      "Abl1_FT_DebiasedCORAL": {
+        "uat_known_acc": 48.0,
+        "within_domain_Known_vs_Pest_AUROC": 61.22,
+        "within_domain_Known_vs_Pest_FPR95": 89.7,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 51.88,
+        "cross_domain_Val_vs_Pest_AUROC": 94.25
+      },
+      "Abl2_UndistortedPre_RawProto": {
+        "uat_known_acc": 0.0,
+        "within_domain_Known_vs_Pest_AUROC": 52.76,
+        "within_domain_Known_vs_Pest_FPR95": 98.48,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 46.71,
+        "cross_domain_Val_vs_Pest_AUROC": 80.61
+      },
+      "Ours_DDP_OSR_Undistorted_Debiased": {
+        "uat_known_acc": 20.5,
+        "within_domain_Known_vs_Pest_AUROC": 54.65,
+        "within_domain_Known_vs_Pest_FPR95": 97.27,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 51.5,
+        "cross_domain_Val_vs_Pest_AUROC": 54.01
+      }
+    },
+    {
+      "seed": 1,
+      "B1_FT_Energy": {
+        "uat_known_acc": 87.5,
+        "within_domain_Known_vs_Pest_AUROC": 67.21,
+        "within_domain_Known_vs_Pest_FPR95": 76.97,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 33.96,
+        "cross_domain_Val_vs_Pest_AUROC": 97.78
+      },
+      "B2_FT_RawProto": {
+        "uat_known_acc": 87.5,
+        "within_domain_Known_vs_Pest_AUROC": 60.16,
+        "within_domain_Known_vs_Pest_FPR95": 80.91,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 13.99,
+        "cross_domain_Val_vs_Pest_AUROC": 98.09
+      },
+      "Abl1_FT_DebiasedCORAL": {
+        "uat_known_acc": 57.5,
+        "within_domain_Known_vs_Pest_AUROC": 66.45,
+        "within_domain_Known_vs_Pest_FPR95": 84.24,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 56.68,
+        "cross_domain_Val_vs_Pest_AUROC": 93.56
+      },
+      "Abl2_UndistortedPre_RawProto": {
+        "uat_known_acc": 0.0,
+        "within_domain_Known_vs_Pest_AUROC": 52.76,
+        "within_domain_Known_vs_Pest_FPR95": 98.48,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 46.71,
+        "cross_domain_Val_vs_Pest_AUROC": 80.61
+      },
+      "Ours_DDP_OSR_Undistorted_Debiased": {
+        "uat_known_acc": 20.5,
+        "within_domain_Known_vs_Pest_AUROC": 54.65,
+        "within_domain_Known_vs_Pest_FPR95": 97.27,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 51.5,
+        "cross_domain_Val_vs_Pest_AUROC": 54.01
+      }
+    },
+    {
+      "seed": 2,
+      "B1_FT_Energy": {
+        "uat_known_acc": 84.0,
+        "within_domain_Known_vs_Pest_AUROC": 39.97,
+        "within_domain_Known_vs_Pest_FPR95": 92.73,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 17.39,
+        "cross_domain_Val_vs_Pest_AUROC": 97.06
+      },
+      "B2_FT_RawProto": {
+        "uat_known_acc": 84.0,
+        "within_domain_Known_vs_Pest_AUROC": 31.34,
+        "within_domain_Known_vs_Pest_FPR95": 92.73,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 4.37,
+        "cross_domain_Val_vs_Pest_AUROC": 96.26
+      },
+      "Abl1_FT_DebiasedCORAL": {
+        "uat_known_acc": 53.5,
+        "within_domain_Known_vs_Pest_AUROC": 56.04,
+        "within_domain_Known_vs_Pest_FPR95": 92.12,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 51.82,
+        "cross_domain_Val_vs_Pest_AUROC": 94.47
+      },
+      "Abl2_UndistortedPre_RawProto": {
+        "uat_known_acc": 0.0,
+        "within_domain_Known_vs_Pest_AUROC": 52.76,
+        "within_domain_Known_vs_Pest_FPR95": 98.48,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 46.71,
+        "cross_domain_Val_vs_Pest_AUROC": 80.61
+      },
+      "Ours_DDP_OSR_Undistorted_Debiased": {
+        "uat_known_acc": 20.5,
+        "within_domain_Known_vs_Pest_AUROC": 54.65,
+        "within_domain_Known_vs_Pest_FPR95": 97.27,
+        "within_domain_Known_vs_UnseenNutr_AUROC": 51.5,
+        "cross_domain_Val_vs_Pest_AUROC": 54.01
+      }
+    }
+  ]
+}

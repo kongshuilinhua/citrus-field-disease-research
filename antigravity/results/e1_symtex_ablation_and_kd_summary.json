@@ -1,0 +1,906 @@
+{
+  "实验名称": "E1_SymTex组件严格消融与零增耗剪枝蒸馏协同_3种子",
+  "总耗时秒": 4296.09,
+  "结果汇总": {
+    "B1_Vanilla_Pruned": {
+      "deployed_params_M": 3.347,
+      "val_f1": [
+        "98.01±0.42",
+        98.01,
+        0.42
+      ],
+      "testB_f1": [
+        "81.57±0.74",
+        81.57,
+        0.74
+      ],
+      "testC_f1": [
+        "81.81±2.32",
+        81.81,
+        2.32
+      ],
+      "testB_yellow_f1": [
+        "85.03±1.18",
+        85.03,
+        1.18
+      ],
+      "testC_yellow_f1": [
+        "82.17±0.79",
+        82.17,
+        0.79
+      ],
+      "testC_s12_recall": [
+        "78.95±20.56",
+        78.95,
+        20.56
+      ],
+      "uat_known_acc": [
+        "74.17±3.18",
+        74.17,
+        3.18
+      ],
+      "uat_eim_pct": [
+        "66.60±1.70",
+        66.6,
+        1.7
+      ],
+      "seeds": [
+        {
+          "tag": "B1_Vanilla_Pruned",
+          "seed": 0,
+          "best_epoch": 14,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\B1_Vanilla_Pruned_seed0.pt",
+          "ckpt_sha256": "eb97cd6096e8ce79da82b0fe5a5425b938408536e4e0d3542a03178a669c6c78",
+          "val": {
+            "acc": 97.81,
+            "macro_f1": 97.78,
+            "yellow_f1": 97.65,
+            "lesion_f1": 99.29,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 82.47,
+            "macro_f1": 82.42,
+            "yellow_f1": 86.36,
+            "lesion_f1": 85.61,
+            "s12_recall": 79.07
+          },
+          "testC": {
+            "acc": 78.64,
+            "macro_f1": 79.14,
+            "yellow_f1": 81.33,
+            "lesion_f1": 78.02,
+            "s12_recall": 55.26
+          },
+          "citrus_uat": {
+            "known_compat_acc": 70.5,
+            "healthy_acc": 69.0,
+            "greasy_spot_acc": 72.0,
+            "energy_inside_leaf_mask_pct": 68.45
+          }
+        },
+        {
+          "tag": "B1_Vanilla_Pruned",
+          "seed": 1,
+          "best_epoch": 17,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\B1_Vanilla_Pruned_seed1.pt",
+          "ckpt_sha256": "8edc026270d707c126cac7a6cf75e497a1582212526cb88187d3941caca19cd1",
+          "val": {
+            "acc": 98.5,
+            "macro_f1": 98.49,
+            "yellow_f1": 99.23,
+            "lesion_f1": 99.43,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 81.47,
+            "macro_f1": 81.25,
+            "yellow_f1": 84.63,
+            "lesion_f1": 85.09,
+            "s12_recall": 86.05
+          },
+          "testC": {
+            "acc": 83.39,
+            "macro_f1": 83.19,
+            "yellow_f1": 82.9,
+            "lesion_f1": 84.65,
+            "s12_recall": 89.47
+          },
+          "citrus_uat": {
+            "known_compat_acc": 76.0,
+            "healthy_acc": 90.0,
+            "greasy_spot_acc": 62.0,
+            "energy_inside_leaf_mask_pct": 66.24
+          }
+        },
+        {
+          "tag": "B1_Vanilla_Pruned",
+          "seed": 2,
+          "best_epoch": 17,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\B1_Vanilla_Pruned_seed2.pt",
+          "ckpt_sha256": "fd9b38f3ab27398553eb5861af3a36ffc5e2ff094d6fad478e90ba4390c17a6d",
+          "val": {
+            "acc": 97.81,
+            "macro_f1": 97.75,
+            "yellow_f1": 98.01,
+            "lesion_f1": 99.11,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 80.97,
+            "macro_f1": 81.05,
+            "yellow_f1": 84.1,
+            "lesion_f1": 85.92,
+            "s12_recall": 83.72
+          },
+          "testC": {
+            "acc": 83.22,
+            "macro_f1": 83.11,
+            "yellow_f1": 82.28,
+            "lesion_f1": 86.67,
+            "s12_recall": 92.11
+          },
+          "citrus_uat": {
+            "known_compat_acc": 76.0,
+            "healthy_acc": 88.0,
+            "greasy_spot_acc": 64.0,
+            "energy_inside_leaf_mask_pct": 65.11
+          }
+        }
+      ]
+    },
+    "Abl_BASD_Only": {
+      "deployed_params_M": 3.347,
+      "val_f1": [
+        "97.71±0.07",
+        97.71,
+        0.07
+      ],
+      "testB_f1": [
+        "81.52±1.27",
+        81.52,
+        1.27
+      ],
+      "testC_f1": [
+        "81.79±1.89",
+        81.79,
+        1.89
+      ],
+      "testB_yellow_f1": [
+        "84.64±1.53",
+        84.64,
+        1.53
+      ],
+      "testC_yellow_f1": [
+        "82.83±5.67",
+        82.83,
+        5.67
+      ],
+      "testC_s12_recall": [
+        "83.33±5.47",
+        83.33,
+        5.47
+      ],
+      "uat_known_acc": [
+        "76.83±9.93",
+        76.83,
+        9.93
+      ],
+      "uat_eim_pct": [
+        "70.00±0.44",
+        70.0,
+        0.44
+      ],
+      "seeds": [
+        {
+          "tag": "Abl_BASD_Only",
+          "seed": 0,
+          "best_epoch": 10,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\Abl_BASD_Only_seed0.pt",
+          "ckpt_sha256": "c51f42b2ea290ebc62f0719c896290d0846f128b2ee617cf78d58e327c353dba",
+          "val": {
+            "acc": 97.93,
+            "macro_f1": 97.74,
+            "yellow_f1": 97.89,
+            "lesion_f1": 99.43,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 82.64,
+            "macro_f1": 82.48,
+            "yellow_f1": 85.47,
+            "lesion_f1": 86.66,
+            "s12_recall": 83.72
+          },
+          "testC": {
+            "acc": 83.9,
+            "macro_f1": 83.74,
+            "yellow_f1": 88.0,
+            "lesion_f1": 79.31,
+            "s12_recall": 81.58
+          },
+          "citrus_uat": {
+            "known_compat_acc": 79.0,
+            "healthy_acc": 84.0,
+            "greasy_spot_acc": 74.0,
+            "energy_inside_leaf_mask_pct": 69.7
+          }
+        },
+        {
+          "tag": "Abl_BASD_Only",
+          "seed": 1,
+          "best_epoch": 7,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\Abl_BASD_Only_seed1.pt",
+          "ckpt_sha256": "c55ced38991fe908dd81b5f35205aa43b63b3da2be8faf47a0d192607d1cf14c",
+          "val": {
+            "acc": 97.81,
+            "macro_f1": 97.75,
+            "yellow_f1": 98.97,
+            "lesion_f1": 99.03,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 80.3,
+            "macro_f1": 80.08,
+            "yellow_f1": 85.57,
+            "lesion_f1": 85.45,
+            "s12_recall": 81.4
+          },
+          "testC": {
+            "acc": 82.03,
+            "macro_f1": 81.67,
+            "yellow_f1": 83.72,
+            "lesion_f1": 80.04,
+            "s12_recall": 78.95
+          },
+          "citrus_uat": {
+            "known_compat_acc": 85.5,
+            "healthy_acc": 100.0,
+            "greasy_spot_acc": 71.0,
+            "energy_inside_leaf_mask_pct": 69.79
+          }
+        },
+        {
+          "tag": "Abl_BASD_Only",
+          "seed": 2,
+          "best_epoch": 10,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\Abl_BASD_Only_seed2.pt",
+          "ckpt_sha256": "8887460511c4b1ca87a94894caf8d5852cbac2c7107a2264fd99b3855712d52d",
+          "val": {
+            "acc": 97.7,
+            "macro_f1": 97.63,
+            "yellow_f1": 97.86,
+            "lesion_f1": 99.23,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 82.3,
+            "macro_f1": 82.0,
+            "yellow_f1": 82.87,
+            "lesion_f1": 85.58,
+            "s12_recall": 76.74
+          },
+          "testC": {
+            "acc": 81.02,
+            "macro_f1": 79.96,
+            "yellow_f1": 76.77,
+            "lesion_f1": 85.6,
+            "s12_recall": 89.47
+          },
+          "citrus_uat": {
+            "known_compat_acc": 66.0,
+            "healthy_acc": 95.0,
+            "greasy_spot_acc": 37.0,
+            "energy_inside_leaf_mask_pct": 70.5
+          }
+        }
+      ]
+    },
+    "Abl_IIHFR_Only": {
+      "deployed_params_M": 3.347,
+      "val_f1": [
+        "97.52±0.27",
+        97.52,
+        0.27
+      ],
+      "testB_f1": [
+        "82.31±1.33",
+        82.31,
+        1.33
+      ],
+      "testC_f1": [
+        "81.54±0.66",
+        81.54,
+        0.66
+      ],
+      "testB_yellow_f1": [
+        "85.69±0.69",
+        85.69,
+        0.69
+      ],
+      "testC_yellow_f1": [
+        "82.84±0.58",
+        82.84,
+        0.58
+      ],
+      "testC_s12_recall": [
+        "74.56±10.63",
+        74.56,
+        10.63
+      ],
+      "uat_known_acc": [
+        "64.33±8.04",
+        64.33,
+        8.04
+      ],
+      "uat_eim_pct": [
+        "64.75±2.35",
+        64.75,
+        2.35
+      ],
+      "seeds": [
+        {
+          "tag": "Abl_IIHFR_Only",
+          "seed": 0,
+          "best_epoch": 12,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\Abl_IIHFR_Only_seed0.pt",
+          "ckpt_sha256": "95b474e61e9e6fa9fcce403b19f0140a27044a69ec392ed658c6ee9ca24103b6",
+          "val": {
+            "acc": 97.35,
+            "macro_f1": 97.21,
+            "yellow_f1": 97.38,
+            "lesion_f1": 98.79,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 83.47,
+            "macro_f1": 83.29,
+            "yellow_f1": 85.4,
+            "lesion_f1": 84.53,
+            "s12_recall": 81.4
+          },
+          "testC": {
+            "acc": 81.53,
+            "macro_f1": 81.32,
+            "yellow_f1": 82.49,
+            "lesion_f1": 80.33,
+            "s12_recall": 68.42
+          },
+          "citrus_uat": {
+            "known_compat_acc": 73.5,
+            "healthy_acc": 80.0,
+            "greasy_spot_acc": 67.0,
+            "energy_inside_leaf_mask_pct": 67.45
+          }
+        },
+        {
+          "tag": "Abl_IIHFR_Only",
+          "seed": 1,
+          "best_epoch": 17,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\Abl_IIHFR_Only_seed1.pt",
+          "ckpt_sha256": "09efc6cdd8916b3b925286347f4c42e15bdb9aea9ef9404f09321224a43fe836",
+          "val": {
+            "acc": 97.7,
+            "macro_f1": 97.62,
+            "yellow_f1": 98.26,
+            "lesion_f1": 99.11,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 80.97,
+            "macro_f1": 80.79,
+            "yellow_f1": 86.48,
+            "lesion_f1": 84.17,
+            "s12_recall": 79.07
+          },
+          "testC": {
+            "acc": 82.37,
+            "macro_f1": 82.29,
+            "yellow_f1": 83.51,
+            "lesion_f1": 82.12,
+            "s12_recall": 68.42
+          },
+          "citrus_uat": {
+            "known_compat_acc": 58.5,
+            "healthy_acc": 34.0,
+            "greasy_spot_acc": 83.0,
+            "energy_inside_leaf_mask_pct": 63.21
+          }
+        },
+        {
+          "tag": "Abl_IIHFR_Only",
+          "seed": 2,
+          "best_epoch": 12,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\Abl_IIHFR_Only_seed2.pt",
+          "ckpt_sha256": "8f2a1946490d087e7b797637abaca5a3bbf3dea927ff8a0475cbb8867770384a",
+          "val": {
+            "acc": 97.81,
+            "macro_f1": 97.73,
+            "yellow_f1": 98.53,
+            "lesion_f1": 99.43,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 82.8,
+            "macro_f1": 82.84,
+            "yellow_f1": 85.2,
+            "lesion_f1": 86.96,
+            "s12_recall": 81.4
+          },
+          "testC": {
+            "acc": 81.02,
+            "macro_f1": 81.02,
+            "yellow_f1": 82.52,
+            "lesion_f1": 83.43,
+            "s12_recall": 86.84
+          },
+          "citrus_uat": {
+            "known_compat_acc": 61.0,
+            "healthy_acc": 64.0,
+            "greasy_spot_acc": 58.0,
+            "energy_inside_leaf_mask_pct": 63.59
+          }
+        }
+      ]
+    },
+    "SymTex_Pruned": {
+      "deployed_params_M": 3.347,
+      "val_f1": [
+        "97.92±0.37",
+        97.92,
+        0.37
+      ],
+      "testB_f1": [
+        "82.35±1.97",
+        82.35,
+        1.97
+      ],
+      "testC_f1": [
+        "82.70±1.13",
+        82.7,
+        1.13
+      ],
+      "testB_yellow_f1": [
+        "84.34±1.06",
+        84.34,
+        1.06
+      ],
+      "testC_yellow_f1": [
+        "84.36±1.98",
+        84.36,
+        1.98
+      ],
+      "testC_s12_recall": [
+        "80.70±5.47",
+        80.7,
+        5.47
+      ],
+      "uat_known_acc": [
+        "68.50±6.26",
+        68.5,
+        6.26
+      ],
+      "uat_eim_pct": [
+        "68.53±0.25",
+        68.53,
+        0.25
+      ],
+      "seeds": [
+        {
+          "tag": "SymTex_Pruned",
+          "seed": 0,
+          "best_epoch": 18,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\SymTex_Pruned_seed0.pt",
+          "ckpt_sha256": "0b113cf253ebe0cb48a1cab29282a3617ed32dee362e033c285bc9b61a22700d",
+          "val": {
+            "acc": 97.93,
+            "macro_f1": 97.92,
+            "yellow_f1": 97.45,
+            "lesion_f1": 99.43,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 81.47,
+            "macro_f1": 81.31,
+            "yellow_f1": 84.66,
+            "lesion_f1": 85.5,
+            "s12_recall": 81.4
+          },
+          "testC": {
+            "acc": 82.37,
+            "macro_f1": 82.1,
+            "yellow_f1": 82.79,
+            "lesion_f1": 82.49,
+            "s12_recall": 76.32
+          },
+          "citrus_uat": {
+            "known_compat_acc": 69.0,
+            "healthy_acc": 83.0,
+            "greasy_spot_acc": 55.0,
+            "energy_inside_leaf_mask_pct": 68.72
+          }
+        },
+        {
+          "tag": "SymTex_Pruned",
+          "seed": 1,
+          "best_epoch": 12,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\SymTex_Pruned_seed1.pt",
+          "ckpt_sha256": "5295016865866299560eec27d402839d8425111a5c6649d7a10809d42c605f71",
+          "val": {
+            "acc": 98.39,
+            "macro_f1": 98.29,
+            "yellow_f1": 99.17,
+            "lesion_f1": 99.43,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 81.14,
+            "macro_f1": 81.11,
+            "yellow_f1": 83.15,
+            "lesion_f1": 86.98,
+            "s12_recall": 83.72
+          },
+          "testC": {
+            "acc": 83.73,
+            "macro_f1": 84.0,
+            "yellow_f1": 86.59,
+            "lesion_f1": 82.85,
+            "s12_recall": 78.95
+          },
+          "citrus_uat": {
+            "known_compat_acc": 62.0,
+            "healthy_acc": 62.0,
+            "greasy_spot_acc": 62.0,
+            "energy_inside_leaf_mask_pct": 68.25
+          }
+        },
+        {
+          "tag": "SymTex_Pruned",
+          "seed": 2,
+          "best_epoch": 15,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\SymTex_Pruned_seed2.pt",
+          "ckpt_sha256": "46346002cb08b5466303e650341a5549e99fdf37224c9fb63d5249f0f42e390f",
+          "val": {
+            "acc": 97.7,
+            "macro_f1": 97.56,
+            "yellow_f1": 98.15,
+            "lesion_f1": 99.09,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 84.64,
+            "macro_f1": 84.62,
+            "yellow_f1": 85.2,
+            "lesion_f1": 88.88,
+            "s12_recall": 88.37
+          },
+          "testC": {
+            "acc": 82.2,
+            "macro_f1": 81.99,
+            "yellow_f1": 83.7,
+            "lesion_f1": 81.31,
+            "s12_recall": 86.84
+          },
+          "citrus_uat": {
+            "known_compat_acc": 74.5,
+            "healthy_acc": 95.0,
+            "greasy_spot_acc": 54.0,
+            "energy_inside_leaf_mask_pct": 68.61
+          }
+        }
+      ]
+    },
+    "Vanilla_KD": {
+      "deployed_params_M": 3.347,
+      "val_f1": [
+        "97.95±0.20",
+        97.95,
+        0.2
+      ],
+      "testB_f1": [
+        "83.90±0.33",
+        83.9,
+        0.33
+      ],
+      "testC_f1": [
+        "84.33±1.10",
+        84.33,
+        1.1
+      ],
+      "testB_yellow_f1": [
+        "86.37±1.44",
+        86.37,
+        1.44
+      ],
+      "testC_yellow_f1": [
+        "85.92±1.05",
+        85.92,
+        1.05
+      ],
+      "testC_s12_recall": [
+        "78.07±15.42",
+        78.07,
+        15.42
+      ],
+      "uat_known_acc": [
+        "77.00±13.00",
+        77.0,
+        13.0
+      ],
+      "uat_eim_pct": [
+        "67.00±1.68",
+        67.0,
+        1.68
+      ],
+      "seeds": [
+        {
+          "tag": "Vanilla_KD",
+          "seed": 0,
+          "best_epoch": 20,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\Vanilla_KD_seed0.pt",
+          "ckpt_sha256": "11d5e0e42697640dce9e5a7ab0a88241d544325dd045e2e2c135db97aad63935",
+          "val": {
+            "acc": 97.93,
+            "macro_f1": 97.81,
+            "yellow_f1": 98.03,
+            "lesion_f1": 99.43,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 84.14,
+            "macro_f1": 84.18,
+            "yellow_f1": 87.97,
+            "lesion_f1": 86.24,
+            "s12_recall": 83.72
+          },
+          "testC": {
+            "acc": 85.42,
+            "macro_f1": 85.57,
+            "yellow_f1": 87.08,
+            "lesion_f1": 86.09,
+            "s12_recall": 89.47
+          },
+          "citrus_uat": {
+            "known_compat_acc": 84.0,
+            "healthy_acc": 83.0,
+            "greasy_spot_acc": 85.0,
+            "energy_inside_leaf_mask_pct": 68.9
+          }
+        },
+        {
+          "tag": "Vanilla_KD",
+          "seed": 1,
+          "best_epoch": 16,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\Vanilla_KD_seed1.pt",
+          "ckpt_sha256": "fb21f00b9c0fce8d3a481f510ec62138627119a9620073fb31d6241613893349",
+          "val": {
+            "acc": 98.27,
+            "macro_f1": 98.18,
+            "yellow_f1": 99.17,
+            "lesion_f1": 99.23,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 83.64,
+            "macro_f1": 83.53,
+            "yellow_f1": 85.95,
+            "lesion_f1": 87.83,
+            "s12_recall": 81.4
+          },
+          "testC": {
+            "acc": 84.24,
+            "macro_f1": 83.95,
+            "yellow_f1": 85.64,
+            "lesion_f1": 83.24,
+            "s12_recall": 60.53
+          },
+          "citrus_uat": {
+            "known_compat_acc": 62.0,
+            "healthy_acc": 47.0,
+            "greasy_spot_acc": 77.0,
+            "energy_inside_leaf_mask_pct": 65.69
+          }
+        },
+        {
+          "tag": "Vanilla_KD",
+          "seed": 2,
+          "best_epoch": 14,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\Vanilla_KD_seed2.pt",
+          "ckpt_sha256": "9055fc6221f2de232dbb665d5ec3d47bafba59fcbc8091a69829540ac8e93a29",
+          "val": {
+            "acc": 97.93,
+            "macro_f1": 97.86,
+            "yellow_f1": 97.69,
+            "lesion_f1": 99.43,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 83.97,
+            "macro_f1": 83.99,
+            "yellow_f1": 85.18,
+            "lesion_f1": 89.72,
+            "s12_recall": 79.07
+          },
+          "testC": {
+            "acc": 83.73,
+            "macro_f1": 83.47,
+            "yellow_f1": 85.04,
+            "lesion_f1": 85.92,
+            "s12_recall": 84.21
+          },
+          "citrus_uat": {
+            "known_compat_acc": 85.0,
+            "healthy_acc": 98.0,
+            "greasy_spot_acc": 72.0,
+            "energy_inside_leaf_mask_pct": 66.42
+          }
+        }
+      ]
+    },
+    "Ours_SymTex_KD_Pruned": {
+      "deployed_params_M": 3.347,
+      "val_f1": [
+        "97.94±0.49",
+        97.94,
+        0.49
+      ],
+      "testB_f1": [
+        "83.21±1.34",
+        83.21,
+        1.34
+      ],
+      "testC_f1": [
+        "83.05±1.82",
+        83.05,
+        1.82
+      ],
+      "testB_yellow_f1": [
+        "85.59±0.82",
+        85.59,
+        0.82
+      ],
+      "testC_yellow_f1": [
+        "84.64±1.98",
+        84.64,
+        1.98
+      ],
+      "testC_s12_recall": [
+        "73.69±11.47",
+        73.69,
+        11.47
+      ],
+      "uat_known_acc": [
+        "74.83±9.22",
+        74.83,
+        9.22
+      ],
+      "uat_eim_pct": [
+        "65.66±0.34",
+        65.66,
+        0.34
+      ],
+      "seeds": [
+        {
+          "tag": "Ours_SymTex_KD_Pruned",
+          "seed": 0,
+          "best_epoch": 11,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\Ours_SymTex_KD_Pruned_seed0.pt",
+          "ckpt_sha256": "f7ba5694f820095412cdc3b7c226f14ac82332ac4090ed61ac81d4751503f64a",
+          "val": {
+            "acc": 97.7,
+            "macro_f1": 97.61,
+            "yellow_f1": 97.32,
+            "lesion_f1": 99.43,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 84.14,
+            "macro_f1": 84.02,
+            "yellow_f1": 85.9,
+            "lesion_f1": 84.87,
+            "s12_recall": 81.4
+          },
+          "testC": {
+            "acc": 84.24,
+            "macro_f1": 84.07,
+            "yellow_f1": 86.79,
+            "lesion_f1": 82.48,
+            "s12_recall": 78.95
+          },
+          "citrus_uat": {
+            "known_compat_acc": 72.5,
+            "healthy_acc": 72.0,
+            "greasy_spot_acc": 73.0,
+            "energy_inside_leaf_mask_pct": 65.35
+          }
+        },
+        {
+          "tag": "Ours_SymTex_KD_Pruned",
+          "seed": 1,
+          "best_epoch": 14,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\Ours_SymTex_KD_Pruned_seed1.pt",
+          "ckpt_sha256": "d5b5fc06693eda5e8ba22abf550a04318e63495e3162a9db87426de106077111",
+          "val": {
+            "acc": 98.5,
+            "macro_f1": 98.5,
+            "yellow_f1": 98.8,
+            "lesion_f1": 99.43,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 81.64,
+            "macro_f1": 81.66,
+            "yellow_f1": 84.66,
+            "lesion_f1": 86.98,
+            "s12_recall": 79.07
+          },
+          "testC": {
+            "acc": 81.19,
+            "macro_f1": 80.95,
+            "yellow_f1": 84.24,
+            "lesion_f1": 81.75,
+            "s12_recall": 60.53
+          },
+          "citrus_uat": {
+            "known_compat_acc": 67.0,
+            "healthy_acc": 77.0,
+            "greasy_spot_acc": 57.0,
+            "energy_inside_leaf_mask_pct": 66.03
+          }
+        },
+        {
+          "tag": "Ours_SymTex_KD_Pruned",
+          "seed": 2,
+          "best_epoch": 20,
+          "deployed_params_M": 3.347,
+          "ckpt_path": "D:\\新版柑橘\\多路线创新筛选_20261124\\小论文完整实验_20261124\\checkpoints\\Ours_SymTex_KD_Pruned_seed2.pt",
+          "ckpt_sha256": "d9cf40e8e709fe14253c77a3e418456c53059e93fbd6982d52e710623a871070",
+          "val": {
+            "acc": 97.81,
+            "macro_f1": 97.7,
+            "yellow_f1": 98.54,
+            "lesion_f1": 99.23,
+            "s12_recall": 100.0
+          },
+          "testB": {
+            "acc": 83.97,
+            "macro_f1": 83.95,
+            "yellow_f1": 86.22,
+            "lesion_f1": 89.11,
+            "s12_recall": 83.72
+          },
+          "testC": {
+            "acc": 84.58,
+            "macro_f1": 84.12,
+            "yellow_f1": 82.89,
+            "lesion_f1": 86.72,
+            "s12_recall": 81.58
+          },
+          "citrus_uat": {
+            "known_compat_acc": 85.0,
+            "healthy_acc": 97.0,
+            "greasy_spot_acc": 73.0,
+            "energy_inside_leaf_mask_pct": 65.61
+          }
+        }
+      ]
+    }
+  }
+}
