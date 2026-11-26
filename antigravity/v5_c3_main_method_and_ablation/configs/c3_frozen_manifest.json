@@ -1,0 +1,228 @@
+{
+  "manifest_version": "2026-11-26_Stage1_Frozen_C3_Lock",
+  "paper_title_zh_tentative": "面向复杂田间背景的柑橘病害检测：基于双尺度目标表征与校准后验融合的方法",
+  "paper_title_en_tentative": "Dual-Scale Target Representation and Calibrated Posterior Fusion for Citrus Disease Detection in Complex Field Environments",
+  "primary_method_id": "C3_DualScale_082_125_Calib",
+  "frozen_stage4_orchard_eval_models": [
+    "B0_Native_YOLOv8n",
+    "B1_Full_DINOv2_125_Hard",
+    "C1_SingleScale_125_Calib",
+    "C3_DualScale_082_125_Calib"
+  ],
+  "anti_leakage_declaration": "全部模型权重与融合超参数仅由源域 SciDB train/val 锁定并记录 SHA-256；后续真实果园评测仅运行上述 4 个冻结模型，严禁根据测试表现回调参数。",
+  "seeds": {
+    "0": {
+      "seed": 0,
+      "checkpoints": {
+        "yolov8n_det": {
+          "path": "D:\\citrus_runs\\yolov8n_unified_seed0\\weights\\best.pt",
+          "sha256": "0e7fbde5e3fbf69af5bedf7d7346b0c92012c0ed595278112a2e6b5527d0955b"
+        },
+        "dinov2_lpft": {
+          "path": "D:\\新版柑橘\\方法推进_20261027\\纯CLS对照\\权重\\LP-FT_末1CLS_种子0_lr1e-05.pt",
+          "sha256": "cab2cbfbc3b57d52ce92c85c8ef716e1bd4f5cf75b3561490aa39cde3633f880"
+        },
+        "tcd_calib_stats": {
+          "path": "D:\\新版柑橘\\Antigravity_CGGAR_真创新攻关_20261125\\models\\cggar_v2_seed0.pt",
+          "sha256": "b277920fab8911f2cbee33bbd2ec4044d3f2fcf60d68584db9b751c5b264e49a"
+        },
+        "bgopta_calib_stats": {
+          "path": "D:\\新版柑橘\\Antigravity_BGOPTA_单趟正交Token攻关_20261126\\frozen_models\\bgopta_frozen_seed0.pt",
+          "sha256": "a282b4f2d1a2f480a76f61cc984c94f1675439e7d32531b02c8a5ebd3e2dfaf3"
+        }
+      },
+      "temperatures": {
+        "T_DET": 1.35,
+        "T_DINO": 1.15
+      },
+      "postprocess": {
+        "yolo_eval_conf_thr": 0.001,
+        "yolo_init_nms_iou": 0.7,
+        "yolo_max_det": 300,
+        "dino_hard_B1_conf_thr": 0.05,
+        "fusion_fg_conf_thr": 0.08,
+        "beta_score_reweight": 0.55,
+        "post_reclass_nms_iou": 0.7
+      },
+      "locked_fusion_params_from_scidb_val": {
+        "C1_SingleScale_125_weights_det_std": [
+          0.35,
+          0.65
+        ],
+        "C2_OOD_Pool_prior_det_std": [
+          0.35,
+          0.65
+        ],
+        "C2_gamma_ood": 0.35,
+        "C3_MainMethod_DualScale_scales": [
+          0.82,
+          1.25
+        ],
+        "C3_MainMethod_weights_det_core082_std125": [
+          0.3,
+          0.2,
+          0.5
+        ]
+      },
+      "offline_v4_reference_AP50_95": {
+        "C1": {
+          "val": 91.13,
+          "testB": 80.5,
+          "testC": 85.23
+        },
+        "C2": {
+          "val": 91.02,
+          "testB": 80.0,
+          "testC": 85.5
+        },
+        "C3": {
+          "val": 91.0,
+          "testB": 80.31,
+          "testC": 86.53
+        }
+      }
+    },
+    "1": {
+      "seed": 1,
+      "checkpoints": {
+        "yolov8n_det": {
+          "path": "D:\\citrus_runs\\yolov8n_unified_seed1\\weights\\best.pt",
+          "sha256": "e93b00ab5308b3084ec2ec73c523801898455a304d81dbc842d7502bc19aad30"
+        },
+        "dinov2_lpft": {
+          "path": "D:\\新版柑橘\\方法推进_20261027\\纯CLS对照\\权重\\LP-FT_末1CLS_种子1_lr1e-05.pt",
+          "sha256": "cee0eca54583c228f190f80398bdf466e2f748c6e0fc9b90eb63026aee0ea354"
+        },
+        "tcd_calib_stats": {
+          "path": "D:\\新版柑橘\\Antigravity_CGGAR_真创新攻关_20261125\\models\\cggar_v2_seed1.pt",
+          "sha256": "47842e4831017911daa4197b1b4442a16bb2f8d28478e747bd1e00d84c2e962b"
+        },
+        "bgopta_calib_stats": {
+          "path": "D:\\新版柑橘\\Antigravity_BGOPTA_单趟正交Token攻关_20261126\\frozen_models\\bgopta_frozen_seed1.pt",
+          "sha256": "1b21848b9cddafb9e944ab6acd62cff8c50d344d8969cee2d425423ea44a02ce"
+        }
+      },
+      "temperatures": {
+        "T_DET": 1.35,
+        "T_DINO": 1.15
+      },
+      "postprocess": {
+        "yolo_eval_conf_thr": 0.001,
+        "yolo_init_nms_iou": 0.7,
+        "yolo_max_det": 300,
+        "dino_hard_B1_conf_thr": 0.05,
+        "fusion_fg_conf_thr": 0.08,
+        "beta_score_reweight": 0.55,
+        "post_reclass_nms_iou": 0.7
+      },
+      "locked_fusion_params_from_scidb_val": {
+        "C1_SingleScale_125_weights_det_std": [
+          0.35,
+          0.65
+        ],
+        "C2_OOD_Pool_prior_det_std": [
+          0.35,
+          0.65
+        ],
+        "C2_gamma_ood": 0.15,
+        "C3_MainMethod_DualScale_scales": [
+          0.82,
+          1.25
+        ],
+        "C3_MainMethod_weights_det_core082_std125": [
+          0.3,
+          0.2,
+          0.5
+        ]
+      },
+      "offline_v4_reference_AP50_95": {
+        "C1": {
+          "val": 89.03,
+          "testB": 76.87,
+          "testC": 82.48
+        },
+        "C2": {
+          "val": 89.0,
+          "testB": 76.96,
+          "testC": 82.46
+        },
+        "C3": {
+          "val": 89.23,
+          "testB": 78.11,
+          "testC": 83.93
+        }
+      }
+    },
+    "2": {
+      "seed": 2,
+      "checkpoints": {
+        "yolov8n_det": {
+          "path": "D:\\citrus_runs\\yolov8n_unified_seed2\\weights\\best.pt",
+          "sha256": "cd86535ae8204994b229aace1e6ae5a117adfa363a3f4dd2f91c4d96d741b051"
+        },
+        "dinov2_lpft": {
+          "path": "D:\\新版柑橘\\方法推进_20261027\\纯CLS对照\\权重\\LP-FT_末1CLS_种子2_lr1e-05.pt",
+          "sha256": "b0cb2dcff9bb7f99c9fd044ef7fa9c598b626e93b42f8871c78e28c9b730b6b8"
+        },
+        "tcd_calib_stats": {
+          "path": "D:\\新版柑橘\\Antigravity_CGGAR_真创新攻关_20261125\\models\\cggar_v2_seed2.pt",
+          "sha256": "67557b6768837380474b93249e81fc0e7e8870fb8b0530d9225c0edde770c7ae"
+        },
+        "bgopta_calib_stats": {
+          "path": "D:\\新版柑橘\\Antigravity_BGOPTA_单趟正交Token攻关_20261126\\frozen_models\\bgopta_frozen_seed2.pt",
+          "sha256": "e959f69112485c2506e231a6fed8d9638dca396a6a2082797ba385b634a92f30"
+        }
+      },
+      "temperatures": {
+        "T_DET": 1.35,
+        "T_DINO": 1.15
+      },
+      "postprocess": {
+        "yolo_eval_conf_thr": 0.001,
+        "yolo_init_nms_iou": 0.7,
+        "yolo_max_det": 300,
+        "dino_hard_B1_conf_thr": 0.05,
+        "fusion_fg_conf_thr": 0.08,
+        "beta_score_reweight": 0.55,
+        "post_reclass_nms_iou": 0.7
+      },
+      "locked_fusion_params_from_scidb_val": {
+        "C1_SingleScale_125_weights_det_std": [
+          0.35,
+          0.65
+        ],
+        "C2_OOD_Pool_prior_det_std": [
+          0.35,
+          0.65
+        ],
+        "C2_gamma_ood": 0.35,
+        "C3_MainMethod_DualScale_scales": [
+          0.82,
+          1.25
+        ],
+        "C3_MainMethod_weights_det_core082_std125": [
+          0.3,
+          0.2,
+          0.5
+        ]
+      },
+      "offline_v4_reference_AP50_95": {
+        "C1": {
+          "val": 91.01,
+          "testB": 77.52,
+          "testC": 83.79
+        },
+        "C2": {
+          "val": 91.01,
+          "testB": 77.24,
+          "testC": 83.91
+        },
+        "C3": {
+          "val": 91.06,
+          "testB": 79.15,
+          "testC": 84.43
+        }
+      }
+    }
+  }
+}

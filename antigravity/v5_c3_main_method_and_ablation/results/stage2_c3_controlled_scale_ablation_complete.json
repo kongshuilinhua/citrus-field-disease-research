@@ -1,0 +1,3948 @@
+{
+  "stage": "Stage2_IsoWdet030_Controlled_Scale_Ablation_A1_to_A5_and_Fair_Latency",
+  "elapsed_seconds": 524.7,
+  "strict_fp32_env": {
+    "评测版本": "共同进程严格FP32_20261109",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121",
+    "ultralytics": "8.3.245",
+    "CUDA构建版本": "12.1",
+    "cuDNN版本": 90100,
+    "矩阵乘TF32": false,
+    "卷积TF32": false,
+    "cuDNN自动调优": false,
+    "float32矩阵乘策略": "highest"
+  },
+  "val_iso_wdet030_selected_weights_per_seed": {
+    "0": {
+      "A1_Single_125_Iso30": [
+        0.3,
+        0.7
+      ],
+      "A2_Single_082_Iso30": [
+        0.3,
+        0.7
+      ],
+      "A3_C3_Locked_082_125_Main": [
+        0.3,
+        0.2,
+        0.5
+      ],
+      "A3_Dual_082_125_Iso30_ValGrid": [
+        0.3,
+        0.1,
+        0.6
+      ],
+      "A4a_CloseDual_115_135_Iso30": [
+        0.3,
+        0.6,
+        0.1
+      ],
+      "A4b_FlipTTA_125_HFlip_Iso30": [
+        0.3,
+        0.5,
+        0.2
+      ],
+      "A5_TriScale_082_125_250_Iso30": [
+        0.3,
+        0.15,
+        0.45,
+        0.1
+      ]
+    },
+    "1": {
+      "A1_Single_125_Iso30": [
+        0.3,
+        0.7
+      ],
+      "A2_Single_082_Iso30": [
+        0.3,
+        0.7
+      ],
+      "A3_C3_Locked_082_125_Main": [
+        0.3,
+        0.2,
+        0.5
+      ],
+      "A3_Dual_082_125_Iso30_ValGrid": [
+        0.3,
+        0.2,
+        0.5
+      ],
+      "A4a_CloseDual_115_135_Iso30": [
+        0.3,
+        0.1,
+        0.6
+      ],
+      "A4b_FlipTTA_125_HFlip_Iso30": [
+        0.3,
+        0.25,
+        0.45
+      ],
+      "A5_TriScale_082_125_250_Iso30": [
+        0.3,
+        0.25,
+        0.35,
+        0.1
+      ]
+    },
+    "2": {
+      "A1_Single_125_Iso30": [
+        0.3,
+        0.7
+      ],
+      "A2_Single_082_Iso30": [
+        0.3,
+        0.7
+      ],
+      "A3_C3_Locked_082_125_Main": [
+        0.3,
+        0.2,
+        0.5
+      ],
+      "A3_Dual_082_125_Iso30_ValGrid": [
+        0.3,
+        0.1,
+        0.6
+      ],
+      "A4a_CloseDual_115_135_Iso30": [
+        0.3,
+        0.1,
+        0.6
+      ],
+      "A4b_FlipTTA_125_HFlip_Iso30": [
+        0.3,
+        0.55,
+        0.15
+      ],
+      "A5_TriScale_082_125_250_Iso30": [
+        0.3,
+        0.1,
+        0.5,
+        0.1
+      ]
+    }
+  },
+  "ablation_metrics_3seed": {
+    "B0_Native_YOLOv8n": {
+      "val": {
+        "AP50_95_mean": 89.78,
+        "AP50_95_std": 0.82,
+        "AP50_95_seeds": [
+          90.68,
+          89.06,
+          89.6
+        ],
+        "AP50_mean": 95.31,
+        "AP50_std": 0.81,
+        "AP50_seeds": [
+          96.24,
+          94.72,
+          94.98
+        ],
+        "Recall_IoU50_pct_mean": 99.77,
+        "Recall_IoU50_pct_std": 0.12,
+        "Recall_IoU50_pct_seeds": [
+          99.77,
+          99.88,
+          99.65
+        ],
+        "Matched_Top1_Acc_pct_mean": 98.23,
+        "Matched_Top1_Acc_pct_std": 0.82,
+        "Matched_Top1_Acc_pct_seeds": [
+          98.96,
+          98.39,
+          97.34
+        ],
+        "Matched_Top3_Acc_pct_mean": 99.96,
+        "Matched_Top3_Acc_pct_std": 0.07,
+        "Matched_Top3_Acc_pct_seeds": [
+          100.0,
+          100.0,
+          99.88
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.73,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.17,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.77,
+          99.88,
+          99.54
+        ]
+      },
+      "testB": {
+        "AP50_95_mean": 71.25,
+        "AP50_95_std": 4.12,
+        "AP50_95_seeds": [
+          74.06,
+          66.52,
+          73.16
+        ],
+        "AP50_mean": 78.69,
+        "AP50_std": 4.46,
+        "AP50_seeds": [
+          81.52,
+          73.55,
+          80.99
+        ],
+        "Recall_IoU50_pct_mean": 99.5,
+        "Recall_IoU50_pct_std": 0.33,
+        "Recall_IoU50_pct_seeds": [
+          99.17,
+          99.5,
+          99.83
+        ],
+        "Matched_Top1_Acc_pct_mean": 82.58,
+        "Matched_Top1_Acc_pct_std": 4.16,
+        "Matched_Top1_Acc_pct_seeds": [
+          84.59,
+          77.8,
+          85.36
+        ],
+        "Matched_Top3_Acc_pct_mean": 95.6,
+        "Matched_Top3_Acc_pct_std": 1.3,
+        "Matched_Top3_Acc_pct_seeds": [
+          95.98,
+          94.16,
+          96.67
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 95.13,
+        "MissPenalized_GT_Top3_Hit_pct_std": 1.41,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          95.18,
+          93.69,
+          96.51
+        ]
+      },
+      "testC": {
+        "AP50_95_mean": 72.77,
+        "AP50_95_std": 1.32,
+        "AP50_95_seeds": [
+          71.33,
+          73.93,
+          73.05
+        ],
+        "AP50_mean": 77.61,
+        "AP50_std": 1.43,
+        "AP50_seeds": [
+          75.98,
+          78.68,
+          78.16
+        ],
+        "Recall_IoU50_pct_mean": 99.44,
+        "Recall_IoU50_pct_std": 0.42,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          99.5,
+          99.0
+        ],
+        "Matched_Top1_Acc_pct_mean": 77.84,
+        "Matched_Top1_Acc_pct_std": 0.41,
+        "Matched_Top1_Acc_pct_seeds": [
+          77.7,
+          78.3,
+          77.52
+        ],
+        "Matched_Top3_Acc_pct_mean": 93.37,
+        "Matched_Top3_Acc_pct_std": 0.54,
+        "Matched_Top3_Acc_pct_seeds": [
+          93.01,
+          93.99,
+          93.12
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 92.86,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.67,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          92.86,
+          93.52,
+          92.19
+        ]
+      }
+    },
+    "B1_Full_DINOv2_125_Hard": {
+      "val": {
+        "AP50_95_mean": 89.77,
+        "AP50_95_std": 1.63,
+        "AP50_95_seeds": [
+          90.49,
+          87.91,
+          90.92
+        ],
+        "AP50_mean": 95.31,
+        "AP50_std": 1.54,
+        "AP50_seeds": [
+          96.04,
+          93.54,
+          96.35
+        ],
+        "Recall_IoU50_pct_mean": 99.77,
+        "Recall_IoU50_pct_std": 0.12,
+        "Recall_IoU50_pct_seeds": [
+          99.77,
+          99.88,
+          99.65
+        ],
+        "Matched_Top1_Acc_pct_mean": 98.92,
+        "Matched_Top1_Acc_pct_std": 0.37,
+        "Matched_Top1_Acc_pct_seeds": [
+          99.08,
+          98.5,
+          99.19
+        ],
+        "Matched_Top3_Acc_pct_mean": 100.0,
+        "Matched_Top3_Acc_pct_std": 0.0,
+        "Matched_Top3_Acc_pct_seeds": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.77,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.12,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.77,
+          99.88,
+          99.65
+        ]
+      },
+      "testB": {
+        "AP50_95_mean": 75.05,
+        "AP50_95_std": 2.37,
+        "AP50_95_seeds": [
+          77.72,
+          73.19,
+          74.24
+        ],
+        "AP50_mean": 82.83,
+        "AP50_std": 2.46,
+        "AP50_seeds": [
+          85.51,
+          80.68,
+          82.3
+        ],
+        "Recall_IoU50_pct_mean": 99.78,
+        "Recall_IoU50_pct_std": 0.25,
+        "Recall_IoU50_pct_seeds": [
+          99.5,
+          99.83,
+          100.0
+        ],
+        "Matched_Top1_Acc_pct_mean": 90.68,
+        "Matched_Top1_Acc_pct_std": 1.83,
+        "Matched_Top1_Acc_pct_seeds": [
+          92.65,
+          89.02,
+          90.37
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.11,
+        "Matched_Top3_Acc_pct_std": 0.47,
+        "Matched_Top3_Acc_pct_seeds": [
+          98.66,
+          97.84,
+          97.84
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 97.89,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.25,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          98.17,
+          97.67,
+          97.84
+        ]
+      },
+      "testC": {
+        "AP50_95_mean": 82.09,
+        "AP50_95_std": 2.9,
+        "AP50_95_seeds": [
+          85.43,
+          80.67,
+          80.18
+        ],
+        "AP50_mean": 87.75,
+        "AP50_std": 3.19,
+        "AP50_seeds": [
+          91.43,
+          85.99,
+          85.82
+        ],
+        "Recall_IoU50_pct_mean": 99.83,
+        "Recall_IoU50_pct_std": 0.0,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          99.83,
+          99.83
+        ],
+        "Matched_Top1_Acc_pct_mean": 90.79,
+        "Matched_Top1_Acc_pct_std": 2.55,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.68,
+          88.85,
+          89.85
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.23,
+        "Matched_Top3_Acc_pct_std": 0.77,
+        "Matched_Top3_Acc_pct_seeds": [
+          98.67,
+          98.67,
+          97.34
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.06,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.76,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          98.5,
+          98.5,
+          97.18
+        ]
+      }
+    },
+    "C1_Historical_125_035_065": {
+      "val": {
+        "AP50_95_mean": 90.39,
+        "AP50_95_std": 1.18,
+        "AP50_95_seeds": [
+          91.13,
+          89.03,
+          91.01
+        ],
+        "AP50_mean": 95.99,
+        "AP50_std": 1.08,
+        "AP50_seeds": [
+          96.74,
+          94.75,
+          96.48
+        ],
+        "Recall_IoU50_pct_mean": 99.92,
+        "Recall_IoU50_pct_std": 0.07,
+        "Recall_IoU50_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ],
+        "Matched_Top1_Acc_pct_mean": 99.15,
+        "Matched_Top1_Acc_pct_std": 0.24,
+        "Matched_Top1_Acc_pct_seeds": [
+          99.42,
+          98.96,
+          99.08
+        ],
+        "Matched_Top3_Acc_pct_mean": 100.0,
+        "Matched_Top3_Acc_pct_std": 0.0,
+        "Matched_Top3_Acc_pct_seeds": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.92,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.07,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ]
+      },
+      "testB": {
+        "AP50_95_mean": 78.3,
+        "AP50_95_std": 1.94,
+        "AP50_95_seeds": [
+          80.5,
+          76.87,
+          77.52
+        ],
+        "AP50_mean": 86.38,
+        "AP50_std": 1.92,
+        "AP50_seeds": [
+          88.5,
+          84.77,
+          85.86
+        ],
+        "Recall_IoU50_pct_mean": 99.94,
+        "Recall_IoU50_pct_std": 0.1,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          100.0,
+          100.0
+        ],
+        "Matched_Top1_Acc_pct_mean": 92.19,
+        "Matched_Top1_Acc_pct_std": 1.6,
+        "Matched_Top1_Acc_pct_seeds": [
+          94.01,
+          91.03,
+          91.53
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.78,
+        "Matched_Top3_Acc_pct_std": 0.26,
+        "Matched_Top3_Acc_pct_seeds": [
+          98.5,
+          99.0,
+          98.84
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.73,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.34,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          98.34,
+          99.0,
+          98.84
+        ]
+      },
+      "testC": {
+        "AP50_95_mean": 83.83,
+        "AP50_95_std": 1.38,
+        "AP50_95_seeds": [
+          85.23,
+          82.48,
+          83.79
+        ],
+        "AP50_mean": 89.56,
+        "AP50_std": 1.71,
+        "AP50_seeds": [
+          91.21,
+          87.79,
+          89.67
+        ],
+        "Recall_IoU50_pct_mean": 99.78,
+        "Recall_IoU50_pct_std": 0.09,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          99.83,
+          99.67
+        ],
+        "Matched_Top1_Acc_pct_mean": 91.06,
+        "Matched_Top1_Acc_pct_std": 1.71,
+        "Matched_Top1_Acc_pct_seeds": [
+          92.51,
+          89.18,
+          91.5
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.84,
+        "Matched_Top3_Acc_pct_std": 0.67,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.5,
+          98.84,
+          98.17
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.62,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.75,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.34,
+          98.67,
+          97.84
+        ]
+      }
+    },
+    "A1_Single_125_Iso30": {
+      "val": {
+        "AP50_95_mean": 90.35,
+        "AP50_95_std": 1.14,
+        "AP50_95_seeds": [
+          91.01,
+          89.03,
+          91.01
+        ],
+        "AP50_mean": 95.95,
+        "AP50_std": 1.04,
+        "AP50_seeds": [
+          96.61,
+          94.75,
+          96.48
+        ],
+        "Recall_IoU50_pct_mean": 99.92,
+        "Recall_IoU50_pct_std": 0.07,
+        "Recall_IoU50_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ],
+        "Matched_Top1_Acc_pct_mean": 99.15,
+        "Matched_Top1_Acc_pct_std": 0.24,
+        "Matched_Top1_Acc_pct_seeds": [
+          99.42,
+          98.96,
+          99.08
+        ],
+        "Matched_Top3_Acc_pct_mean": 100.0,
+        "Matched_Top3_Acc_pct_std": 0.0,
+        "Matched_Top3_Acc_pct_seeds": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.92,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.07,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ]
+      },
+      "testB": {
+        "AP50_95_mean": 78.08,
+        "AP50_95_std": 1.91,
+        "AP50_95_seeds": [
+          80.26,
+          76.67,
+          77.32
+        ],
+        "AP50_mean": 86.15,
+        "AP50_std": 1.87,
+        "AP50_seeds": [
+          88.23,
+          84.61,
+          85.62
+        ],
+        "Recall_IoU50_pct_mean": 99.94,
+        "Recall_IoU50_pct_std": 0.1,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          100.0,
+          100.0
+        ],
+        "Matched_Top1_Acc_pct_mean": 92.08,
+        "Matched_Top1_Acc_pct_std": 1.56,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.84,
+          90.86,
+          91.53
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.73,
+        "Matched_Top3_Acc_pct_std": 0.2,
+        "Matched_Top3_Acc_pct_seeds": [
+          98.5,
+          98.84,
+          98.84
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.67,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.29,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          98.34,
+          98.84,
+          98.84
+        ]
+      },
+      "testC": {
+        "AP50_95_mean": 84.29,
+        "AP50_95_std": 1.82,
+        "AP50_95_seeds": [
+          86.25,
+          82.64,
+          83.98
+        ],
+        "AP50_mean": 90.07,
+        "AP50_std": 2.17,
+        "AP50_seeds": [
+          92.31,
+          87.98,
+          89.92
+        ],
+        "Recall_IoU50_pct_mean": 99.78,
+        "Recall_IoU50_pct_std": 0.09,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          99.83,
+          99.67
+        ],
+        "Matched_Top1_Acc_pct_mean": 91.62,
+        "Matched_Top1_Acc_pct_std": 2.0,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.51,
+          89.52,
+          91.83
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.67,
+        "Matched_Top3_Acc_pct_std": 0.67,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.33,
+          98.67,
+          98.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.45,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.75,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.17,
+          98.5,
+          97.67
+        ]
+      }
+    },
+    "A2_Single_082_Iso30": {
+      "val": {
+        "AP50_95_mean": 89.49,
+        "AP50_95_std": 1.0,
+        "AP50_95_seeds": [
+          90.31,
+          88.38,
+          89.78
+        ],
+        "AP50_mean": 95.03,
+        "AP50_std": 0.93,
+        "AP50_seeds": [
+          95.89,
+          94.05,
+          95.16
+        ],
+        "Recall_IoU50_pct_mean": 99.92,
+        "Recall_IoU50_pct_std": 0.07,
+        "Recall_IoU50_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ],
+        "Matched_Top1_Acc_pct_mean": 98.54,
+        "Matched_Top1_Acc_pct_std": 0.29,
+        "Matched_Top1_Acc_pct_seeds": [
+          98.85,
+          98.5,
+          98.27
+        ],
+        "Matched_Top3_Acc_pct_mean": 100.0,
+        "Matched_Top3_Acc_pct_std": 0.0,
+        "Matched_Top3_Acc_pct_seeds": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.92,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.07,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ]
+      },
+      "testB": {
+        "AP50_95_mean": 77.78,
+        "AP50_95_std": 1.77,
+        "AP50_95_seeds": [
+          79.28,
+          75.82,
+          78.23
+        ],
+        "AP50_mean": 85.78,
+        "AP50_std": 1.96,
+        "AP50_seeds": [
+          87.22,
+          83.54,
+          86.57
+        ],
+        "Recall_IoU50_pct_mean": 99.94,
+        "Recall_IoU50_pct_std": 0.1,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          100.0,
+          100.0
+        ],
+        "Matched_Top1_Acc_pct_mean": 92.13,
+        "Matched_Top1_Acc_pct_std": 1.45,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.34,
+          90.53,
+          92.52
+        ],
+        "Matched_Top3_Acc_pct_mean": 99.23,
+        "Matched_Top3_Acc_pct_std": 0.34,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.5,
+          98.84,
+          99.34
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.17,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.29,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.34,
+          98.84,
+          99.34
+        ]
+      },
+      "testC": {
+        "AP50_95_mean": 82.47,
+        "AP50_95_std": 1.15,
+        "AP50_95_seeds": [
+          83.8,
+          81.78,
+          81.82
+        ],
+        "AP50_mean": 88.08,
+        "AP50_std": 1.38,
+        "AP50_seeds": [
+          89.63,
+          87.0,
+          87.61
+        ],
+        "Recall_IoU50_pct_mean": 99.78,
+        "Recall_IoU50_pct_std": 0.09,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          99.83,
+          99.67
+        ],
+        "Matched_Top1_Acc_pct_mean": 90.07,
+        "Matched_Top1_Acc_pct_std": 1.18,
+        "Matched_Top1_Acc_pct_seeds": [
+          91.35,
+          89.02,
+          89.83
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.83,
+        "Matched_Top3_Acc_pct_std": 0.34,
+        "Matched_Top3_Acc_pct_seeds": [
+          98.5,
+          99.17,
+          98.83
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.61,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.34,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          98.34,
+          99.0,
+          98.5
+        ]
+      }
+    },
+    "A3_C3_Locked_082_125_Main": {
+      "val": {
+        "AP50_95_mean": 90.43,
+        "AP50_95_std": 1.04,
+        "AP50_95_seeds": [
+          91.0,
+          89.23,
+          91.06
+        ],
+        "AP50_mean": 96.04,
+        "AP50_std": 0.94,
+        "AP50_seeds": [
+          96.6,
+          94.96,
+          96.56
+        ],
+        "Recall_IoU50_pct_mean": 99.92,
+        "Recall_IoU50_pct_std": 0.07,
+        "Recall_IoU50_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ],
+        "Matched_Top1_Acc_pct_mean": 99.23,
+        "Matched_Top1_Acc_pct_std": 0.17,
+        "Matched_Top1_Acc_pct_seeds": [
+          99.42,
+          99.19,
+          99.08
+        ],
+        "Matched_Top3_Acc_pct_mean": 100.0,
+        "Matched_Top3_Acc_pct_std": 0.0,
+        "Matched_Top3_Acc_pct_seeds": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.92,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.07,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ]
+      },
+      "testB": {
+        "AP50_95_mean": 79.19,
+        "AP50_95_std": 1.1,
+        "AP50_95_seeds": [
+          80.31,
+          78.11,
+          79.15
+        ],
+        "AP50_mean": 87.36,
+        "AP50_std": 1.11,
+        "AP50_seeds": [
+          88.34,
+          86.15,
+          87.6
+        ],
+        "Recall_IoU50_pct_mean": 99.94,
+        "Recall_IoU50_pct_std": 0.1,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          100.0,
+          100.0
+        ],
+        "Matched_Top1_Acc_pct_mean": 93.19,
+        "Matched_Top1_Acc_pct_std": 0.6,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.68,
+          92.52,
+          93.36
+        ],
+        "Matched_Top3_Acc_pct_mean": 99.06,
+        "Matched_Top3_Acc_pct_std": 0.19,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.17,
+          99.17,
+          98.84
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.0,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.17,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.0,
+          99.17,
+          98.84
+        ]
+      },
+      "testC": {
+        "AP50_95_mean": 84.96,
+        "AP50_95_std": 1.38,
+        "AP50_95_seeds": [
+          86.53,
+          83.93,
+          84.43
+        ],
+        "AP50_mean": 90.77,
+        "AP50_std": 1.68,
+        "AP50_seeds": [
+          92.61,
+          89.33,
+          90.37
+        ],
+        "Recall_IoU50_pct_mean": 99.78,
+        "Recall_IoU50_pct_std": 0.09,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          99.83,
+          99.67
+        ],
+        "Matched_Top1_Acc_pct_mean": 92.34,
+        "Matched_Top1_Acc_pct_std": 1.67,
+        "Matched_Top1_Acc_pct_seeds": [
+          94.01,
+          90.68,
+          92.33
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.89,
+        "Matched_Top3_Acc_pct_std": 0.67,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.5,
+          99.0,
+          98.17
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.67,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.76,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.34,
+          98.84,
+          97.84
+        ]
+      }
+    },
+    "A3_Dual_082_125_Iso30_ValGrid": {
+      "val": {
+        "AP50_95_mean": 90.46,
+        "AP50_95_std": 1.06,
+        "AP50_95_seeds": [
+          91.03,
+          89.23,
+          91.11
+        ],
+        "AP50_mean": 96.06,
+        "AP50_std": 0.95,
+        "AP50_seeds": [
+          96.62,
+          94.96,
+          96.59
+        ],
+        "Recall_IoU50_pct_mean": 99.92,
+        "Recall_IoU50_pct_std": 0.07,
+        "Recall_IoU50_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ],
+        "Matched_Top1_Acc_pct_mean": 99.27,
+        "Matched_Top1_Acc_pct_std": 0.13,
+        "Matched_Top1_Acc_pct_seeds": [
+          99.42,
+          99.19,
+          99.19
+        ],
+        "Matched_Top3_Acc_pct_mean": 100.0,
+        "Matched_Top3_Acc_pct_std": 0.0,
+        "Matched_Top3_Acc_pct_seeds": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.92,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.07,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ]
+      },
+      "testB": {
+        "AP50_95_mean": 78.93,
+        "AP50_95_std": 1.25,
+        "AP50_95_seeds": [
+          80.37,
+          78.11,
+          78.32
+        ],
+        "AP50_mean": 87.1,
+        "AP50_std": 1.18,
+        "AP50_seeds": [
+          88.43,
+          86.15,
+          86.73
+        ],
+        "Recall_IoU50_pct_mean": 99.94,
+        "Recall_IoU50_pct_std": 0.1,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          100.0,
+          100.0
+        ],
+        "Matched_Top1_Acc_pct_mean": 92.91,
+        "Matched_Top1_Acc_pct_std": 0.81,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.84,
+          92.52,
+          92.36
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.89,
+        "Matched_Top3_Acc_pct_std": 0.25,
+        "Matched_Top3_Acc_pct_seeds": [
+          98.67,
+          99.17,
+          98.84
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.84,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.34,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          98.5,
+          99.17,
+          98.84
+        ]
+      },
+      "testC": {
+        "AP50_95_mean": 84.76,
+        "AP50_95_std": 1.06,
+        "AP50_95_seeds": [
+          85.95,
+          83.93,
+          84.39
+        ],
+        "AP50_mean": 90.54,
+        "AP50_std": 1.33,
+        "AP50_seeds": [
+          91.97,
+          89.33,
+          90.33
+        ],
+        "Recall_IoU50_pct_mean": 99.78,
+        "Recall_IoU50_pct_std": 0.09,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          99.83,
+          99.67
+        ],
+        "Matched_Top1_Acc_pct_mean": 92.01,
+        "Matched_Top1_Acc_pct_std": 1.26,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.18,
+          90.68,
+          92.17
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.94,
+        "Matched_Top3_Acc_pct_std": 0.59,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.5,
+          99.0,
+          98.33
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.73,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.67,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.34,
+          98.84,
+          98.01
+        ]
+      }
+    },
+    "A3_Dual_082_125_Iso30_Equal": {
+      "val": {
+        "AP50_95_mean": 90.3,
+        "AP50_95_std": 1.06,
+        "AP50_95_seeds": [
+          90.99,
+          89.08,
+          90.83
+        ],
+        "AP50_mean": 95.9,
+        "AP50_std": 0.98,
+        "AP50_seeds": [
+          96.61,
+          94.79,
+          96.31
+        ],
+        "Recall_IoU50_pct_mean": 99.92,
+        "Recall_IoU50_pct_std": 0.07,
+        "Recall_IoU50_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ],
+        "Matched_Top1_Acc_pct_mean": 99.19,
+        "Matched_Top1_Acc_pct_std": 0.2,
+        "Matched_Top1_Acc_pct_seeds": [
+          99.42,
+          99.08,
+          99.08
+        ],
+        "Matched_Top3_Acc_pct_mean": 100.0,
+        "Matched_Top3_Acc_pct_std": 0.0,
+        "Matched_Top3_Acc_pct_seeds": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.92,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.07,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ]
+      },
+      "testB": {
+        "AP50_95_mean": 78.83,
+        "AP50_95_std": 1.58,
+        "AP50_95_seeds": [
+          80.49,
+          77.34,
+          78.67
+        ],
+        "AP50_mean": 86.95,
+        "AP50_std": 1.65,
+        "AP50_seeds": [
+          88.54,
+          85.25,
+          87.06
+        ],
+        "Recall_IoU50_pct_mean": 99.94,
+        "Recall_IoU50_pct_std": 0.1,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          100.0,
+          100.0
+        ],
+        "Matched_Top1_Acc_pct_mean": 92.91,
+        "Matched_Top1_Acc_pct_std": 1.34,
+        "Matched_Top1_Acc_pct_seeds": [
+          94.34,
+          91.69,
+          92.69
+        ],
+        "Matched_Top3_Acc_pct_mean": 99.06,
+        "Matched_Top3_Acc_pct_std": 0.25,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.33,
+          99.0,
+          98.84
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.0,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.17,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.17,
+          99.0,
+          98.84
+        ]
+      },
+      "testC": {
+        "AP50_95_mean": 84.58,
+        "AP50_95_std": 1.05,
+        "AP50_95_seeds": [
+          85.76,
+          84.22,
+          83.76
+        ],
+        "AP50_mean": 90.34,
+        "AP50_std": 1.24,
+        "AP50_seeds": [
+          91.77,
+          89.57,
+          89.69
+        ],
+        "Recall_IoU50_pct_mean": 99.78,
+        "Recall_IoU50_pct_std": 0.09,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          99.83,
+          99.67
+        ],
+        "Matched_Top1_Acc_pct_mean": 91.9,
+        "Matched_Top1_Acc_pct_std": 1.14,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.18,
+          91.01,
+          91.5
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.95,
+        "Matched_Top3_Acc_pct_std": 0.75,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.67,
+          99.0,
+          98.17
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.73,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.84,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.5,
+          98.84,
+          97.84
+        ]
+      }
+    },
+    "A4a_CloseDual_115_135_Iso30_ValGrid": {
+      "val": {
+        "AP50_95_mean": 90.61,
+        "AP50_95_std": 0.93,
+        "AP50_95_seeds": [
+          91.16,
+          89.54,
+          91.14
+        ],
+        "AP50_mean": 96.23,
+        "AP50_std": 0.82,
+        "AP50_seeds": [
+          96.77,
+          95.28,
+          96.63
+        ],
+        "Recall_IoU50_pct_mean": 99.92,
+        "Recall_IoU50_pct_std": 0.07,
+        "Recall_IoU50_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ],
+        "Matched_Top1_Acc_pct_mean": 99.31,
+        "Matched_Top1_Acc_pct_std": 0.12,
+        "Matched_Top1_Acc_pct_seeds": [
+          99.42,
+          99.31,
+          99.19
+        ],
+        "Matched_Top3_Acc_pct_mean": 100.0,
+        "Matched_Top3_Acc_pct_std": 0.0,
+        "Matched_Top3_Acc_pct_seeds": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.92,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.07,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ]
+      },
+      "testB": {
+        "AP50_95_mean": 77.7,
+        "AP50_95_std": 1.89,
+        "AP50_95_seeds": [
+          79.87,
+          76.45,
+          76.77
+        ],
+        "AP50_mean": 85.72,
+        "AP50_std": 1.89,
+        "AP50_seeds": [
+          87.86,
+          84.28,
+          85.02
+        ],
+        "Recall_IoU50_pct_mean": 99.94,
+        "Recall_IoU50_pct_std": 0.1,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          100.0,
+          100.0
+        ],
+        "Matched_Top1_Acc_pct_mean": 91.64,
+        "Matched_Top1_Acc_pct_std": 1.77,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.68,
+          90.53,
+          90.7
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.62,
+        "Matched_Top3_Acc_pct_std": 0.25,
+        "Matched_Top3_Acc_pct_seeds": [
+          98.84,
+          98.67,
+          98.34
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.56,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.19,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          98.67,
+          98.67,
+          98.34
+        ]
+      },
+      "testC": {
+        "AP50_95_mean": 84.0,
+        "AP50_95_std": 1.72,
+        "AP50_95_seeds": [
+          85.99,
+          83.06,
+          82.95
+        ],
+        "AP50_mean": 89.75,
+        "AP50_std": 1.99,
+        "AP50_seeds": [
+          92.04,
+          88.4,
+          88.81
+        ],
+        "Recall_IoU50_pct_mean": 99.78,
+        "Recall_IoU50_pct_std": 0.09,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          99.83,
+          99.67
+        ],
+        "Matched_Top1_Acc_pct_mean": 91.51,
+        "Matched_Top1_Acc_pct_std": 1.92,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.68,
+          90.02,
+          90.83
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.61,
+        "Matched_Top3_Acc_pct_std": 1.02,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.5,
+          98.84,
+          97.5
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.4,
+        "MissPenalized_GT_Top3_Hit_pct_std": 1.11,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.34,
+          98.67,
+          97.18
+        ]
+      }
+    },
+    "A4a_CloseDual_115_135_Iso30_Equal": {
+      "val": {
+        "AP50_95_mean": 90.4,
+        "AP50_95_std": 0.85,
+        "AP50_95_seeds": [
+          90.88,
+          89.42,
+          90.9
+        ],
+        "AP50_mean": 96.0,
+        "AP50_std": 0.73,
+        "AP50_seeds": [
+          96.46,
+          95.15,
+          96.38
+        ],
+        "Recall_IoU50_pct_mean": 99.92,
+        "Recall_IoU50_pct_std": 0.07,
+        "Recall_IoU50_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ],
+        "Matched_Top1_Acc_pct_mean": 99.27,
+        "Matched_Top1_Acc_pct_std": 0.07,
+        "Matched_Top1_Acc_pct_seeds": [
+          99.31,
+          99.31,
+          99.19
+        ],
+        "Matched_Top3_Acc_pct_mean": 100.0,
+        "Matched_Top3_Acc_pct_std": 0.0,
+        "Matched_Top3_Acc_pct_seeds": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.92,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.07,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ]
+      },
+      "testB": {
+        "AP50_95_mean": 77.86,
+        "AP50_95_std": 1.51,
+        "AP50_95_seeds": [
+          79.58,
+          76.74,
+          77.27
+        ],
+        "AP50_mean": 85.91,
+        "AP50_std": 1.47,
+        "AP50_seeds": [
+          87.52,
+          84.64,
+          85.56
+        ],
+        "Recall_IoU50_pct_mean": 99.94,
+        "Recall_IoU50_pct_std": 0.1,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          100.0,
+          100.0
+        ],
+        "Matched_Top1_Acc_pct_mean": 91.91,
+        "Matched_Top1_Acc_pct_std": 1.18,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.18,
+          90.86,
+          91.69
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.45,
+        "Matched_Top3_Acc_pct_std": 0.09,
+        "Matched_Top3_Acc_pct_seeds": [
+          98.5,
+          98.5,
+          98.34
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.39,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.09,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          98.34,
+          98.5,
+          98.34
+        ]
+      },
+      "testC": {
+        "AP50_95_mean": 84.5,
+        "AP50_95_std": 1.59,
+        "AP50_95_seeds": [
+          86.26,
+          84.1,
+          83.15
+        ],
+        "AP50_mean": 90.27,
+        "AP50_std": 1.72,
+        "AP50_seeds": [
+          92.24,
+          89.53,
+          89.05
+        ],
+        "Recall_IoU50_pct_mean": 99.78,
+        "Recall_IoU50_pct_std": 0.09,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          99.83,
+          99.67
+        ],
+        "Matched_Top1_Acc_pct_mean": 92.01,
+        "Matched_Top1_Acc_pct_std": 1.59,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.84,
+          91.01,
+          91.17
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.5,
+        "Matched_Top3_Acc_pct_std": 0.88,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.17,
+          98.84,
+          97.5
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.28,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.97,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.0,
+          98.67,
+          97.18
+        ]
+      }
+    },
+    "A4b_FlipTTA_125_HFlip_Iso30_ValGrid": {
+      "val": {
+        "AP50_95_mean": 90.57,
+        "AP50_95_std": 0.87,
+        "AP50_95_seeds": [
+          91.02,
+          89.57,
+          91.13
+        ],
+        "AP50_mean": 96.19,
+        "AP50_std": 0.74,
+        "AP50_seeds": [
+          96.61,
+          95.33,
+          96.62
+        ],
+        "Recall_IoU50_pct_mean": 99.92,
+        "Recall_IoU50_pct_std": 0.07,
+        "Recall_IoU50_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ],
+        "Matched_Top1_Acc_pct_mean": 99.34,
+        "Matched_Top1_Acc_pct_std": 0.13,
+        "Matched_Top1_Acc_pct_seeds": [
+          99.42,
+          99.42,
+          99.19
+        ],
+        "Matched_Top3_Acc_pct_mean": 100.0,
+        "Matched_Top3_Acc_pct_std": 0.0,
+        "Matched_Top3_Acc_pct_seeds": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.92,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.07,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ]
+      },
+      "testB": {
+        "AP50_95_mean": 77.8,
+        "AP50_95_std": 1.56,
+        "AP50_95_seeds": [
+          79.58,
+          76.66,
+          77.16
+        ],
+        "AP50_mean": 85.81,
+        "AP50_std": 1.54,
+        "AP50_seeds": [
+          87.51,
+          84.51,
+          85.41
+        ],
+        "Recall_IoU50_pct_mean": 99.94,
+        "Recall_IoU50_pct_std": 0.1,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          100.0,
+          100.0
+        ],
+        "Matched_Top1_Acc_pct_mean": 91.69,
+        "Matched_Top1_Acc_pct_std": 1.04,
+        "Matched_Top1_Acc_pct_seeds": [
+          92.85,
+          90.86,
+          91.36
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.78,
+        "Matched_Top3_Acc_pct_std": 0.1,
+        "Matched_Top3_Acc_pct_seeds": [
+          98.67,
+          98.84,
+          98.84
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.73,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.2,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          98.5,
+          98.84,
+          98.84
+        ]
+      },
+      "testC": {
+        "AP50_95_mean": 84.62,
+        "AP50_95_std": 1.51,
+        "AP50_95_seeds": [
+          86.36,
+          83.77,
+          83.73
+        ],
+        "AP50_mean": 90.38,
+        "AP50_std": 1.7,
+        "AP50_seeds": [
+          92.32,
+          89.17,
+          89.64
+        ],
+        "Recall_IoU50_pct_mean": 99.78,
+        "Recall_IoU50_pct_std": 0.09,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          99.83,
+          99.67
+        ],
+        "Matched_Top1_Acc_pct_mean": 91.95,
+        "Matched_Top1_Acc_pct_std": 1.71,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.84,
+          90.52,
+          91.5
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.89,
+        "Matched_Top3_Acc_pct_std": 0.77,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.33,
+          99.33,
+          98.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.67,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.87,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.17,
+          99.17,
+          97.67
+        ]
+      }
+    },
+    "A5_TriScale_082_125_250_Iso30_ValGrid": {
+      "val": {
+        "AP50_95_mean": 90.47,
+        "AP50_95_std": 1.1,
+        "AP50_95_seeds": [
+          91.0,
+          89.21,
+          91.21
+        ],
+        "AP50_mean": 96.08,
+        "AP50_std": 1.0,
+        "AP50_seeds": [
+          96.6,
+          94.93,
+          96.71
+        ],
+        "Recall_IoU50_pct_mean": 99.92,
+        "Recall_IoU50_pct_std": 0.07,
+        "Recall_IoU50_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ],
+        "Matched_Top1_Acc_pct_mean": 99.31,
+        "Matched_Top1_Acc_pct_std": 0.12,
+        "Matched_Top1_Acc_pct_seeds": [
+          99.42,
+          99.19,
+          99.31
+        ],
+        "Matched_Top3_Acc_pct_mean": 100.0,
+        "Matched_Top3_Acc_pct_std": 0.0,
+        "Matched_Top3_Acc_pct_seeds": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.92,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.07,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ]
+      },
+      "testB": {
+        "AP50_95_mean": 78.94,
+        "AP50_95_std": 1.34,
+        "AP50_95_seeds": [
+          80.47,
+          77.97,
+          78.37
+        ],
+        "AP50_mean": 87.08,
+        "AP50_std": 1.3,
+        "AP50_seeds": [
+          88.51,
+          85.98,
+          86.76
+        ],
+        "Recall_IoU50_pct_mean": 99.94,
+        "Recall_IoU50_pct_std": 0.1,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          100.0,
+          100.0
+        ],
+        "Matched_Top1_Acc_pct_mean": 92.8,
+        "Matched_Top1_Acc_pct_std": 0.76,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.68,
+          92.36,
+          92.36
+        ],
+        "Matched_Top3_Acc_pct_mean": 99.12,
+        "Matched_Top3_Acc_pct_std": 0.25,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.17,
+          99.34,
+          98.84
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.06,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.26,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.0,
+          99.34,
+          98.84
+        ]
+      },
+      "testC": {
+        "AP50_95_mean": 84.48,
+        "AP50_95_std": 1.39,
+        "AP50_95_seeds": [
+          86.05,
+          83.39,
+          84.0
+        ],
+        "AP50_mean": 90.24,
+        "AP50_std": 1.67,
+        "AP50_seeds": [
+          92.06,
+          88.77,
+          89.9
+        ],
+        "Recall_IoU50_pct_mean": 99.78,
+        "Recall_IoU50_pct_std": 0.09,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          99.83,
+          99.67
+        ],
+        "Matched_Top1_Acc_pct_mean": 91.79,
+        "Matched_Top1_Acc_pct_std": 1.5,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.34,
+          90.35,
+          91.67
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.83,
+        "Matched_Top3_Acc_pct_std": 0.76,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.5,
+          99.0,
+          98.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.62,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.86,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.34,
+          98.84,
+          97.67
+        ]
+      }
+    },
+    "A5_TriScale_082_125_250_Iso30_Equal": {
+      "val": {
+        "AP50_95_mean": 90.19,
+        "AP50_95_std": 1.15,
+        "AP50_95_seeds": [
+          90.99,
+          88.87,
+          90.72
+        ],
+        "AP50_mean": 95.78,
+        "AP50_std": 1.07,
+        "AP50_seeds": [
+          96.58,
+          94.57,
+          96.2
+        ],
+        "Recall_IoU50_pct_mean": 99.92,
+        "Recall_IoU50_pct_std": 0.07,
+        "Recall_IoU50_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ],
+        "Matched_Top1_Acc_pct_mean": 99.15,
+        "Matched_Top1_Acc_pct_std": 0.24,
+        "Matched_Top1_Acc_pct_seeds": [
+          99.42,
+          98.96,
+          99.08
+        ],
+        "Matched_Top3_Acc_pct_mean": 100.0,
+        "Matched_Top3_Acc_pct_std": 0.0,
+        "Matched_Top3_Acc_pct_seeds": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 99.92,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.07,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.88,
+          100.0,
+          99.88
+        ]
+      },
+      "testB": {
+        "AP50_95_mean": 78.73,
+        "AP50_95_std": 1.36,
+        "AP50_95_seeds": [
+          80.05,
+          77.34,
+          78.81
+        ],
+        "AP50_mean": 86.85,
+        "AP50_std": 1.43,
+        "AP50_seeds": [
+          88.04,
+          85.26,
+          87.25
+        ],
+        "Recall_IoU50_pct_mean": 99.94,
+        "Recall_IoU50_pct_std": 0.1,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          100.0,
+          100.0
+        ],
+        "Matched_Top1_Acc_pct_mean": 92.69,
+        "Matched_Top1_Acc_pct_std": 1.2,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.68,
+          91.36,
+          93.02
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.89,
+        "Matched_Top3_Acc_pct_std": 0.09,
+        "Matched_Top3_Acc_pct_seeds": [
+          98.84,
+          98.84,
+          99.0
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.84,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.17,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          98.67,
+          98.84,
+          99.0
+        ]
+      },
+      "testC": {
+        "AP50_95_mean": 83.93,
+        "AP50_95_std": 1.86,
+        "AP50_95_seeds": [
+          86.08,
+          82.74,
+          82.98
+        ],
+        "AP50_mean": 89.65,
+        "AP50_std": 2.16,
+        "AP50_seeds": [
+          92.09,
+          88.0,
+          88.85
+        ],
+        "Recall_IoU50_pct_mean": 99.78,
+        "Recall_IoU50_pct_std": 0.09,
+        "Recall_IoU50_pct_seeds": [
+          99.83,
+          99.83,
+          99.67
+        ],
+        "Matched_Top1_Acc_pct_mean": 91.29,
+        "Matched_Top1_Acc_pct_std": 1.82,
+        "Matched_Top1_Acc_pct_seeds": [
+          93.34,
+          89.85,
+          90.67
+        ],
+        "Matched_Top3_Acc_pct_mean": 98.67,
+        "Matched_Top3_Acc_pct_std": 0.76,
+        "Matched_Top3_Acc_pct_seeds": [
+          99.33,
+          98.84,
+          97.83
+        ],
+        "MissPenalized_GT_Top3_Hit_pct_mean": 98.45,
+        "MissPenalized_GT_Top3_Hit_pct_std": 0.85,
+        "MissPenalized_GT_Top3_Hit_pct_seeds": [
+          99.17,
+          98.67,
+          97.51
+        ]
+      }
+    }
+  },
+  "paired_bootstrap_1000_results": {
+    "val": {
+      "A3_C3_Locked_082_125_Main__minus__A1_Single_125_Iso30": {
+        "AP50_95": {
+          "mean_diff_3seed": 0.079,
+          "ci95_3seed": [
+            -0.118,
+            0.285
+          ],
+          "p_value_two_sided": 0.44,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.001,
+            0.223,
+            0.015
+          ],
+          "per_seed_ci95": [
+            [
+              -0.062,
+              0.061
+            ],
+            [
+              -0.265,
+              0.769
+            ],
+            [
+              -0.284,
+              0.347
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 0.087,
+          "ci95_3seed": [
+            -0.12,
+            0.308
+          ],
+          "p_value_two_sided": 0.422,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.002,
+            0.236,
+            0.028
+          ],
+          "per_seed_ci95": [
+            [
+              -0.068,
+              0.07
+            ],
+            [
+              -0.269,
+              0.823
+            ],
+            [
+              -0.287,
+              0.379
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__C1_Historical_125_035_065": {
+        "AP50_95": {
+          "mean_diff_3seed": 0.045,
+          "ci95_3seed": [
+            -0.173,
+            0.258
+          ],
+          "p_value_two_sided": 0.708,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.114,
+            0.231,
+            0.017
+          ],
+          "per_seed_ci95": [
+            [
+              -0.419,
+              0.053
+            ],
+            [
+              -0.252,
+              0.784
+            ],
+            [
+              -0.287,
+              0.36
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 0.049,
+          "ci95_3seed": [
+            -0.186,
+            0.269
+          ],
+          "p_value_two_sided": 0.69,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.129,
+            0.246,
+            0.03
+          ],
+          "per_seed_ci95": [
+            [
+              -0.476,
+              0.056
+            ],
+            [
+              -0.269,
+              0.833
+            ],
+            [
+              -0.286,
+              0.379
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__A2_Single_082_Iso30": {
+        "AP50_95": {
+          "mean_diff_3seed": 0.953,
+          "ci95_3seed": [
+            0.55,
+            1.369
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.737,
+            0.861,
+            1.263
+          ],
+          "per_seed_ci95": [
+            [
+              0.086,
+              1.438
+            ],
+            [
+              0.314,
+              1.483
+            ],
+            [
+              0.505,
+              2.12
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 1.017,
+          "ci95_3seed": [
+            0.609,
+            1.456
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.762,
+            0.925,
+            1.365
+          ],
+          "per_seed_ci95": [
+            [
+              0.096,
+              1.49
+            ],
+            [
+              0.332,
+              1.591
+            ],
+            [
+              0.557,
+              2.286
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__A4a_CloseDual_115_135_Iso30_ValGrid": {
+        "AP50_95": {
+          "mean_diff_3seed": -0.176,
+          "ci95_3seed": [
+            -0.398,
+            0.042
+          ],
+          "p_value_two_sided": 0.112,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.142,
+            -0.28,
+            -0.106
+          ],
+          "per_seed_ci95": [
+            [
+              -0.446,
+              0.005
+            ],
+            [
+              -0.629,
+              0.007
+            ],
+            [
+              -0.617,
+              0.476
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": -0.186,
+          "ci95_3seed": [
+            -0.42,
+            0.038
+          ],
+          "p_value_two_sided": 0.116,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.155,
+            -0.293,
+            -0.11
+          ],
+          "per_seed_ci95": [
+            [
+              -0.493,
+              0.01
+            ],
+            [
+              -0.67,
+              0.02
+            ],
+            [
+              -0.648,
+              0.499
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__A4a_CloseDual_115_135_Iso30_Equal": {
+        "AP50_95": {
+          "mean_diff_3seed": 0.016,
+          "ci95_3seed": [
+            -0.162,
+            0.22
+          ],
+          "p_value_two_sided": 0.896,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.131,
+            -0.18,
+            0.096
+          ],
+          "per_seed_ci95": [
+            [
+              -0.036,
+              0.442
+            ],
+            [
+              -0.487,
+              0.052
+            ],
+            [
+              -0.321,
+              0.584
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 0.019,
+          "ci95_3seed": [
+            -0.173,
+            0.235
+          ],
+          "p_value_two_sided": 0.87,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.149,
+            -0.189,
+            0.097
+          ],
+          "per_seed_ci95": [
+            [
+              -0.027,
+              0.481
+            ],
+            [
+              -0.517,
+              0.069
+            ],
+            [
+              -0.338,
+              0.618
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__A4b_FlipTTA_125_HFlip_Iso30_ValGrid": {
+        "AP50_95": {
+          "mean_diff_3seed": -0.133,
+          "ci95_3seed": [
+            -0.332,
+            0.057
+          ],
+          "p_value_two_sided": 0.184,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.0,
+            -0.313,
+            -0.086
+          ],
+          "per_seed_ci95": [
+            [
+              -0.045,
+              0.052
+            ],
+            [
+              -0.809,
+              0.077
+            ],
+            [
+              -0.443,
+              0.281
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": -0.139,
+          "ci95_3seed": [
+            -0.353,
+            0.063
+          ],
+          "p_value_two_sided": 0.2,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.003,
+            -0.333,
+            -0.087
+          ],
+          "per_seed_ci95": [
+            [
+              -0.048,
+              0.063
+            ],
+            [
+              -0.856,
+              0.093
+            ],
+            [
+              -0.464,
+              0.301
+            ]
+          ]
+        }
+      },
+      "A3_Dual_082_125_Iso30_ValGrid__minus__A4a_CloseDual_115_135_Iso30_ValGrid": {
+        "AP50_95": {
+          "mean_diff_3seed": -0.154,
+          "ci95_3seed": [
+            -0.372,
+            0.047
+          ],
+          "p_value_two_sided": 0.144,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.126,
+            -0.28,
+            -0.056
+          ],
+          "per_seed_ci95": [
+            [
+              -0.426,
+              0.016
+            ],
+            [
+              -0.629,
+              0.007
+            ],
+            [
+              -0.553,
+              0.49
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": -0.167,
+          "ci95_3seed": [
+            -0.391,
+            0.049
+          ],
+          "p_value_two_sided": 0.148,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.142,
+            -0.293,
+            -0.067
+          ],
+          "per_seed_ci95": [
+            [
+              -0.483,
+              0.016
+            ],
+            [
+              -0.67,
+              0.02
+            ],
+            [
+              -0.592,
+              0.52
+            ]
+          ]
+        }
+      },
+      "A3_Dual_082_125_Iso30_Equal__minus__A4a_CloseDual_115_135_Iso30_Equal": {
+        "AP50_95": {
+          "mean_diff_3seed": -0.126,
+          "ci95_3seed": [
+            -0.414,
+            0.142
+          ],
+          "p_value_two_sided": 0.382,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.109,
+            -0.336,
+            -0.152
+          ],
+          "per_seed_ci95": [
+            [
+              -0.333,
+              0.579
+            ],
+            [
+              -0.764,
+              -0.003
+            ],
+            [
+              -0.683,
+              0.402
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": -0.13,
+          "ci95_3seed": [
+            -0.43,
+            0.15
+          ],
+          "p_value_two_sided": 0.4,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.132,
+            -0.359,
+            -0.164
+          ],
+          "per_seed_ci95": [
+            [
+              -0.331,
+              0.633
+            ],
+            [
+              -0.814,
+              0.009
+            ],
+            [
+              -0.72,
+              0.418
+            ]
+          ]
+        }
+      },
+      "A5_TriScale_082_125_250_Iso30_ValGrid__minus__A3_C3_Locked_082_125_Main": {
+        "AP50_95": {
+          "mean_diff_3seed": 0.041,
+          "ci95_3seed": [
+            -0.025,
+            0.142
+          ],
+          "p_value_two_sided": 0.324,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.007,
+            -0.016,
+            0.147
+          ],
+          "per_seed_ci95": [
+            [
+              -0.058,
+              0.041
+            ],
+            [
+              -0.071,
+              0.032
+            ],
+            [
+              -0.022,
+              0.43
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 0.041,
+          "ci95_3seed": [
+            -0.03,
+            0.146
+          ],
+          "p_value_two_sided": 0.396,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.009,
+            -0.024,
+            0.156
+          ],
+          "per_seed_ci95": [
+            [
+              -0.065,
+              0.044
+            ],
+            [
+              -0.084,
+              0.026
+            ],
+            [
+              -0.03,
+              0.459
+            ]
+          ]
+        }
+      },
+      "A5_TriScale_082_125_250_Iso30_Equal__minus__A3_Dual_082_125_Iso30_Equal": {
+        "AP50_95": {
+          "mean_diff_3seed": -0.079,
+          "ci95_3seed": [
+            -0.347,
+            0.164
+          ],
+          "p_value_two_sided": 0.554,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.001,
+            -0.187,
+            -0.052
+          ],
+          "per_seed_ci95": [
+            [
+              -0.409,
+              0.415
+            ],
+            [
+              -0.646,
+              0.243
+            ],
+            [
+              -0.573,
+              0.425
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": -0.082,
+          "ci95_3seed": [
+            -0.363,
+            0.169
+          ],
+          "p_value_two_sided": 0.544,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.004,
+            -0.198,
+            -0.044
+          ],
+          "per_seed_ci95": [
+            [
+              -0.429,
+              0.432
+            ],
+            [
+              -0.68,
+              0.251
+            ],
+            [
+              -0.596,
+              0.463
+            ]
+          ]
+        }
+      },
+      "A2_Single_082_Iso30__minus__A1_Single_125_Iso30": {
+        "AP50_95": {
+          "mean_diff_3seed": -0.875,
+          "ci95_3seed": [
+            -1.363,
+            -0.42
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            -0.738,
+            -0.638,
+            -1.248
+          ],
+          "per_seed_ci95": [
+            [
+              -1.454,
+              -0.07
+            ],
+            [
+              -1.511,
+              0.167
+            ],
+            [
+              -2.152,
+              -0.426
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": -0.93,
+          "ci95_3seed": [
+            -1.44,
+            -0.459
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            -0.764,
+            -0.689,
+            -1.337
+          ],
+          "per_seed_ci95": [
+            [
+              -1.5,
+              -0.089
+            ],
+            [
+              -1.611,
+              0.168
+            ],
+            [
+              -2.295,
+              -0.493
+            ]
+          ]
+        }
+      }
+    },
+    "testB": {
+      "A3_C3_Locked_082_125_Main__minus__A1_Single_125_Iso30": {
+        "AP50_95": {
+          "mean_diff_3seed": 1.135,
+          "ci95_3seed": [
+            0.549,
+            1.769
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.056,
+            1.456,
+            1.891
+          ],
+          "per_seed_ci95": [
+            [
+              -0.911,
+              1.04
+            ],
+            [
+              0.475,
+              2.45
+            ],
+            [
+              0.812,
+              3.06
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 1.245,
+          "ci95_3seed": [
+            0.595,
+            1.933
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.109,
+            1.591,
+            2.036
+          ],
+          "per_seed_ci95": [
+            [
+              -0.938,
+              1.181
+            ],
+            [
+              0.536,
+              2.672
+            ],
+            [
+              0.877,
+              3.318
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__C1_Historical_125_035_065": {
+        "AP50_95": {
+          "mean_diff_3seed": 0.92,
+          "ci95_3seed": [
+            0.347,
+            1.537
+          ],
+          "p_value_two_sided": 0.002,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            -0.149,
+            1.242,
+            1.669
+          ],
+          "per_seed_ci95": [
+            [
+              -1.004,
+              0.801
+            ],
+            [
+              0.108,
+              2.494
+            ],
+            [
+              0.754,
+              2.702
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 1.018,
+          "ci95_3seed": [
+            0.398,
+            1.697
+          ],
+          "p_value_two_sided": 0.002,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            -0.124,
+            1.39,
+            1.788
+          ],
+          "per_seed_ci95": [
+            [
+              -1.044,
+              0.9
+            ],
+            [
+              0.137,
+              2.752
+            ],
+            [
+              0.795,
+              2.863
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__A2_Single_082_Iso30": {
+        "AP50_95": {
+          "mean_diff_3seed": 1.366,
+          "ci95_3seed": [
+            0.511,
+            2.198
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.963,
+            2.251,
+            0.883
+          ],
+          "per_seed_ci95": [
+            [
+              -0.397,
+              2.373
+            ],
+            [
+              0.669,
+              3.803
+            ],
+            [
+              -0.494,
+              2.211
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 1.523,
+          "ci95_3seed": [
+            0.604,
+            2.418
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            1.052,
+            2.544,
+            0.971
+          ],
+          "per_seed_ci95": [
+            [
+              -0.431,
+              2.533
+            ],
+            [
+              0.875,
+              4.253
+            ],
+            [
+              -0.498,
+              2.379
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__A4a_CloseDual_115_135_Iso30_ValGrid": {
+        "AP50_95": {
+          "mean_diff_3seed": 1.488,
+          "ci95_3seed": [
+            0.755,
+            2.291
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.409,
+            1.705,
+            2.35
+          ],
+          "per_seed_ci95": [
+            [
+              -0.689,
+              1.499
+            ],
+            [
+              0.283,
+              3.041
+            ],
+            [
+              1.185,
+              3.665
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 1.613,
+          "ci95_3seed": [
+            0.825,
+            2.484
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.454,
+            1.873,
+            2.513
+          ],
+          "per_seed_ci95": [
+            [
+              -0.749,
+              1.653
+            ],
+            [
+              0.316,
+              3.322
+            ],
+            [
+              1.261,
+              3.944
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__A4a_CloseDual_115_135_Iso30_Equal": {
+        "AP50_95": {
+          "mean_diff_3seed": 1.342,
+          "ci95_3seed": [
+            0.614,
+            2.077
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.722,
+            1.422,
+            1.883
+          ],
+          "per_seed_ci95": [
+            [
+              -0.383,
+              1.831
+            ],
+            [
+              -0.031,
+              2.739
+            ],
+            [
+              0.789,
+              3.162
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 1.454,
+          "ci95_3seed": [
+            0.68,
+            2.293
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.81,
+            1.543,
+            2.008
+          ],
+          "per_seed_ci95": [
+            [
+              -0.374,
+              2.0
+            ],
+            [
+              -0.056,
+              2.993
+            ],
+            [
+              0.848,
+              3.413
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__A4b_FlipTTA_125_HFlip_Iso30_ValGrid": {
+        "AP50_95": {
+          "mean_diff_3seed": 1.367,
+          "ci95_3seed": [
+            0.682,
+            2.037
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.675,
+            1.434,
+            1.992
+          ],
+          "per_seed_ci95": [
+            [
+              -0.364,
+              1.687
+            ],
+            [
+              -0.02,
+              2.943
+            ],
+            [
+              0.98,
+              3.133
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 1.524,
+          "ci95_3seed": [
+            0.802,
+            2.235
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.77,
+            1.636,
+            2.166
+          ],
+          "per_seed_ci95": [
+            [
+              -0.384,
+              1.851
+            ],
+            [
+              0.073,
+              3.23
+            ],
+            [
+              1.085,
+              3.448
+            ]
+          ]
+        }
+      },
+      "A3_Dual_082_125_Iso30_ValGrid__minus__A4a_CloseDual_115_135_Iso30_ValGrid": {
+        "AP50_95": {
+          "mean_diff_3seed": 1.225,
+          "ci95_3seed": [
+            0.562,
+            1.911
+          ],
+          "p_value_two_sided": 0.002,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.486,
+            1.705,
+            1.486
+          ],
+          "per_seed_ci95": [
+            [
+              -0.56,
+              1.59
+            ],
+            [
+              0.283,
+              3.041
+            ],
+            [
+              0.441,
+              2.566
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 1.336,
+          "ci95_3seed": [
+            0.612,
+            2.09
+          ],
+          "p_value_two_sided": 0.002,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.532,
+            1.873,
+            1.603
+          ],
+          "per_seed_ci95": [
+            [
+              -0.603,
+              1.725
+            ],
+            [
+              0.316,
+              3.322
+            ],
+            [
+              0.492,
+              2.775
+            ]
+          ]
+        }
+      },
+      "A3_Dual_082_125_Iso30_Equal__minus__A4a_CloseDual_115_135_Iso30_Equal": {
+        "AP50_95": {
+          "mean_diff_3seed": 0.984,
+          "ci95_3seed": [
+            0.261,
+            1.801
+          ],
+          "p_value_two_sided": 0.008,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.894,
+            0.675,
+            1.384
+          ],
+          "per_seed_ci95": [
+            [
+              -0.283,
+              2.116
+            ],
+            [
+              -0.815,
+              2.14
+            ],
+            [
+              0.16,
+              2.722
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 1.045,
+          "ci95_3seed": [
+            0.267,
+            1.916
+          ],
+          "p_value_two_sided": 0.01,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            1.007,
+            0.677,
+            1.453
+          ],
+          "per_seed_ci95": [
+            [
+              -0.313,
+              2.311
+            ],
+            [
+              -0.953,
+              2.279
+            ],
+            [
+              0.155,
+              2.894
+            ]
+          ]
+        }
+      },
+      "A5_TriScale_082_125_250_Iso30_ValGrid__minus__A3_C3_Locked_082_125_Main": {
+        "AP50_95": {
+          "mean_diff_3seed": -0.258,
+          "ci95_3seed": [
+            -0.711,
+            0.212
+          ],
+          "p_value_two_sided": 0.284,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.168,
+            -0.112,
+            -0.83
+          ],
+          "per_seed_ci95": [
+            [
+              -0.389,
+              0.709
+            ],
+            [
+              -1.064,
+              0.844
+            ],
+            [
+              -1.706,
+              -0.029
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": -0.277,
+          "ci95_3seed": [
+            -0.769,
+            0.229
+          ],
+          "p_value_two_sided": 0.272,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.181,
+            -0.129,
+            -0.884
+          ],
+          "per_seed_ci95": [
+            [
+              -0.41,
+              0.75
+            ],
+            [
+              -1.149,
+              0.895
+            ],
+            [
+              -1.814,
+              -0.002
+            ]
+          ]
+        }
+      },
+      "A5_TriScale_082_125_250_Iso30_Equal__minus__A3_Dual_082_125_Iso30_Equal": {
+        "AP50_95": {
+          "mean_diff_3seed": -0.052,
+          "ci95_3seed": [
+            -0.71,
+            0.58
+          ],
+          "p_value_two_sided": 0.84,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.357,
+            0.01,
+            0.192
+          ],
+          "per_seed_ci95": [
+            [
+              -1.262,
+              0.572
+            ],
+            [
+              -1.293,
+              1.305
+            ],
+            [
+              -0.898,
+              1.202
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": -0.048,
+          "ci95_3seed": [
+            -0.775,
+            0.656
+          ],
+          "p_value_two_sided": 0.852,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.414,
+            0.015,
+            0.256
+          ],
+          "per_seed_ci95": [
+            [
+              -1.404,
+              0.595
+            ],
+            [
+              -1.425,
+              1.447
+            ],
+            [
+              -0.876,
+              1.324
+            ]
+          ]
+        }
+      },
+      "A2_Single_082_Iso30__minus__A1_Single_125_Iso30": {
+        "AP50_95": {
+          "mean_diff_3seed": -0.231,
+          "ci95_3seed": [
+            -1.247,
+            0.866
+          ],
+          "p_value_two_sided": 0.65,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.907,
+            -0.795,
+            1.008
+          ],
+          "per_seed_ci95": [
+            [
+              -2.742,
+              0.78
+            ],
+            [
+              -2.733,
+              1.138
+            ],
+            [
+              -0.746,
+              3.011
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": -0.277,
+          "ci95_3seed": [
+            -1.375,
+            0.909
+          ],
+          "p_value_two_sided": 0.63,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.943,
+            -0.953,
+            1.064
+          ],
+          "per_seed_ci95": [
+            [
+              -2.864,
+              0.873
+            ],
+            [
+              -3.078,
+              1.165
+            ],
+            [
+              -0.825,
+              3.229
+            ]
+          ]
+        }
+      }
+    },
+    "testC": {
+      "A3_C3_Locked_082_125_Main__minus__A1_Single_125_Iso30": {
+        "AP50_95": {
+          "mean_diff_3seed": 0.65,
+          "ci95_3seed": [
+            0.023,
+            1.261
+          ],
+          "p_value_two_sided": 0.044,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.304,
+            1.178,
+            0.468
+          ],
+          "per_seed_ci95": [
+            [
+              -0.775,
+              1.439
+            ],
+            [
+              -0.051,
+              2.489
+            ],
+            [
+              -0.449,
+              1.35
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 0.672,
+          "ci95_3seed": [
+            0.018,
+            1.318
+          ],
+          "p_value_two_sided": 0.048,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.321,
+            1.227,
+            0.467
+          ],
+          "per_seed_ci95": [
+            [
+              -0.857,
+              1.563
+            ],
+            [
+              -0.074,
+              2.596
+            ],
+            [
+              -0.486,
+              1.408
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__C1_Historical_125_035_065": {
+        "AP50_95": {
+          "mean_diff_3seed": 1.118,
+          "ci95_3seed": [
+            0.472,
+            1.805
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            1.347,
+            1.375,
+            0.632
+          ],
+          "per_seed_ci95": [
+            [
+              0.158,
+              2.629
+            ],
+            [
+              0.117,
+              2.694
+            ],
+            [
+              -0.183,
+              1.454
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 1.195,
+          "ci95_3seed": [
+            0.49,
+            1.924
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            1.451,
+            1.45,
+            0.683
+          ],
+          "per_seed_ci95": [
+            [
+              0.139,
+              2.837
+            ],
+            [
+              0.113,
+              2.832
+            ],
+            [
+              -0.156,
+              1.533
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__A2_Single_082_Iso30": {
+        "AP50_95": {
+          "mean_diff_3seed": 2.474,
+          "ci95_3seed": [
+            1.4,
+            3.488
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            2.727,
+            2.035,
+            2.66
+          ],
+          "per_seed_ci95": [
+            [
+              1.301,
+              4.349
+            ],
+            [
+              -0.005,
+              4.173
+            ],
+            [
+              0.915,
+              4.687
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 2.646,
+          "ci95_3seed": [
+            1.515,
+            3.717
+          ],
+          "p_value_two_sided": 0.0,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            2.95,
+            2.18,
+            2.807
+          ],
+          "per_seed_ci95": [
+            [
+              1.441,
+              4.662
+            ],
+            [
+              0.04,
+              4.455
+            ],
+            [
+              0.989,
+              4.93
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__A4a_CloseDual_115_135_Iso30_ValGrid": {
+        "AP50_95": {
+          "mean_diff_3seed": 0.961,
+          "ci95_3seed": [
+            0.209,
+            1.725
+          ],
+          "p_value_two_sided": 0.01,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.459,
+            0.872,
+            1.551
+          ],
+          "per_seed_ci95": [
+            [
+              -0.732,
+              1.628
+            ],
+            [
+              -0.724,
+              2.663
+            ],
+            [
+              0.404,
+              2.677
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 1.008,
+          "ci95_3seed": [
+            0.198,
+            1.832
+          ],
+          "p_value_two_sided": 0.016,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            0.456,
+            0.919,
+            1.647
+          ],
+          "per_seed_ci95": [
+            [
+              -0.848,
+              1.707
+            ],
+            [
+              -0.809,
+              2.812
+            ],
+            [
+              0.431,
+              2.907
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__A4a_CloseDual_115_135_Iso30_Equal": {
+        "AP50_95": {
+          "mean_diff_3seed": 0.435,
+          "ci95_3seed": [
+            -0.242,
+            1.141
+          ],
+          "p_value_two_sided": 0.214,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.188,
+            -0.2,
+            1.317
+          ],
+          "per_seed_ci95": [
+            [
+              -1.017,
+              1.358
+            ],
+            [
+              -1.63,
+              1.291
+            ],
+            [
+              0.276,
+              2.429
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 0.445,
+          "ci95_3seed": [
+            -0.285,
+            1.202
+          ],
+          "p_value_two_sided": 0.236,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.235,
+            -0.263,
+            1.364
+          ],
+          "per_seed_ci95": [
+            [
+              -1.118,
+              1.54
+            ],
+            [
+              -1.759,
+              1.33
+            ],
+            [
+              0.26,
+              2.514
+            ]
+          ]
+        }
+      },
+      "A3_C3_Locked_082_125_Main__minus__A4b_FlipTTA_125_HFlip_Iso30_ValGrid": {
+        "AP50_95": {
+          "mean_diff_3seed": 0.295,
+          "ci95_3seed": [
+            -0.414,
+            0.983
+          ],
+          "p_value_two_sided": 0.414,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.13,
+            0.043,
+            0.712
+          ],
+          "per_seed_ci95": [
+            [
+              -1.15,
+              1.477
+            ],
+            [
+              -1.504,
+              1.531
+            ],
+            [
+              -0.028,
+              1.465
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 0.317,
+          "ci95_3seed": [
+            -0.446,
+            1.05
+          ],
+          "p_value_two_sided": 0.404,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.207,
+            0.001,
+            0.742
+          ],
+          "per_seed_ci95": [
+            [
+              -1.157,
+              1.673
+            ],
+            [
+              -1.67,
+              1.523
+            ],
+            [
+              -0.021,
+              1.55
+            ]
+          ]
+        }
+      },
+      "A3_Dual_082_125_Iso30_ValGrid__minus__A4a_CloseDual_115_135_Iso30_ValGrid": {
+        "AP50_95": {
+          "mean_diff_3seed": 0.755,
+          "ci95_3seed": [
+            0.008,
+            1.549
+          ],
+          "p_value_two_sided": 0.05,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            -0.125,
+            0.872,
+            1.519
+          ],
+          "per_seed_ci95": [
+            [
+              -1.478,
+              1.123
+            ],
+            [
+              -0.724,
+              2.663
+            ],
+            [
+              0.456,
+              2.704
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 0.787,
+          "ci95_3seed": [
+            -0.057,
+            1.631
+          ],
+          "p_value_two_sided": 0.07,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.173,
+            0.919,
+            1.613
+          ],
+          "per_seed_ci95": [
+            [
+              -1.623,
+              1.17
+            ],
+            [
+              -0.809,
+              2.812
+            ],
+            [
+              0.49,
+              2.874
+            ]
+          ]
+        }
+      },
+      "A3_Dual_082_125_Iso30_Equal__minus__A4a_CloseDual_115_135_Iso30_Equal": {
+        "AP50_95": {
+          "mean_diff_3seed": 0.061,
+          "ci95_3seed": [
+            -0.74,
+            0.915
+          ],
+          "p_value_two_sided": 0.914,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.551,
+            0.137,
+            0.598
+          ],
+          "per_seed_ci95": [
+            [
+              -1.893,
+              0.772
+            ],
+            [
+              -1.597,
+              2.012
+            ],
+            [
+              -0.528,
+              1.764
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": 0.042,
+          "ci95_3seed": [
+            -0.838,
+            0.967
+          ],
+          "p_value_two_sided": 0.952,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.547,
+            0.047,
+            0.627
+          ],
+          "per_seed_ci95": [
+            [
+              -1.985,
+              0.891
+            ],
+            [
+              -1.777,
+              1.978
+            ],
+            [
+              -0.561,
+              1.9
+            ]
+          ]
+        }
+      },
+      "A5_TriScale_082_125_250_Iso30_ValGrid__minus__A3_C3_Locked_082_125_Main": {
+        "AP50_95": {
+          "mean_diff_3seed": -0.418,
+          "ci95_3seed": [
+            -0.895,
+            0.029
+          ],
+          "p_value_two_sided": 0.072,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.391,
+            -0.457,
+            -0.408
+          ],
+          "per_seed_ci95": [
+            [
+              -1.192,
+              0.358
+            ],
+            [
+              -1.444,
+              0.484
+            ],
+            [
+              -1.237,
+              0.383
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": -0.452,
+          "ci95_3seed": [
+            -0.968,
+            0.031
+          ],
+          "p_value_two_sided": 0.068,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            -0.444,
+            -0.466,
+            -0.445
+          ],
+          "per_seed_ci95": [
+            [
+              -1.323,
+              0.37
+            ],
+            [
+              -1.545,
+              0.532
+            ],
+            [
+              -1.303,
+              0.375
+            ]
+          ]
+        }
+      },
+      "A5_TriScale_082_125_250_Iso30_Equal__minus__A3_Dual_082_125_Iso30_Equal": {
+        "AP50_95": {
+          "mean_diff_3seed": -0.638,
+          "ci95_3seed": [
+            -1.356,
+            0.067
+          ],
+          "p_value_two_sided": 0.082,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.348,
+            -1.418,
+            -0.843
+          ],
+          "per_seed_ci95": [
+            [
+              -0.638,
+              1.394
+            ],
+            [
+              -2.951,
+              -0.076
+            ],
+            [
+              -2.121,
+              0.478
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": -0.695,
+          "ci95_3seed": [
+            -1.46,
+            0.048
+          ],
+          "p_value_two_sided": 0.074,
+          "significant_95": false,
+          "per_seed_mean_diffs": [
+            0.33,
+            -1.484,
+            -0.929
+          ],
+          "per_seed_ci95": [
+            [
+              -0.714,
+              1.417
+            ],
+            [
+              -3.093,
+              -0.046
+            ],
+            [
+              -2.286,
+              0.47
+            ]
+          ]
+        }
+      },
+      "A2_Single_082_Iso30__minus__A1_Single_125_Iso30": {
+        "AP50_95": {
+          "mean_diff_3seed": -1.824,
+          "ci95_3seed": [
+            -2.998,
+            -0.54
+          ],
+          "p_value_two_sided": 0.006,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            -2.423,
+            -0.858,
+            -2.191
+          ],
+          "per_seed_ci95": [
+            [
+              -4.139,
+              -0.611
+            ],
+            [
+              -3.289,
+              1.561
+            ],
+            [
+              -4.294,
+              -0.118
+            ]
+          ]
+        },
+        "AP50": {
+          "mean_diff_3seed": -1.974,
+          "ci95_3seed": [
+            -3.213,
+            -0.615
+          ],
+          "p_value_two_sided": 0.004,
+          "significant_95": true,
+          "per_seed_mean_diffs": [
+            -2.629,
+            -0.953,
+            -2.34
+          ],
+          "per_seed_ci95": [
+            [
+              -4.436,
+              -0.722
+            ],
+            [
+              -3.494,
+              1.683
+            ],
+            [
+              -4.567,
+              -0.203
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "fair_end2end_latency_rtx4060ti_fp32": {
+    "B0_Native_YOLOv8n": {
+      "val_250imgs": {
+        "mean_ms": 9.38,
+        "p50_ms": 9.26,
+        "p95_ms": 10.2,
+        "multi_target_ge3_mean_ms": 9.34,
+        "multi_target_ge3_count": 29,
+        "fps": 106.6,
+        "avg_dino_crops_per_img": 0.0,
+        "verified_live_AP50_95_seed0": null
+      },
+      "testC_all602imgs": {
+        "mean_ms": 9.48,
+        "p50_ms": 9.43,
+        "p95_ms": 10.07,
+        "multi_target_ge3_mean_ms": 9.58,
+        "multi_target_ge3_count": 4,
+        "fps": 105.4,
+        "avg_dino_crops_per_img": 0.0,
+        "verified_live_AP50_95_seed0": 71.33
+      }
+    },
+    "B1_Full_DINOv2_125_Hard": {
+      "val_250imgs": {
+        "mean_ms": 16.69,
+        "p50_ms": 15.99,
+        "p95_ms": 21.34,
+        "multi_target_ge3_mean_ms": 21.15,
+        "multi_target_ge3_count": 32,
+        "fps": 59.9,
+        "avg_dino_crops_per_img": 1.837,
+        "verified_live_AP50_95_seed0": null
+      },
+      "testC_all602imgs": {
+        "mean_ms": 15.74,
+        "p50_ms": 15.65,
+        "p95_ms": 16.8,
+        "multi_target_ge3_mean_ms": 19.26,
+        "multi_target_ge3_count": 9,
+        "fps": 63.5,
+        "avg_dino_crops_per_img": 1.167,
+        "verified_live_AP50_95_seed0": 85.43
+      }
+    },
+    "A1_Single_125": {
+      "val_250imgs": {
+        "mean_ms": 17.42,
+        "p50_ms": 16.76,
+        "p95_ms": 21.63,
+        "multi_target_ge3_mean_ms": 21.8,
+        "multi_target_ge3_count": 35,
+        "fps": 57.4,
+        "avg_dino_crops_per_img": 1.725,
+        "verified_live_AP50_95_seed0": null
+      },
+      "testC_all602imgs": {
+        "mean_ms": 16.65,
+        "p50_ms": 16.53,
+        "p95_ms": 17.84,
+        "multi_target_ge3_mean_ms": 19.68,
+        "multi_target_ge3_count": 5,
+        "fps": 60.1,
+        "avg_dino_crops_per_img": 1.142,
+        "verified_live_AP50_95_seed0": 86.25
+      }
+    },
+    "A2_Single_082": {
+      "val_250imgs": {
+        "mean_ms": 16.88,
+        "p50_ms": 16.19,
+        "p95_ms": 21.41,
+        "multi_target_ge3_mean_ms": 21.4,
+        "multi_target_ge3_count": 33,
+        "fps": 59.3,
+        "avg_dino_crops_per_img": 1.725,
+        "verified_live_AP50_95_seed0": null
+      },
+      "testC_all602imgs": {
+        "mean_ms": 16.2,
+        "p50_ms": 16.14,
+        "p95_ms": 17.14,
+        "multi_target_ge3_mean_ms": 19.33,
+        "multi_target_ge3_count": 5,
+        "fps": 61.7,
+        "avg_dino_crops_per_img": 1.142,
+        "verified_live_AP50_95_seed0": 83.8
+      }
+    },
+    "A3_Dual_082_125_C3_Main": {
+      "val_250imgs": {
+        "mean_ms": 19.17,
+        "p50_ms": 17.24,
+        "p95_ms": 30.77,
+        "multi_target_ge3_mean_ms": 30.04,
+        "multi_target_ge3_count": 35,
+        "fps": 52.2,
+        "avg_dino_crops_per_img": 3.45,
+        "verified_live_AP50_95_seed0": null
+      },
+      "testC_all602imgs": {
+        "mean_ms": 17.46,
+        "p50_ms": 16.92,
+        "p95_ms": 20.96,
+        "multi_target_ge3_mean_ms": 25.6,
+        "multi_target_ge3_count": 5,
+        "fps": 57.3,
+        "avg_dino_crops_per_img": 2.284,
+        "verified_live_AP50_95_seed0": 86.53
+      }
+    },
+    "A4a_CloseDual_115_135": {
+      "val_250imgs": {
+        "mean_ms": 19.88,
+        "p50_ms": 17.95,
+        "p95_ms": 30.64,
+        "multi_target_ge3_mean_ms": 31.05,
+        "multi_target_ge3_count": 34,
+        "fps": 50.3,
+        "avg_dino_crops_per_img": 3.45,
+        "verified_live_AP50_95_seed0": null
+      },
+      "testC_all602imgs": {
+        "mean_ms": 17.87,
+        "p50_ms": 17.33,
+        "p95_ms": 21.36,
+        "multi_target_ge3_mean_ms": 26.28,
+        "multi_target_ge3_count": 5,
+        "fps": 56.0,
+        "avg_dino_crops_per_img": 2.284,
+        "verified_live_AP50_95_seed0": 85.99
+      }
+    },
+    "A5_TriScale_082_125_250": {
+      "val_250imgs": {
+        "mean_ms": 23.77,
+        "p50_ms": 20.58,
+        "p95_ms": 41.87,
+        "multi_target_ge3_mean_ms": 41.27,
+        "multi_target_ge3_count": 35,
+        "fps": 42.1,
+        "avg_dino_crops_per_img": 5.175,
+        "verified_live_AP50_95_seed0": null
+      },
+      "testC_all602imgs": {
+        "mean_ms": 20.28,
+        "p50_ms": 19.36,
+        "p95_ms": 27.35,
+        "multi_target_ge3_mean_ms": 35.74,
+        "multi_target_ge3_count": 5,
+        "fps": 49.3,
+        "avg_dino_crops_per_img": 3.426,
+        "verified_live_AP50_95_seed0": 86.05
+      }
+    }
+  }
+}
