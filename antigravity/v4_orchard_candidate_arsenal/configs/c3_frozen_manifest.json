@@ -1,5 +1,5 @@
 {
-  "manifest_version": "2026-11-26_Stage1_Frozen_C3_Lock",
+  "manifest_version": "2026-11-27_Stage2b_Frozen_C3_Lock_With_A4b_Predeclared_Control",
   "paper_title_zh_tentative": "面向复杂田间背景的柑橘病害检测：基于双尺度目标表征与校准后验融合的方法",
   "paper_title_en_tentative": "Dual-Scale Target Representation and Calibrated Posterior Fusion for Citrus Disease Detection in Complex Field Environments",
   "primary_method_id": "C3_DualScale_082_125_Calib",
@@ -7,9 +7,29 @@
     "B0_Native_YOLOv8n",
     "B1_Full_DINOv2_125_Hard",
     "C1_SingleScale_125_Calib",
+    "A4b_FlipTTA_125_HFlip_Calib",
     "C3_DualScale_082_125_Calib"
   ],
-  "anti_leakage_declaration": "全部模型权重与融合超参数仅由源域 SciDB train/val 锁定并记录 SHA-256；后续真实果园评测仅运行上述 4 个冻结模型，严禁根据测试表现回调参数。",
+  "frozen_stage4_model_roles": {
+    "B0_Native_YOLOv8n": "原始单阶段检测基线",
+    "B1_Full_DINOv2_125_Hard": "两阶段硬覆盖强基线",
+    "C1_SingleScale_125_Calib": "单尺度校准后验融合主对照",
+    "A4b_FlipTTA_125_HFlip_Calib": "常规双视角水平翻转 TTA 预先指定补充对照（等 ViT 算力）",
+    "C3_DualScale_082_125_Calib": "唯一冻结主方法（主研究问题对比 C1 与 Full DINOv2；A4b 为补充对照）"
+  },
+  "protocol_amendment_log": [
+    {
+      "date": "2026-11-26",
+      "version": "2026-11-26_Stage1_Frozen_C3_Lock",
+      "change": "锁定唯一主方法 C3 [0.30, 0.20, 0.50]、12 份底层权重 SHA-256 与初始四模型评测清单。"
+    },
+    {
+      "date": "2026-11-27",
+      "version": "2026-11-27_Stage2b_Frozen_C3_Lock_With_A4b_Predeclared_Control",
+      "change": "在 190 张真实果园专家标注启动/揭盲前，预先将等算力常规双视角 TTA (A4b: 1.25x + 水平翻转，沿用源域 SciDB val 锁定的种子权重) 增补为第 5 个外部验证补充对照，同时保持 C3 为唯一主方法且全部底层权重哈希与 C3 参数零改动。"
+    }
+  ],
+  "anti_leakage_declaration": "全部模型权重与融合超参数仅由源域 SciDB train/val 锁定并记录 SHA-256；后续真实果园评测仅运行上述 5 个预声明冻结模型（C3 唯一主方法 + 4 个基线/对照），严禁根据盲测表现更换主方法或回调参数。",
   "seeds": {
     "0": {
       "seed": 0,
@@ -54,6 +74,11 @@
           0.65
         ],
         "C2_gamma_ood": 0.35,
+        "A4b_FlipTTA_125_HFlip_weights_det_std_flip": [
+          0.3,
+          0.5,
+          0.2
+        ],
         "C3_MainMethod_DualScale_scales": [
           0.82,
           1.25
@@ -74,6 +99,11 @@
           "val": 91.02,
           "testB": 80.0,
           "testC": 85.5
+        },
+        "A4b": {
+          "val": 90.96,
+          "testB": 79.58,
+          "testC": 86.36
         },
         "C3": {
           "val": 91.0,
@@ -125,6 +155,11 @@
           0.65
         ],
         "C2_gamma_ood": 0.15,
+        "A4b_FlipTTA_125_HFlip_weights_det_std_flip": [
+          0.3,
+          0.25,
+          0.45
+        ],
         "C3_MainMethod_DualScale_scales": [
           0.82,
           1.25
@@ -145,6 +180,11 @@
           "val": 89.0,
           "testB": 76.96,
           "testC": 82.46
+        },
+        "A4b": {
+          "val": 89.56,
+          "testB": 76.66,
+          "testC": 83.77
         },
         "C3": {
           "val": 89.23,
@@ -196,6 +236,11 @@
           0.65
         ],
         "C2_gamma_ood": 0.35,
+        "A4b_FlipTTA_125_HFlip_weights_det_std_flip": [
+          0.3,
+          0.55,
+          0.15
+        ],
         "C3_MainMethod_DualScale_scales": [
           0.82,
           1.25
@@ -216,6 +261,11 @@
           "val": 91.01,
           "testB": 77.24,
           "testC": 83.91
+        },
+        "A4b": {
+          "val": 91.18,
+          "testB": 77.16,
+          "testC": 83.73
         },
         "C3": {
           "val": 91.06,

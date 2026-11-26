@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
 """
-真实果园统一推理与冻结四模型评测命令行工具 (orchard_plug_and_play_cli.py — Stage 1 修复定型版)
+真实果园统一推理与预声明冻结五模型评测命令行工具 (orchard_plug_and_play_cli.py — Stage 2b 审计增强定型版)
 
-严格修复与一致性保证：
-1. 零硬编码超参数：C3 融合权重 [0.30, 0.20, 0.50]、C1 融合权重 [0.35, 0.65]、以及按种子标定的 C2 流形衰减系数 γ ∈ {0.35, 0.15, 0.35}
-   100% 从冻结配置文件 `configs/c3_frozen_manifest.json` 读取，并在启动时强制校验底层权重的 SHA-256 哈希。
-2. 在线与离线推理流程 100% 统一：
-   单次 YOLOv8n 前向 (`conf=0.001, iou=0.70, max_det=300, rect=False`) 同步钩取检测头 14 类原始概率分布 ->
-   对 `score >= 0.08` 候选框裁取双尺度视图 (`0.82x` 紧致中心视角 + `1.25x` 标准目标视角) 单批次输入冻结 DINOv2 ->
-   温度缩放对数后验加权融合 -> 统一几何分数重加权 -> 类别内 `batched_nms(iou=0.70)`。
-3. 明确命令行模式边界（文档与代码严格一致，不含未实现声明）：
-   - `--mode check_manifest`：校验全部 12 份冻结模型权重 SHA-256 与冻结参数配置；
-   - `--mode preannotate`：对未标注果园图像目录运行主方法 C3（可选 B0/B1/C1/C2），输出检测框、Top-3 可确认症状候选卡片与不确定度复核排序；
-   - `--mode eval_frozen4`：对已完成标注的真实果园 COCO JSON（可选传入 `--cluster-csv` 采集簇编号表）一次性评测冻结四模型
-     (`B0_YOLOv8n`, `B1_Full_DINOv2`, `C1_SingleScale_125`, `C3_DualScale_082_125`)，完整输出检测指标 (AP50/AP50-95/Recall@0.5/候选召回)、
-     分类指标 (匹配目标 Top-1/Top-3、含漏检整图 Top-3)、部署延迟 (平均/P95/多目标延迟)、四类错误归因及按采集簇重采样配对置信区间。
-   （注：保形风险控制 R2 与 597 例 PCR 分层送检模拟属于独立统计评估实验，位于 `run_candidate_arsenal_and_conformal_suite.py`，不在此推理 CLI 中混列。）
+严格修复与方法学保证：
+1. 零硬编码超参数：唯一主方法 C3 融合权重 [0.30, 0.20, 0.50]、单尺度对照 C1 [0.35, 0.65]、常规双视角翻转 TTA 补充对照 A4b
+   按种子权重 [[0.30, 0.50, 0.20], [0.30, 0.25, 0.45], [0.30, 0.55, 0.15]] 及 C2 按种子 γ ∈ {0.35, 0.15, 0.35}
+   100% 从冻结配置文件 `configs/c3_frozen_manifest.json` 读取，并在启动时强制校验 12 份底层权重 SHA-256。
+2. 在线与离线推理流程 100% 逐框一致：
+   显式 640x640 方形 LetterBox 单次 YOLOv8n 前向 -> 钩取 8400 锚点 14 类原始响应 -> 对 score >= 0.08 前景框单批次提取
+   DINOv2 特征 -> 温度缩放对数后验融合 -> 统一几何置信度重加权 -> 类别内 batched_nms(iou=0.70)。
+3. 真实果园外部验证严密统计保证（修复一对多重复匹配与采集簇相关性）：
+   - 预声明冻结 5 模型评测：B0 (YOLOv8n)、B1 (Full DINOv2)、C1 (1.25x 单尺度校准)、A4b (1.25x+HFlip 常规 TTA 补充对照)、
+     以及唯一主方法 C3 (0.82x+1.25x)；
+   - 严格一对一（1-to-1）贪心置信度优先匹配：在 Recall@IoU0.5、低阈值候选召回、Matched Top-1/Top-3 及完备五分法错误归因中，
+     按预测分数降序逐一匹配未占用的真值框（每个预测框与每个真值框最多匹配一次，绝无相邻重叠叶片共享同一预测框虚增召回）；
+   - 自动隔离植保专家标记为“不确定/待核实”（`uncertain=True` 或 `category_id < 0`）的疑难标注，单独统计不强判；
+   - 按采集簇（Cluster-level）同步配对 Bootstrap (`B = 1,000`)：对同株/同枝连拍簇执行整簇有放回重采样，精确计算
+     `AP50-95`、`AP50`、`Recall@IoU0.5`、`Matched_Top1` 与 `MissPenalized_Top3` 的配对差值 95% 置信区间及双侧 p 值。
 """
 import os
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
@@ -87,6 +88,47 @@ def fast_letterbox_params(h: int, w: int, new_shape: int = 640):
     return r, float(px), float(py)
 
 
+def iou_xywh(b1, b2) -> float:
+    ix1, iy1 = max(b1[0], b2[0]), max(b1[1], b2[1])
+    ix2, iy2 = min(b1[0] + b1[2], b2[0] + b2[2]), min(b1[1] + b1[3], b2[1] + b2[3])
+    inter = max(0.0, ix2 - ix1) * max(0.0, iy2 - iy1)
+    return inter / (b1[2] * b1[3] + b2[2] * b2[3] - inter + 1e-9)
+
+
+def match_detections_to_gt_1to1(dets_sorted_desc: list, gt_list: list, iou_thr: float = 0.50):
+    """
+    严格一对一（1-to-1）置信度优先匹配（与 COCO 匹配顺序一致）：
+    输入 `dets_sorted_desc` 必须已按置信度降序排列，元素首项为 `bbox_xywh`。
+    返回 `gt_to_det_idx`（字典 `{gt_i: det_j}`，每个预测框和每个真值框最多被占用一次）以及每个真值框与任意预测框的最大几何 IoU。
+    """
+    n_d, n_g = len(dets_sorted_desc), len(gt_list)
+    max_any_iou = [0.0] * n_g
+    if n_d == 0 or n_g == 0:
+        return {}, max_any_iou
+
+    iou_mat = np.zeros((n_d, n_g), dtype=np.float64)
+    for dj, d_item in enumerate(dets_sorted_desc):
+        db = d_item[0]
+        for gi, ga in enumerate(gt_list):
+            v = iou_xywh(db, ga['bbox'])
+            iou_mat[dj, gi] = v
+            if v > max_any_iou[gi]:
+                max_any_iou[gi] = v
+
+    used_gt = set()
+    gt_to_det = {}
+    for dj in range(n_d):
+        best_iou, best_gi = iou_thr, -1
+        for gi in range(n_g):
+            if gi not in used_gt and iou_mat[dj, gi] >= best_iou:
+                best_iou = iou_mat[dj, gi]
+                best_gi = gi
+        if best_gi >= 0:
+            used_gt.add(best_gi)
+            gt_to_det[best_gi] = dj
+    return gt_to_det, max_any_iou
+
+
 def verify_manifest_hashes(manifest: dict, seeds_to_check=None):
     target_seeds = [str(s) for s in (seeds_to_check if seeds_to_check is not None else [0, 1, 2])]
     for sk in target_seeds:
@@ -101,7 +143,7 @@ def verify_manifest_hashes(manifest: dict, seeds_to_check=None):
 
 
 class UnifiedOrchardInferenceEngine:
-    """严格统一的端到端在线推理引擎（离线缓存评测与在线单图推理 100% 共享同一数学路径）。"""
+    """严格统一的端到端在线推理引擎（支持 B0 / B1 / C1 / C2 / A4b / C3）。"""
 
     def __init__(self, manifest: dict, seed: int = 0, device: str = 'cuda:0'):
         self.manifest = manifest
@@ -126,10 +168,10 @@ class UnifiedOrchardInferenceEngine:
         self.w_c1 = [float(x) for x in fp['C1_SingleScale_125_weights_det_std']]
         self.w_c2_prior = [float(x) for x in fp['C2_OOD_Pool_prior_det_std']]
         self.gamma_c2 = float(fp['C2_gamma_ood'])
+        self.w_a4b = [float(x) for x in fp.get('A4b_FlipTTA_125_HFlip_weights_det_std_flip', [0.30, 0.35, 0.35])]
         self.scales_c3 = [float(x) for x in fp['C3_MainMethod_DualScale_scales']]
         self.w_c3 = [float(x) for x in fp['C3_MainMethod_weights_det_core082_std125']]
 
-        # Load frozen DINOv2 LP-FT
         st_dino = torch.load(ckpts['dinov2_lpft']['path'], map_location='cpu', weights_only=True)
         self.enc = timm.create_model('vit_small_patch14_dinov2.lvd142m', pretrained=False, img_size=224, num_classes=0).to(device).eval()
         self.enc.load_state_dict(st_dino['骨干'])
@@ -138,7 +180,6 @@ class UnifiedOrchardInferenceEngine:
         self.mean = torch.tensor([0.485, 0.456, 0.406], device=device).view(1, 3, 1, 1)
         self.std = torch.tensor([0.229, 0.224, 0.225], device=device).view(1, 3, 1, 1)
 
-        # Load Mahalanobis stats (only used if C2 is requested)
         blob_tcd = torch.load(ckpts['tcd_calib_stats']['path'], map_location='cpu', weights_only=False)
         m_cfg = blob_tcd['mahalanobis']
         self.m_means = torch.from_numpy(m_cfg['means'].astype(np.float32)).to(device)
@@ -146,7 +187,6 @@ class UnifiedOrchardInferenceEngine:
         self.m_mu = float(m_cfg['m_mu'])
         self.m_sd = float(m_cfg['m_sd'])
 
-        # Load frozen YOLOv8n with single-pass Detect hook
         self.yolo = YOLO(ckpts['yolov8n_det']['path'])
         self.net = self.yolo.model.to(device).eval()
         self.detect = self.net.model[-1]
@@ -166,10 +206,6 @@ class UnifiedOrchardInferenceEngine:
 
     @torch.no_grad()
     def yolo_detect_square640(self, bgr: np.ndarray):
-        """
-        严格执行与离线统一评测完全一致的 640x640 方形 LetterBox 前向推理（修复 Ultralytics 单图 predict 默认启用 auto=True 矩形缩放
-        导致竖图/16:9图锚点坐标与颈部特征偏移的隐患）。单次前向同时产出 NMS 检测框与 8400 锚点原始输出。
-        """
         h, w = bgr.shape[:2]
         pad, _r, _px, _py = letterbox_640(bgr)
         rgb_pad = cv2.cvtColor(pad, cv2.COLOR_BGR2RGB)
@@ -187,7 +223,7 @@ class UnifiedOrchardInferenceEngine:
     @torch.no_grad()
     def _extract_anchor_p14_and_neck(self, h: int, w: int, bxs_xywh: list, need_neck: bool = False):
         r_lb, px_lb, py_lb = fast_letterbox_params(h, w, 640)
-        yb = self.raw_y[0][0]  # (18, 8400) on GPU
+        yb = self.raw_y[0][0]
         acx, acy, abw, abh = yb[0], yb[1], yb[2], yb[3]
         ax1 = (acx - abw * 0.5 - px_lb) / r_lb
         ay1 = (acy - abh * 0.5 - py_lb) / r_lb
@@ -218,7 +254,6 @@ class UnifiedOrchardInferenceEngine:
 
     @torch.no_grad()
     def compute_box_posteriors_given_boxes(self, bgr: np.ndarray, bxs_xywh: list, candidate: str = 'C3') -> np.ndarray:
-        """在给定候选框坐标上执行在线特征提取与融合，用于逐框离线/在线数值一致性核验。"""
         if not bxs_xywh:
             return np.zeros((0, 14), dtype=np.float32)
         h, w = bgr.shape[:2]
@@ -237,6 +272,15 @@ class UnifiedOrchardInferenceEngine:
             lp_std = F.log_softmax(lg_both[k:] / self.T_DINO, dim=-1)
             wd, wc, ws = self.w_c3
             p_post = F.softmax(wd * lp_det + wc * lp_core + ws * lp_std, dim=-1)
+        elif candidate == 'A4b':
+            std_list = [crop_square_scale(rgb, bb, 1.25) for bb in bxs_xywh]
+            flip_list = [c[:, :, ::-1].copy() for c in std_list]
+            c_both = np.stack(std_list + flip_list, axis=0)
+            lg_both = self._encode_dino_logits(c_both)
+            lp_std = F.log_softmax(lg_both[:k] / self.T_DINO, dim=-1)
+            lp_flp = F.log_softmax(lg_both[k:] / self.T_DINO, dim=-1)
+            wd, ws, wf = self.w_a4b
+            p_post = F.softmax(wd * lp_det + ws * lp_std + wf * lp_flp, dim=-1)
         elif candidate == 'C1':
             c125 = np.stack([crop_square_scale(rgb, bb, 1.25) for bb in bxs_xywh], axis=0)
             lp_std = F.log_softmax(self._encode_dino_logits(c125) / self.T_DINO, dim=-1)
@@ -261,26 +305,39 @@ class UnifiedOrchardInferenceEngine:
     @torch.no_grad()
     def infer_image_detailed(self, bgr: np.ndarray, candidate: str = 'C3'):
         """
-        统一端到端单图推理 (B0 / B1 / C1 / C2 / C3)：
-        返回 (kept_boxes_xywh, kept_scores, kept_cls, kept_probs_14, raw_low_thr_boxes_xywh, n_dino_crops)
+        统一端到端单图推理 (B0 / B1 / C1 / C2 / A4b / C3)：
+        返回 (kept_boxes_xywh, kept_scores, kept_cls, kept_probs_14, raw_low_thr_proposals_desc, n_dino_crops)
+        其中 raw_low_thr_proposals_desc 为按原始检测分数降序排列的 [(bbox_xywh, raw_score), ...]。
         """
         h, w = bgr.shape[:2]
         xyxy_t, sc_t, cls_t = self.yolo_detect_square640(bgr)
         N = len(xyxy_t)
-        raw_low_bxs = [[float(b[0]), float(b[1]), float(b[2] - b[0]), float(b[3] - b[1])]
-                       for b in xyxy_t[sc_t >= 0.05].cpu().tolist()] if N > 0 else []
+        if N > 0:
+            low_mask = sc_t >= 0.05
+            low_xy = xyxy_t[low_mask].cpu().tolist()
+            low_sc = sc_t[low_mask].cpu().tolist()
+            raw_low_props = sorted(
+                [([float(b[0]), float(b[1]), float(b[2] - b[0]), float(b[3] - b[1])], float(s)) for b, s in zip(low_xy, low_sc)],
+                key=lambda x: -x[1]
+            )
+        else:
+            raw_low_props = []
 
         if N == 0:
             return [], [], [], np.zeros((0, 14), dtype=np.float32), [], 0
 
         if candidate == 'B0':
-            p14_all, _ = self._extract_anchor_p14_and_neck(h, w, [[float(b[0]), float(b[1]), float(b[2] - b[0]), float(b[3] - b[1])] for b in xyxy_t.cpu().tolist()], False)
+            p14_all, _ = self._extract_anchor_p14_and_neck(
+                h, w, [[float(b[0]), float(b[1]), float(b[2] - b[0]), float(b[3] - b[1])] for b in xyxy_t.cpu().tolist()], False
+            )
             p_norm = (p14_all / p14_all.sum(dim=-1, keepdim=True).clamp_min(1e-8)).cpu().numpy()
             bxs_out = [[float(b[0]), float(b[1]), float(b[2] - b[0]), float(b[3] - b[1])] for b in xyxy_t.cpu().tolist()]
-            return bxs_out, sc_t.cpu().tolist(), cls_t.cpu().tolist(), p_norm, raw_low_bxs, 0
+            return bxs_out, sc_t.cpu().tolist(), cls_t.cpu().tolist(), p_norm, raw_low_props, 0
 
         xyxy_f, sc_f, cls_f = xyxy_t.clone(), sc_t.clone(), cls_t.clone()
-        p14_all, _ = self._extract_anchor_p14_and_neck(h, w, [[float(b[0]), float(b[1]), float(b[2] - b[0]), float(b[3] - b[1])] for b in xyxy_t.cpu().tolist()], False)
+        p14_all, _ = self._extract_anchor_p14_and_neck(
+            h, w, [[float(b[0]), float(b[1]), float(b[2] - b[0]), float(b[3] - b[1])] for b in xyxy_t.cpu().tolist()], False
+        )
         probs_full = (p14_all / p14_all.sum(dim=-1, keepdim=True).clamp_min(1e-8))
 
         if candidate == 'B1':
@@ -299,9 +356,8 @@ class UnifiedOrchardInferenceEngine:
                 sc_f[act_ids] = torch.where(changed, torch.sqrt(sc_sub * pmax.clamp_min(1e-6)), sc_sub)
                 n_dino = len(bxs)
             bxs_out = [[float(b[0]), float(b[1]), float(b[2] - b[0]), float(b[3] - b[1])] for b in xyxy_f.cpu().tolist()]
-            return bxs_out, sc_f.cpu().tolist(), cls_f.cpu().tolist(), probs_full.cpu().numpy(), raw_low_bxs, n_dino
+            return bxs_out, sc_f.cpu().tolist(), cls_f.cpu().tolist(), probs_full.cpu().numpy(), raw_low_props, n_dino
 
-        # Calibrated Fusion Modes: C1 / C2 / C3
         fg_ids = torch.where(sc_t >= self.fg_thr)[0]
         n_dino = 0
         if len(fg_ids) > 0:
@@ -320,6 +376,16 @@ class UnifiedOrchardInferenceEngine:
                 lp_std = F.log_softmax(lg_both[k:] / self.T_DINO, dim=-1)
                 wd, wc, ws = self.w_c3
                 p_post = F.softmax(wd * lp_det + wc * lp_core + ws * lp_std, dim=-1)
+                n_dino = 2 * k
+            elif candidate == 'A4b':
+                std_list = [crop_square_scale(rgb, bb, 1.25) for bb in bxs_fg]
+                flip_list = [c[:, :, ::-1].copy() for c in std_list]
+                c_both = np.stack(std_list + flip_list, axis=0)
+                lg_both = self._encode_dino_logits(c_both)
+                lp_std = F.log_softmax(lg_both[:k] / self.T_DINO, dim=-1)
+                lp_flp = F.log_softmax(lg_both[k:] / self.T_DINO, dim=-1)
+                wd, ws, wf = self.w_a4b
+                p_post = F.softmax(wd * lp_det + ws * lp_std + wf * lp_flp, dim=-1)
                 n_dino = 2 * k
             elif candidate == 'C1':
                 c125 = np.stack([crop_square_scale(rgb, bb, 1.25) for bb in bxs_fg], axis=0)
@@ -353,7 +419,7 @@ class UnifiedOrchardInferenceEngine:
                 xyxy_f, sc_f, cls_f, probs_full = xyxy_f[keep], sc_f[keep], cls_f[keep], probs_full[keep]
 
         bxs_out = [[float(b[0]), float(b[1]), float(b[2] - b[0]), float(b[3] - b[1])] for b in xyxy_f.cpu().tolist()]
-        return bxs_out, sc_f.cpu().tolist(), cls_f.cpu().tolist(), probs_full.cpu().numpy(), raw_low_bxs, n_dino
+        return bxs_out, sc_f.cpu().tolist(), cls_f.cpu().tolist(), probs_full.cpu().numpy(), raw_low_props, n_dino
 
     def infer_image_coco_rows(self, bgr: np.ndarray, image_id: int, candidate: str = 'C3') -> list:
         bxs, scs, cls_l, _, _, _ = self.infer_image_detailed(bgr, candidate=candidate)
@@ -416,56 +482,258 @@ def run_preannotate_folder(manifest: dict, image_dir: Path, out_json: Path, cand
     print(f"[预标注完成] 使用冻结候选 {candidate} (Seed {seed}) 处理 {len(results_out)} 张图像 -> {out_json}", flush=True)
 
 
-def evaluate_frozen_4models_on_labeled_orchard(manifest: dict, image_dir: Path, gt_json: Path, out_json: Path,
-                                               cluster_csv: str = '', seeds=(0, 1, 2)):
-    """第四阶段专用：仅评测冻结四模型 (B0: YOLOv8n, B1: Full DINOv2, C1: 1.25x, C3: 0.82x+1.25x 主方法)，含采集簇重采样与四类错误归因。"""
-    device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
-    gt_dict = json.loads(gt_json.read_text(encoding='utf-8'))
-    anns_by_img = defaultdict(list)
-    for a in gt_dict['annotations']:
-        if a.get('iscrowd', 0) == 0:
-            anns_by_img[a['image_id']].append(a)
+def paired_cluster_bootstrap_orchard(clean_gt_dict: dict, preds_per_seed_model: dict, img_counts_per_seed_model: dict,
+                                     img_idx_to_cluster: list, pairs_to_test: list, n_boot: int = 1000, rng_seed: int = 20261127):
+    """
+    按采集簇（Cluster-level）同步有放回配对 Bootstrap (`B = 1,000`)：
+    同一棵树/同一枝条的连拍图像共享 `cluster_id`，每次重抽样抽取 G 个簇（保留重复簇内图像的权重倍数），
+    在所有预声明冻结模型与全部随机种子上同步积分 COCO PR 曲线及一对一召回/Top-1/Top-3 准确率！
+    """
+    ious_thrs = np.linspace(0.5, 0.95, 10)
+    rec_thrs = np.linspace(0.0, 1.0, 101)
+    images = clean_gt_dict['images']
+    img_ids = [im['id'] for im in images]
+    iid2idx = {iid: idx for idx, iid in enumerate(img_ids)}
+    cats = sorted([c['id'] for c in clean_gt_dict['categories'] if int(c['id']) >= 0])
+    M, K = len(img_ids), len(cats)
+    cat2k = {c: k for k, c in enumerate(cats)}
 
-    # Optional cluster mapping (file_name -> cluster_id) to avoid treating burst shots as independent
+    gt_by_ic = defaultdict(list)
+    for a in clean_gt_dict['annotations']:
+        if a.get('iscrowd', 0) == 0 and a['category_id'] in cat2k and a['image_id'] in iid2idx:
+            gt_by_ic[(iid2idx[a['image_id']], cat2k[a['category_id']])].append(a['bbox'])
+
+    n_gt_ic = np.zeros((M, K), dtype=np.int32)
+    for m in range(M):
+        for k in range(K):
+            n_gt_ic[m, k] = len(gt_by_ic.get((m, k), []))
+
+    cluster_members = defaultdict(list)
+    for m_idx, cid in enumerate(img_idx_to_cluster):
+        cluster_members[cid].append(m_idx)
+    unique_clusters = sorted(cluster_members.keys())
+    G = len(unique_clusters)
+    cluster_arrays = [np.array(cluster_members[c], dtype=np.int32) for c in unique_clusters]
+
+    seeds_sorted = sorted(preds_per_seed_model.keys())
+    needed_models = sorted({m for pair in pairs_to_test for m in pair})
+
+    match_tables = {s: {} for s in seeds_sorted}
+    cnt_arrays = {s: {} for s in seeds_sorted}
+    for s in seeds_sorted:
+        for m_name in needed_models:
+            cnt_arrays[s][m_name] = np.array(img_counts_per_seed_model[s][m_name], dtype=np.float64)
+            dt_by_ic = defaultdict(list)
+            for r in preds_per_seed_model[s][m_name]:
+                if r['image_id'] in iid2idx and r['category_id'] in cat2k:
+                    dt_by_ic[(iid2idx[r['image_id']], cat2k[r['category_id']])].append((r['score'], r['bbox']))
+            match_ic = [[None] * K for _ in range(M)]
+            for m in range(M):
+                for k in range(K):
+                    dlist = dt_by_ic.get((m, k), [])
+                    if not dlist:
+                        continue
+                    order = np.argsort([-x[0] for x in dlist], kind='mergesort')[:100]
+                    dlist = [dlist[i] for i in order]
+                    D = len(dlist)
+                    scores = np.array([x[0] for x in dlist], dtype=np.float64)
+                    tp = np.zeros((10, D), dtype=np.float64)
+                    fp = np.zeros((10, D), dtype=np.float64)
+                    glist = gt_by_ic.get((m, k), [])
+                    if len(glist) == 0:
+                        fp[:, :] = 1.0
+                    else:
+                        gb = np.array(glist, dtype=np.float64)
+                        db = np.array([x[1] for x in dlist], dtype=np.float64)
+                        ix1 = np.maximum(db[:, None, 0], gb[None, :, 0])
+                        iy1 = np.maximum(db[:, None, 1], gb[None, :, 1])
+                        ix2 = np.minimum(db[:, None, 0] + db[:, None, 2], gb[None, :, 0] + gb[None, :, 2])
+                        iy2 = np.minimum(db[:, None, 1] + db[:, None, 3], gb[None, :, 1] + gb[None, :, 3])
+                        inter = np.maximum(0.0, ix2 - ix1) * np.maximum(0.0, iy2 - iy1)
+                        iou_mat = inter / (db[:, None, 2] * db[:, None, 3] + gb[None, :, 2] * gb[None, :, 3] - inter + 1e-12)
+                        for ti, thr in enumerate(ious_thrs):
+                            gt_used = np.zeros(len(glist), dtype=bool)
+                            for di in range(D):
+                                best_iou, best_g = thr, -1
+                                for gi in range(len(glist)):
+                                    if not gt_used[gi] and iou_mat[di, gi] >= best_iou:
+                                        best_iou = iou_mat[di, gi]
+                                        best_g = gi
+                                if best_g >= 0:
+                                    gt_used[best_g] = True
+                                    tp[ti, di] = 1.0
+                                else:
+                                    fp[ti, di] = 1.0
+                    match_ic[m][k] = (scores, tp, fp)
+            match_tables[s][m_name] = match_ic
+
+    def eval_sample(s_key, m_name, idx_arr):
+        match_ic = match_tables[s_key][m_name]
+        ap_tk = []
+        for k in range(K):
+            npig = int(n_gt_ic[idx_arr, k].sum())
+            if npig == 0:
+                continue
+            sc_l, tp_l, fp_l = [], [], []
+            for m in idx_arr:
+                it = match_ic[m][k]
+                if it is not None:
+                    sc_l.append(it[0]); tp_l.append(it[1]); fp_l.append(it[2])
+            if not sc_l:
+                ap_tk.append(np.zeros(10))
+                continue
+            sc_all = np.concatenate(sc_l)
+            tp_all = np.concatenate(tp_l, axis=1)
+            fp_all = np.concatenate(fp_l, axis=1)
+            inds = np.argsort(-sc_all, kind='mergesort')
+            tp_s = np.cumsum(tp_all[:, inds], axis=1)
+            fp_s = np.cumsum(fp_all[:, inds], axis=1)
+            rc = tp_s / float(npig)
+            pr = tp_s / np.maximum(tp_s + fp_s, np.finfo(np.float64).eps)
+            pr_env = np.maximum.accumulate(pr[:, ::-1], axis=1)[:, ::-1]
+            ap_10 = np.zeros(10)
+            for ti in range(10):
+                idxs = np.searchsorted(rc[ti], rec_thrs, side='left')
+                vals = np.where(idxs < pr_env.shape[1], pr_env[ti, np.minimum(idxs, pr_env.shape[1] - 1)], 0.0)
+                ap_10[ti] = vals.mean()
+            ap_tk.append(ap_10)
+        ap50_95 = float(np.stack(ap_tk, axis=0).mean() * 100.0) if ap_tk else 0.0
+        ap50 = float(np.stack(ap_tk, axis=0)[:, 0].mean() * 100.0) if ap_tk else 0.0
+        sums = cnt_arrays[s_key][m_name][idx_arr].sum(axis=0)
+        rec50 = float(sums[1] / max(1.0, sums[0]) * 100.0)
+        top1 = float(sums[2] / max(1.0, sums[1]) * 100.0)
+        mp_top3 = float(sums[3] / max(1.0, sums[0]) * 100.0)
+        return np.array([ap50_95, ap50, rec50, top1, mp_top3], dtype=np.float64)
+
+    s0, m0 = seeds_sorted[0], needed_models[0]
+    if preds_per_seed_model[s0][m0]:
+        with contextlib.redirect_stdout(io.StringIO()):
+            c_gt = COCO(); c_gt.dataset = clean_gt_dict; c_gt.createIndex()
+            ev_chk = COCOeval_faster(c_gt, c_gt.loadRes(preds_per_seed_model[s0][m0]), 'bbox')
+            ev_chk.evaluate(); ev_chk.accumulate(); ev_chk.summarize()
+            chk_ap = ev_chk.stats[0] * 100.0
+        fast_ap = eval_sample(s0, m0, np.arange(M))[0]
+        assert abs(chk_ap - fast_ap) < 1e-4, f"Cluster bootstrap base COCO mismatch: {chk_ap} vs {fast_ap}"
+
+    rng = np.random.RandomState(rng_seed)
+    boot_vals = {m: np.zeros((n_boot, 5), dtype=np.float64) for m in needed_models}
+    for b in range(n_boot):
+        chosen_c = rng.randint(0, G, size=G)
+        idx_arr = np.concatenate([cluster_arrays[c] for c in chosen_c])
+        for m_name in needed_models:
+            seed_vecs = [eval_sample(s, m_name, idx_arr) for s in seeds_sorted]
+            boot_vals[m_name][b] = np.mean(seed_vecs, axis=0)
+
+    metric_names = ['AP50_95', 'AP50', 'Recall_IoU50_pct', 'Matched_Top1_Acc_pct', 'MissPenalized_Total_Top3_Hit_pct']
+    paired_out = {}
+    for m_a, m_b in pairs_to_test:
+        tag = f"{m_a}__minus__{m_b}"
+        paired_out[tag] = {}
+        diff_mat = boot_vals[m_a] - boot_vals[m_b]
+        for col, m_lbl in enumerate(metric_names):
+            dv = diff_mat[:, col]
+            lo, hi = float(np.percentile(dv, 2.5)), float(np.percentile(dv, 97.5))
+            p_two = min(1.0, 2.0 * min(float(np.mean(dv <= 0.0)), float(np.mean(dv >= 0.0))))
+            paired_out[tag][m_lbl] = {
+                'boot_mean_diff': round(float(dv.mean()), 3),
+                'ci95_cluster_bootstrap': [round(lo, 3), round(hi, 3)],
+                'p_value_two_sided': round(p_two, 4),
+                'significant_95': bool(lo > 0.0 or hi < 0.0),
+            }
+    return {
+        'n_images': M,
+        'n_clusters': G,
+        'n_bootstrap_replicates': n_boot,
+        'paired_comparisons': paired_out,
+    }
+
+
+def evaluate_frozen_5models_on_labeled_orchard(manifest: dict, image_dir: Path, gt_json: Path, out_json: Path,
+                                               cluster_csv: str = '', seeds=(0, 1, 2), n_boot: int = 1000):
+    device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+    raw_gt_dict = json.loads(gt_json.read_text(encoding='utf-8'))
+
+    anns_by_img = defaultdict(list)
+    clean_anns = []
+    n_uncertain_ignored = 0
+    for a in raw_gt_dict['annotations']:
+        if a.get('iscrowd', 0) != 0:
+            continue
+        if bool(a.get('uncertain', False)) or str(a.get('status', '')).lower() == 'uncertain' or int(a.get('category_id', -1)) < 0:
+            n_uncertain_ignored += 1
+            continue
+        anns_by_img[a['image_id']].append(a)
+        clean_anns.append(a)
+
+    clean_gt_dict = {
+        'images': raw_gt_dict['images'],
+        'annotations': clean_anns,
+        'categories': [c for c in raw_gt_dict['categories'] if int(c['id']) >= 0],
+    }
+
     fn2cluster = {}
+    cluster_source = 'per_image_fallback_no_cluster_csv'
     if cluster_csv and Path(cluster_csv).exists():
+        cluster_source = f'csv:{Path(cluster_csv).name}'
         for r in csv.DictReader(open(cluster_csv, encoding='utf-8-sig')):
             fn = r.get('file_name') or r.get('文件')
             cid = r.get('cluster_id') or r.get('簇编号')
             if fn and cid:
                 fn2cluster[fn] = str(cid)
+    elif any('cluster_id' in im for im in clean_gt_dict['images']):
+        cluster_source = 'gt_json_image_cluster_id'
 
-    models_4 = [('B0', 'YOLOv8n'), ('B1', 'Full_DINOv2'), ('C1', 'C1_SingleScale_125'), ('C3', 'C3_DualScale_082_125')]
-    report = {'models': {m[1]: defaultdict(list) for m in models_4}, 'per_seed': {}}
+    img_idx_to_cluster = [
+        fn2cluster.get(im['file_name'], str(im.get('cluster_id', im['id'])))
+        for im in clean_gt_dict['images']
+    ]
 
-    def iou_xywh(b1, b2):
-        ix1, iy1 = max(b1[0], b2[0]), max(b1[1], b2[1])
-        ix2, iy2 = min(b1[0] + b1[2], b2[0] + b2[2]), min(b1[1] + b1[3], b2[1] + b2[3])
-        inter = max(0.0, ix2 - ix1) * max(0.0, iy2 - iy1)
-        return inter / (b1[2] * b1[3] + b2[2] * b2[3] - inter + 1e-9)
+    models_5 = [
+        ('B0', 'YOLOv8n'),
+        ('B1', 'Full_DINOv2'),
+        ('C1', 'C1_SingleScale_125'),
+        ('A4b', 'A4b_FlipTTA_125_HFlip'),
+        ('C3', 'C3_DualScale_082_125'),
+    ]
+    report = {
+        'manifest_version': manifest['manifest_version'],
+        'primary_method': 'C3_DualScale_082_125',
+        'cluster_source': cluster_source,
+        'n_images': len(clean_gt_dict['images']),
+        'n_unique_clusters': len(set(img_idx_to_cluster)),
+        'n_confirmable_gt_boxes': len(clean_anns),
+        'n_uncertain_expert_boxes_excluded_from_gt': n_uncertain_ignored,
+        'matching_protocol': 'strict_1to1_score_descending_greedy_iou_0.50',
+        'models_3seed_summary': {},
+        'per_seed': {},
+    }
+
+    preds_per_seed_model = {str(s): {} for s in seeds}
+    img_counts_per_seed_model = {str(s): {} for s in seeds}
+    agg_lists = {m[1]: defaultdict(list) for m in models_5}
 
     for seed in seeds:
         eng = UnifiedOrchardInferenceEngine(manifest, seed=seed, device=device)
         report['per_seed'][str(seed)] = {}
-        for m_code, m_name in models_4:
+        for m_code, m_name in models_5:
             coco_rows = []
+            img_cnt_rows = []
             times_all, times_multi = [], []
-            n_gt_tot = n_prop_hit = n_rec50_loc = n_top1_ok = n_top3_ok = 0
-            err_no_cand = err_poor_loc = err_score_nms_drop = err_wrong_cls = 0
-            img_top3_hits_with_miss = []
+            n_gt_tot = n_prop_1to1_hit = n_rec50_loc = n_top1_ok = n_top3_ok = 0
+            err_no_cand = err_poor_loc = err_score_nms_or_crowd = err_wrong_cls = 0
 
-            for idx, im in enumerate(gt_dict['images']):
+            for idx, im in enumerate(clean_gt_dict['images']):
                 iid = im['id']
                 p = image_dir / im['file_name']
                 bgr = cv2.imdecode(np.fromfile(str(p), dtype=np.uint8), 1)
                 if torch.cuda.is_available():
                     torch.cuda.synchronize()
                 t0 = time.perf_counter()
-                bxs, scs, cls_l, probs, raw_low_bxs, _ = eng.infer_image_detailed(bgr, candidate=m_code)
+                bxs, scs, cls_l, probs, raw_low_props, _ = eng.infer_image_detailed(bgr, candidate=m_code)
                 if torch.cuda.is_available():
                     torch.cuda.synchronize()
                 dt_ms = (time.perf_counter() - t0) * 1000.0
-                if idx >= 5:
+                if idx >= min(5, max(0, len(clean_gt_dict['images']) - 1)):
                     times_all.append(dt_ms)
                     if len(anns_by_img.get(iid, [])) >= 3 or len([s for s in scs if s >= 0.25]) >= 3:
                         times_multi.append(dt_ms)
@@ -473,45 +741,52 @@ def evaluate_frozen_4models_on_labeled_orchard(manifest: dict, image_dir: Path, 
                 for bb, s, c in zip(bxs, scs, cls_l):
                     coco_rows.append({'image_id': iid, 'category_id': int(c), 'bbox': bb, 'score': float(s)})
 
-                # Active detections at operational threshold >= 0.20 for recall & error attribution
-                act = [(bxs[j], scs[j], cls_l[j], probs[j]) for j in range(len(bxs)) if scs[j] >= 0.20]
+                act_desc = sorted(
+                    [(bxs[j], float(scs[j]), int(cls_l[j]), probs[j]) for j in range(len(bxs)) if scs[j] >= 0.20],
+                    key=lambda x: -x[1]
+                )
                 glist = anns_by_img.get(iid, [])
-                for ga in glist:
-                    n_gt_tot += 1
-                    gb, gc = ga['bbox'], int(ga['category_id'])
-                    max_raw_iou = max([iou_xywh(gb, rb) for rb in raw_low_bxs], default=0.0)
-                    if max_raw_iou >= 0.50:
-                        n_prop_hit += 1
-                    best_act_iou, best_j = 0.0, -1
-                    for j, (ab, as_, ac_, ap_) in enumerate(act):
-                        v = iou_xywh(gb, ab)
-                        if v > best_act_iou:
-                            best_act_iou, best_j = v, j
-                    if best_act_iou >= 0.50:
+                raw_1to1_map, max_raw_ious = match_detections_to_gt_1to1(raw_low_props, glist, iou_thr=0.50)
+                act_1to1_map, _ = match_detections_to_gt_1to1(act_desc, glist, iou_thr=0.50)
+
+                im_gt = len(glist)
+                im_loc = im_t1 = im_t3 = 0
+                n_gt_tot += im_gt
+                n_prop_1to1_hit += len(raw_1to1_map)
+
+                for gi, ga in enumerate(glist):
+                    gc = int(ga['category_id'])
+                    if gi in act_1to1_map:
+                        dj = act_1to1_map[gi]
+                        _, _, ac_, ap_ = act_desc[dj]
+                        im_loc += 1
                         n_rec50_loc += 1
-                        _, _, ac_, ap_ = act[best_j]
                         top3_c = np.argsort(-ap_)[:3].tolist()
-                        if int(ac_) == gc:
+                        if ac_ == gc:
+                            im_t1 += 1
                             n_top1_ok += 1
                         else:
                             err_wrong_cls += 1
                         if gc in top3_c:
+                            im_t3 += 1
                             n_top3_ok += 1
-                            img_top3_hits_with_miss.append((fn2cluster.get(im['file_name'], str(iid)), 1.0))
-                        else:
-                            img_top3_hits_with_miss.append((fn2cluster.get(im['file_name'], str(iid)), 0.0))
                     else:
-                        img_top3_hits_with_miss.append((fn2cluster.get(im['file_name'], str(iid)), 0.0))
-                        if max_raw_iou < 0.10:
+                        mx_raw = max_raw_ious[gi]
+                        if mx_raw < 0.10:
                             err_no_cand += 1
-                        elif max_raw_iou < 0.50:
+                        elif mx_raw < 0.50:
                             err_poor_loc += 1
                         else:
-                            err_score_nms_drop += 1
+                            err_score_nms_or_crowd += 1
+
+                img_cnt_rows.append([im_gt, im_loc, im_t1, im_t3])
+
+            assert (n_top1_ok + err_wrong_cls + err_no_cand + err_poor_loc + err_score_nms_or_crowd) == n_gt_tot, \
+                "Error attribution must form an exact 1-to-1 partition of confirmable GT boxes!"
 
             with contextlib.redirect_stdout(io.StringIO()):
-                c_gt = COCO(str(gt_json))
-                ev = COCOeval_faster(c_gt, c_gt.loadRes(coco_rows), 'bbox') if coco_rows else None
+                c_gt = COCO(); c_gt.dataset = clean_gt_dict; c_gt.createIndex()
+                ev = COCOeval_faster(c_gt, c_gt.loadRes(coco_rows), 'bbox') if (coco_rows and clean_anns) else None
                 if ev:
                     ev.evaluate(); ev.accumulate(); ev.summarize()
             ap50_95 = round(float(ev.stats[0] * 100.0), 2) if ev else 0.0
@@ -520,44 +795,70 @@ def evaluate_frozen_4models_on_labeled_orchard(manifest: dict, image_dir: Path, 
             s_rec = {
                 'AP50_95': ap50_95,
                 'AP50': ap50,
-                'LowThr_Proposal_Recall50_pct': round(n_prop_hit / max(1, n_gt_tot) * 100.0, 2),
-                'Recall_IoU50_Active_pct': round(n_rec50_loc / max(1, n_gt_tot) * 100.0, 2),
-                'Matched_Top1_Acc_pct': round(n_top1_ok / max(1, n_rec50_loc) * 100.0, 2),
-                'Matched_Top3_Acc_pct': round(n_top3_ok / max(1, n_rec50_loc) * 100.0, 2),
+                'LowThr_Proposal_Recall50_1to1_pct': round(n_prop_1to1_hit / max(1, n_gt_tot) * 100.0, 2),
+                'Recall_IoU50_Active_1to1_pct': round(n_rec50_loc / max(1, n_gt_tot) * 100.0, 2),
+                'Matched_Top1_Acc_1to1_pct': round(n_top1_ok / max(1, n_rec50_loc) * 100.0, 2),
+                'Matched_Top3_Acc_1to1_pct': round(n_top3_ok / max(1, n_rec50_loc) * 100.0, 2),
                 'MissPenalized_Total_Top3_Hit_pct': round(n_top3_ok / max(1, n_gt_tot) * 100.0, 2),
                 'Mean_Latency_ms': round(float(np.mean(times_all)), 2) if times_all else None,
                 'P95_Latency_ms': round(float(np.percentile(times_all, 95)), 2) if times_all else None,
                 'MultiTarget_Latency_ms': round(float(np.mean(times_multi)), 2) if times_multi else None,
-                'Error_Attribution_Counts': {
-                    'no_candidate_box': err_no_cand,
-                    'inaccurate_box_localization': err_poor_loc,
-                    'lost_by_score_or_nms': err_score_nms_drop,
+                'Exact_GT_Partition_Counts': {
+                    'total_confirmable_gt': n_gt_tot,
+                    'localized_and_correct_top1': n_top1_ok,
                     'localized_but_wrong_class': err_wrong_cls,
+                    'no_candidate_box_raw_iou_lt_010': err_no_cand,
+                    'inaccurate_box_localization_raw_010_050': err_poor_loc,
+                    'lost_by_score_nms_or_1to1_crowding': err_score_nms_or_crowd,
                 },
             }
             report['per_seed'][str(seed)][m_name] = s_rec
+            preds_per_seed_model[str(seed)][m_name] = coco_rows
+            img_counts_per_seed_model[str(seed)][m_name] = img_cnt_rows
             for k, v in s_rec.items():
                 if isinstance(v, (int, float)):
-                    report['models'][m_name][k].append(v)
+                    agg_lists[m_name][k].append(v)
 
         eng.close()
 
+    for _, m_name in models_5:
+        msum = {}
+        for k, vals in agg_lists[m_name].items():
+            msum[f'{k}_mean'] = round(float(np.mean(vals)), 2)
+            msum[f'{k}_std'] = round(float(np.std(vals, ddof=1)), 2) if len(vals) > 1 else 0.0
+            msum[f'{k}_seeds'] = vals
+        report['models_3seed_summary'][m_name] = msum
+
+    pairs_orchard = [
+        ('C3_DualScale_082_125', 'C1_SingleScale_125'),
+        ('C3_DualScale_082_125', 'Full_DINOv2'),
+        ('C3_DualScale_082_125', 'YOLOv8n'),
+        ('C3_DualScale_082_125', 'A4b_FlipTTA_125_HFlip'),
+    ]
+    if clean_anns and n_boot > 0:
+        report['cluster_paired_bootstrap'] = paired_cluster_bootstrap_orchard(
+            clean_gt_dict, preds_per_seed_model, img_counts_per_seed_model,
+            img_idx_to_cluster, pairs_orchard, n_boot=n_boot
+        )
+
     out_json.parent.mkdir(parents=True, exist_ok=True)
     out_json.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
-    print(f"[冻结四模型评测完成] 结果已保存至: {out_json}", flush=True)
+    print(f"[预声明冻结五模型评测完成] 1-to-1 匹配 + 按簇 Bootstrap (G={report['n_unique_clusters']} 簇) -> {out_json}", flush=True)
+    return report
 
 
 def main():
-    ap = argparse.ArgumentParser(description='冻结主方法 C3 统一在线推理与真实果园四模型评测工具')
+    ap = argparse.ArgumentParser(description='冻结主方法 C3 统一在线推理与真实果园预声明五模型评测工具')
     ap.add_argument('--manifest', type=str, default=str(DEFAULT_MANIFEST))
-    ap.add_argument('--mode', choices=['check_manifest', 'preannotate', 'eval_frozen4'], default='check_manifest')
+    ap.add_argument('--mode', choices=['check_manifest', 'preannotate', 'eval_frozen5', 'eval_frozen4'], default='check_manifest')
     ap.add_argument('--image-dir', type=str, default='')
     ap.add_argument('--gt-json', type=str, default='')
     ap.add_argument('--cluster-csv', type=str, default='')
     ap.add_argument('--out-json', type=str, default='')
-    ap.add_argument('--candidate', choices=['B0', 'B1', 'C1', 'C2', 'C3'], default='C3')
+    ap.add_argument('--candidate', choices=['B0', 'B1', 'C1', 'C2', 'A4b', 'C3'], default='C3')
     ap.add_argument('--seed', type=int, default=0)
     ap.add_argument('--max-images', type=int, default=0)
+    ap.add_argument('--n-boot', type=int, default=1000)
     args = ap.parse_args()
 
     manifest = json.loads(Path(args.manifest).read_text(encoding='utf-8'))
@@ -565,14 +866,18 @@ def main():
         verify_manifest_hashes(manifest)
         s0 = manifest['seeds']['0']['locked_fusion_params_from_scidb_val']
         gammas = [manifest['seeds'][str(s)]['locked_fusion_params_from_scidb_val']['C2_gamma_ood'] for s in [0, 1, 2]]
-        print(f"[冻结配置校验通过] 主方法={manifest['primary_method_id']} | C3权重={s0['C3_MainMethod_weights_det_core082_std125']} | "
-              f"C2按种子γ={gammas} | 12份权重SHA-256全部吻合！", flush=True)
+        a4b_ws = [manifest['seeds'][str(s)]['locked_fusion_params_from_scidb_val']['A4b_FlipTTA_125_HFlip_weights_det_std_flip'] for s in [0, 1, 2]]
+        print(f"[冻结配置校验通过] 版本={manifest['manifest_version']} | 唯一主方法={manifest['primary_method_id']} | "
+              f"C3权重={s0['C3_MainMethod_weights_det_core082_std125']} | A4b按种子权重={a4b_ws} | "
+              f"C2按种子γ={gammas} | 预声明评测模型={manifest['frozen_stage4_orchard_eval_models']} | 12份权重SHA-256全部吻合！", flush=True)
     elif args.mode == 'preannotate':
         assert args.image_dir and args.out_json, "preannotate 模式需指定 --image-dir 与 --out-json"
         run_preannotate_folder(manifest, Path(args.image_dir), Path(args.out_json), args.candidate, args.seed, max_images=args.max_images)
-    elif args.mode == 'eval_frozen4':
-        assert args.image_dir and args.gt_json and args.out_json, "eval_frozen4 模式需指定 --image-dir, --gt-json 与 --out-json"
-        evaluate_frozen_4models_on_labeled_orchard(manifest, Path(args.image_dir), Path(args.gt_json), Path(args.out_json), args.cluster_csv)
+    elif args.mode in ('eval_frozen5', 'eval_frozen4'):
+        assert args.image_dir and args.gt_json and args.out_json, "评测模式需指定 --image-dir, --gt-json 与 --out-json"
+        evaluate_frozen_5models_on_labeled_orchard(
+            manifest, Path(args.image_dir), Path(args.gt_json), Path(args.out_json), args.cluster_csv, n_boot=args.n_boot
+        )
 
 
 if __name__ == '__main__':
