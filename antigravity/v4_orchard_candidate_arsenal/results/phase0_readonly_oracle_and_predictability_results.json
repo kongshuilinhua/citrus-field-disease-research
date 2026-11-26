@@ -1,0 +1,2484 @@
+{
+  "审计名称": "阶段一只读可行性审计_Oracle分解与冲突可预测性及类级收缩校准",
+  "耗时秒": 68.59,
+  "仓库零修改保证": true,
+  "训练集GT选框与样本内记忆核查": [
+    {
+      "seed": 0,
+      "n_gt_matched_train_boxes": 9330,
+      "yolo_in_sample_acc_pct": 98.564,
+      "dino_in_sample_acc_pct": 99.582,
+      "disagreement_count": 171,
+      "disagreement_pct": 1.833,
+      "caseC_yolo_right_dino_wrong": 38,
+      "caseB_dino_right_yolo_wrong": 133
+    },
+    {
+      "seed": 1,
+      "n_gt_matched_train_boxes": 9330,
+      "yolo_in_sample_acc_pct": 98.51,
+      "dino_in_sample_acc_pct": 99.496,
+      "disagreement_count": 177,
+      "disagreement_pct": 1.897,
+      "caseC_yolo_right_dino_wrong": 42,
+      "caseB_dino_right_yolo_wrong": 134
+    },
+    {
+      "seed": 2,
+      "n_gt_matched_train_boxes": 9330,
+      "yolo_in_sample_acc_pct": 98.253,
+      "dino_in_sample_acc_pct": 99.496,
+      "disagreement_count": 189,
+      "disagreement_pct": 2.026,
+      "caseC_yolo_right_dino_wrong": 36,
+      "caseB_dino_right_yolo_wrong": 152
+    }
+  ],
+  "三种子汇总": {
+    "oracles": {
+      "val_source": {
+        "Ref0_Native_YOLOv8n": {
+          "mean": 89.779,
+          "std": 0.821,
+          "seeds": [
+            90.676,
+            89.065,
+            89.595
+          ]
+        },
+        "Ref1_FullDINO_Square_Hard": {
+          "mean": 89.774,
+          "std": 1.632,
+          "seeds": [
+            90.493,
+            87.906,
+            90.922
+          ]
+        },
+        "Ref2_GlobalFixed_ClsOnly_NoNMS": {
+          "mean": 90.175,
+          "std": 1.454,
+          "seeds": [
+            91.084,
+            88.498,
+            90.944
+          ]
+        },
+        "Ref3_GlobalFixed_ClsPlusScore_NoNMS": {
+          "mean": 90.433,
+          "std": 1.094,
+          "seeds": [
+            91.107,
+            89.171,
+            91.02
+          ]
+        },
+        "Ref4_Abl1_GlobalFixed_Full_WithNMS": {
+          "mean": 90.437,
+          "std": 1.088,
+          "seeds": [
+            91.108,
+            89.182,
+            91.021
+          ]
+        },
+        "StepEffect_ScoreReweight_NoNMS": {
+          "mean": 0.257,
+          "std": 0.361,
+          "seeds": [
+            0.023,
+            0.673,
+            0.076
+          ]
+        },
+        "StepEffect_PostReclass_NMS": {
+          "mean": 0.004,
+          "std": 0.006,
+          "seeds": [
+            0.001,
+            0.011,
+            0.001
+          ]
+        },
+        "Oracle_A1_ClassChoice_KeepYoloSc_NoNMS": {
+          "mean": 90.758,
+          "std": 1.116,
+          "seeds": [
+            91.465,
+            89.472,
+            91.338
+          ]
+        },
+        "Oracle_A2_ClassChoice_KeepAbl1Sc_NoNMS": {
+          "mean": 90.842,
+          "std": 0.996,
+          "seeds": [
+            91.457,
+            89.693,
+            91.375
+          ]
+        },
+        "Oracle_A3_ClassChoice_WithScoreAndNMS": {
+          "mean": 90.891,
+          "std": 0.958,
+          "seeds": [
+            91.491,
+            89.786,
+            91.396
+          ]
+        },
+        "Delta_PureClassChoice_Over_Abl1_WithNMS": {
+          "mean": 0.454,
+          "std": 0.13,
+          "seeds": [
+            0.383,
+            0.604,
+            0.375
+          ]
+        },
+        "Delta_PureClassChoice_FixedScore_NoNMS": {
+          "mean": 0.409,
+          "std": 0.098,
+          "seeds": [
+            0.35,
+            0.522,
+            0.355
+          ]
+        },
+        "Oracle_B1_AlphaScoreOnly_FixedClass_NoNMS": {
+          "mean": 90.733,
+          "std": 0.966,
+          "seeds": [
+            91.314,
+            89.617,
+            91.267
+          ]
+        },
+        "Oracle_B2_AlphaScoreOnly_FixedClass_WithNMS": {
+          "mean": 90.734,
+          "std": 0.966,
+          "seeds": [
+            91.314,
+            89.619,
+            91.268
+          ]
+        },
+        "Delta_AlphaScoreOnly_Over_Abl1": {
+          "mean": 0.297,
+          "std": 0.123,
+          "seeds": [
+            0.206,
+            0.437,
+            0.247
+          ]
+        },
+        "Oracle_B3_UnconstrainedIdealRank_FixedBoxesAndClass": {
+          "mean": 94.682,
+          "std": 0.442,
+          "seeds": [
+            95.073,
+            94.203,
+            94.771
+          ]
+        },
+        "Delta_UnconstrainedIdealRank_Over_Abl1": {
+          "mean": 4.245,
+          "std": 0.68,
+          "seeds": [
+            3.965,
+            5.021,
+            3.75
+          ]
+        },
+        "Oracle_C_TrueGateSpace_AlphaIn01_Full_WithNMS": {
+          "mean": 91.196,
+          "std": 0.789,
+          "seeds": [
+            91.682,
+            90.286,
+            91.62
+          ]
+        },
+        "Delta_TrueGateSpace_AlphaIn01_Over_Abl1": {
+          "mean": 0.759,
+          "std": 0.299,
+          "seeds": [
+            0.574,
+            1.104,
+            0.599
+          ]
+        }
+      },
+      "testB_exploratory": {
+        "Ref0_Native_YOLOv8n": {
+          "mean": 71.247,
+          "std": 4.121,
+          "seeds": [
+            74.064,
+            66.517,
+            73.161
+          ]
+        },
+        "Ref1_FullDINO_Square_Hard": {
+          "mean": 75.05,
+          "std": 2.369,
+          "seeds": [
+            77.717,
+            73.192,
+            74.24
+          ]
+        },
+        "Ref2_GlobalFixed_ClsOnly_NoNMS": {
+          "mean": 76.8,
+          "std": 2.107,
+          "seeds": [
+            79.218,
+            75.362,
+            75.82
+          ]
+        },
+        "Ref3_GlobalFixed_ClsPlusScore_NoNMS": {
+          "mean": 77.915,
+          "std": 1.968,
+          "seeds": [
+            80.102,
+            76.288,
+            77.355
+          ]
+        },
+        "Ref4_Abl1_GlobalFixed_Full_WithNMS": {
+          "mean": 78.227,
+          "std": 1.886,
+          "seeds": [
+            80.342,
+            76.721,
+            77.619
+          ]
+        },
+        "StepEffect_ScoreReweight_NoNMS": {
+          "mean": 1.115,
+          "std": 0.364,
+          "seeds": [
+            0.884,
+            0.926,
+            1.535
+          ]
+        },
+        "StepEffect_PostReclass_NMS": {
+          "mean": 0.312,
+          "std": 0.105,
+          "seeds": [
+            0.24,
+            0.433,
+            0.264
+          ]
+        },
+        "Oracle_A1_ClassChoice_KeepYoloSc_NoNMS": {
+          "mean": 80.905,
+          "std": 0.497,
+          "seeds": [
+            81.415,
+            80.423,
+            80.877
+          ]
+        },
+        "Oracle_A2_ClassChoice_KeepAbl1Sc_NoNMS": {
+          "mean": 80.696,
+          "std": 1.017,
+          "seeds": [
+            81.601,
+            79.596,
+            80.892
+          ]
+        },
+        "Oracle_A3_ClassChoice_WithScoreAndNMS": {
+          "mean": 81.801,
+          "std": 0.642,
+          "seeds": [
+            82.327,
+            81.086,
+            81.991
+          ]
+        },
+        "Delta_PureClassChoice_Over_Abl1_WithNMS": {
+          "mean": 3.574,
+          "std": 1.376,
+          "seeds": [
+            1.985,
+            4.365,
+            4.372
+          ]
+        },
+        "Delta_PureClassChoice_FixedScore_NoNMS": {
+          "mean": 2.781,
+          "std": 1.116,
+          "seeds": [
+            1.499,
+            3.308,
+            3.537
+          ]
+        },
+        "Oracle_B1_AlphaScoreOnly_FixedClass_NoNMS": {
+          "mean": 80.32,
+          "std": 1.889,
+          "seeds": [
+            82.426,
+            78.776,
+            79.759
+          ]
+        },
+        "Oracle_B2_AlphaScoreOnly_FixedClass_WithNMS": {
+          "mean": 80.329,
+          "std": 1.88,
+          "seeds": [
+            82.431,
+            78.809,
+            79.747
+          ]
+        },
+        "Delta_AlphaScoreOnly_Over_Abl1": {
+          "mean": 2.102,
+          "std": 0.023,
+          "seeds": [
+            2.089,
+            2.088,
+            2.128
+          ]
+        },
+        "Oracle_B3_UnconstrainedIdealRank_FixedBoxesAndClass": {
+          "mean": 85.598,
+          "std": 1.451,
+          "seeds": [
+            87.235,
+            84.471,
+            85.088
+          ]
+        },
+        "Delta_UnconstrainedIdealRank_Over_Abl1": {
+          "mean": 7.371,
+          "std": 0.437,
+          "seeds": [
+            6.893,
+            7.75,
+            7.469
+          ]
+        },
+        "Oracle_C_TrueGateSpace_AlphaIn01_Full_WithNMS": {
+          "mean": 83.208,
+          "std": 0.683,
+          "seeds": [
+            83.815,
+            82.468,
+            83.342
+          ]
+        },
+        "Delta_TrueGateSpace_AlphaIn01_Over_Abl1": {
+          "mean": 4.981,
+          "std": 1.306,
+          "seeds": [
+            3.473,
+            5.747,
+            5.723
+          ]
+        }
+      },
+      "testC_exploratory": {
+        "Ref0_Native_YOLOv8n": {
+          "mean": 72.771,
+          "std": 1.324,
+          "seeds": [
+            71.328,
+            73.931,
+            73.053
+          ]
+        },
+        "Ref1_FullDINO_Square_Hard": {
+          "mean": 82.096,
+          "std": 2.898,
+          "seeds": [
+            85.43,
+            80.674,
+            80.183
+          ]
+        },
+        "Ref2_GlobalFixed_ClsOnly_NoNMS": {
+          "mean": 82.804,
+          "std": 1.515,
+          "seeds": [
+            84.444,
+            81.458,
+            82.509
+          ]
+        },
+        "Ref3_GlobalFixed_ClsPlusScore_NoNMS": {
+          "mean": 83.458,
+          "std": 1.328,
+          "seeds": [
+            84.841,
+            82.194,
+            83.339
+          ]
+        },
+        "Ref4_Abl1_GlobalFixed_Full_WithNMS": {
+          "mean": 83.964,
+          "std": 1.306,
+          "seeds": [
+            85.295,
+            82.685,
+            83.911
+          ]
+        },
+        "StepEffect_ScoreReweight_NoNMS": {
+          "mean": 0.654,
+          "std": 0.228,
+          "seeds": [
+            0.397,
+            0.736,
+            0.83
+          ]
+        },
+        "StepEffect_PostReclass_NMS": {
+          "mean": 0.506,
+          "std": 0.06,
+          "seeds": [
+            0.454,
+            0.491,
+            0.572
+          ]
+        },
+        "Oracle_A1_ClassChoice_KeepYoloSc_NoNMS": {
+          "mean": 87.367,
+          "std": 1.139,
+          "seeds": [
+            88.678,
+            86.795,
+            86.627
+          ]
+        },
+        "Oracle_A2_ClassChoice_KeepAbl1Sc_NoNMS": {
+          "mean": 87.176,
+          "std": 0.867,
+          "seeds": [
+            88.178,
+            86.681,
+            86.67
+          ]
+        },
+        "Oracle_A3_ClassChoice_WithScoreAndNMS": {
+          "mean": 87.885,
+          "std": 0.882,
+          "seeds": [
+            88.904,
+            87.39,
+            87.362
+          ]
+        },
+        "Delta_PureClassChoice_Over_Abl1_WithNMS": {
+          "mean": 3.922,
+          "std": 0.683,
+          "seeds": [
+            3.609,
+            4.705,
+            3.451
+          ]
+        },
+        "Delta_PureClassChoice_FixedScore_NoNMS": {
+          "mean": 3.718,
+          "std": 0.666,
+          "seeds": [
+            3.337,
+            4.487,
+            3.331
+          ]
+        },
+        "Oracle_B1_AlphaScoreOnly_FixedClass_NoNMS": {
+          "mean": 84.662,
+          "std": 1.201,
+          "seeds": [
+            85.848,
+            83.446,
+            84.692
+          ]
+        },
+        "Oracle_B2_AlphaScoreOnly_FixedClass_WithNMS": {
+          "mean": 84.686,
+          "std": 1.172,
+          "seeds": [
+            85.84,
+            83.497,
+            84.721
+          ]
+        },
+        "Delta_AlphaScoreOnly_Over_Abl1": {
+          "mean": 0.722,
+          "std": 0.154,
+          "seeds": [
+            0.545,
+            0.812,
+            0.81
+          ]
+        },
+        "Oracle_B3_UnconstrainedIdealRank_FixedBoxesAndClass": {
+          "mean": 86.854,
+          "std": 1.143,
+          "seeds": [
+            87.822,
+            85.593,
+            87.147
+          ]
+        },
+        "Delta_UnconstrainedIdealRank_Over_Abl1": {
+          "mean": 2.89,
+          "std": 0.355,
+          "seeds": [
+            2.527,
+            2.908,
+            3.236
+          ]
+        },
+        "Oracle_C_TrueGateSpace_AlphaIn01_Full_WithNMS": {
+          "mean": 88.41,
+          "std": 0.795,
+          "seeds": [
+            89.322,
+            87.867,
+            88.04
+          ]
+        },
+        "Delta_TrueGateSpace_AlphaIn01_Over_Abl1": {
+          "mean": 4.446,
+          "std": 0.639,
+          "seeds": [
+            4.027,
+            5.182,
+            4.129
+          ]
+        }
+      }
+    },
+    "val_oof_calibration_and_gate": {
+      "Global_Fixed_035_Abl1": {
+        "mean": 90.437,
+        "std": 1.088,
+        "seeds": [
+          91.108,
+          89.182,
+          91.021
+        ]
+      },
+      "OOF_TempScaled_Global": {
+        "mean": 90.38,
+        "std": 0.9,
+        "seeds": [
+          91.063,
+          89.361,
+          90.717
+        ]
+      },
+      "OOF_PerClass_Unregularized": {
+        "mean": 90.411,
+        "std": 1.031,
+        "seeds": [
+          91.215,
+          89.249,
+          90.768
+        ]
+      },
+      "OOF_PerClass_Shrinkage_Mild": {
+        "mean": 90.526,
+        "std": 1.005,
+        "seeds": [
+          91.215,
+          89.372,
+          90.99
+        ]
+      },
+      "OOF_PerClass_Shrinkage_Strong": {
+        "mean": 90.547,
+        "std": 0.982,
+        "seeds": [
+          91.214,
+          89.419,
+          91.008
+        ]
+      },
+      "OOF_PerBox_RidgeGate_14d": {
+        "mean": 89.923,
+        "std": 1.468,
+        "seeds": [
+          90.508,
+          88.253,
+          91.008
+        ]
+      }
+    },
+    "exploratory_transfer": {
+      "testB_exploratory": {
+        "Global_Fixed_035_Abl1": {
+          "mean": 78.227,
+          "std": 1.886,
+          "seeds": [
+            80.342,
+            76.721,
+            77.619
+          ]
+        },
+        "ValFit_TempScaled_Global": {
+          "mean": 76.498,
+          "std": 4.026,
+          "seeds": [
+            79.799,
+            72.012,
+            77.683
+          ]
+        },
+        "ValFit_PerClass_Unregularized": {
+          "mean": 76.956,
+          "std": 2.457,
+          "seeds": [
+            78.786,
+            74.163,
+            77.919
+          ]
+        },
+        "ValFit_PerClass_Shrinkage_Mild": {
+          "mean": 78.278,
+          "std": 1.811,
+          "seeds": [
+            80.232,
+            76.656,
+            77.945
+          ]
+        },
+        "ValFit_PerClass_Shrinkage_Strong": {
+          "mean": 78.221,
+          "std": 1.791,
+          "seeds": [
+            80.212,
+            76.741,
+            77.71
+          ]
+        },
+        "ValFit_PerBox_RidgeGate_14d": {
+          "mean": 76.819,
+          "std": 1.763,
+          "seeds": [
+            78.852,
+            75.721,
+            75.884
+          ]
+        }
+      },
+      "testC_exploratory": {
+        "Global_Fixed_035_Abl1": {
+          "mean": 83.964,
+          "std": 1.306,
+          "seeds": [
+            85.295,
+            82.685,
+            83.911
+          ]
+        },
+        "ValFit_TempScaled_Global": {
+          "mean": 81.644,
+          "std": 2.727,
+          "seeds": [
+            81.906,
+            78.795,
+            84.23
+          ]
+        },
+        "ValFit_PerClass_Unregularized": {
+          "mean": 82.867,
+          "std": 2.025,
+          "seeds": [
+            85.174,
+            81.382,
+            82.045
+          ]
+        },
+        "ValFit_PerClass_Shrinkage_Mild": {
+          "mean": 83.833,
+          "std": 1.453,
+          "seeds": [
+            85.293,
+            82.388,
+            83.819
+          ]
+        },
+        "ValFit_PerClass_Shrinkage_Strong": {
+          "mean": 83.983,
+          "std": 1.37,
+          "seeds": [
+            85.439,
+            82.72,
+            83.789
+          ]
+        },
+        "ValFit_PerBox_RidgeGate_14d": {
+          "mean": 83.142,
+          "std": 2.404,
+          "seeds": [
+            85.9,
+            82.034,
+            81.491
+          ]
+        }
+      }
+    }
+  },
+  "逐种子完整明细": [
+    {
+      "seed": 0,
+      "census": {
+        "val_source": {
+          "n_gt_boxes_total": 869,
+          "n_cand_conf05": 1275,
+          "n_cand_fg08": 1216,
+          "n_fg08_disagree_all": 49,
+          "fg08_disagree_pct": 4.03,
+          "n_matched_tp_candidates": 868,
+          "n_duplicate_box_candidates": 10,
+          "n_pure_bg_fp_candidates": 338,
+          "matched_disagree_count": 14,
+          "matched_disagree_pct": 1.61,
+          "quadrant_A_both_right": 853,
+          "quadrant_B_dino_right_yolo_wrong": 7,
+          "quadrant_C_yolo_right_dino_wrong": 7,
+          "quadrant_D_both_wrong": 1,
+          "quadrant_D_same_wrong_cls": 1,
+          "quadrant_D_diff_wrong_cls": 0,
+          "quadrant_D_in_top2_union": 1,
+          "per_class_conflict_distribution": {
+            "S1 Healthy fruit": {
+              "n_gt_matched": 59,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S2 Healthy leaf": {
+              "n_gt_matched": 58,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S3 Blotchy mottling": {
+              "n_gt_matched": 59,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S4 Red nose fruit": {
+              "n_gt_matched": 50,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 0
+            },
+            "S5 Zinc deficiency": {
+              "n_gt_matched": 69,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S6 Vein yellowing": {
+              "n_gt_matched": 47,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 1
+            },
+            "S7 Uniform yellowing": {
+              "n_gt_matched": 66,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 0
+            },
+            "S8 Magnesium deficiency": {
+              "n_gt_matched": 67,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S9 Boron deficiency": {
+              "n_gt_matched": 64,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S10 Anthracnose": {
+              "n_gt_matched": 72,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S11 Citrus greasy spot": {
+              "n_gt_matched": 54,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 4,
+              "caseD_both_wrong": 0
+            },
+            "S14 Canker": {
+              "n_gt_matched": 74,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S13 Sooty mould": {
+              "n_gt_matched": 84,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S12 Algal spot and moss": {
+              "n_gt_matched": 45,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            }
+          }
+        },
+        "testB_exploratory": {
+          "n_gt_boxes_total": 602,
+          "n_cand_conf05": 1202,
+          "n_cand_fg08": 1105,
+          "n_fg08_disagree_all": 263,
+          "fg08_disagree_pct": 23.8,
+          "n_matched_tp_candidates": 601,
+          "n_duplicate_box_candidates": 56,
+          "n_pure_bg_fp_candidates": 448,
+          "matched_disagree_count": 92,
+          "matched_disagree_pct": 15.31,
+          "quadrant_A_both_right": 498,
+          "quadrant_B_dino_right_yolo_wrong": 59,
+          "quadrant_C_yolo_right_dino_wrong": 17,
+          "quadrant_D_both_wrong": 27,
+          "quadrant_D_same_wrong_cls": 11,
+          "quadrant_D_diff_wrong_cls": 16,
+          "quadrant_D_in_top2_union": 19,
+          "per_class_conflict_distribution": {
+            "S1 Healthy fruit": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S2 Healthy leaf": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 12,
+              "caseC_yolo_right_dino_wrong": 3,
+              "caseD_both_wrong": 0
+            },
+            "S3 Blotchy mottling": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 9,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 6
+            },
+            "S4 Red nose fruit": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 3,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 0
+            },
+            "S5 Zinc deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 1
+            },
+            "S6 Vein yellowing": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 6,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 3
+            },
+            "S7 Uniform yellowing": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 3,
+              "caseC_yolo_right_dino_wrong": 4,
+              "caseD_both_wrong": 5
+            },
+            "S8 Magnesium deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 14,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 6
+            },
+            "S9 Boron deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S10 Anthracnose": {
+              "n_gt_matched": 42,
+              "caseB_dino_right_yolo_wrong": 4,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 4
+            },
+            "S11 Citrus greasy spot": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 4,
+              "caseC_yolo_right_dino_wrong": 4,
+              "caseD_both_wrong": 1
+            },
+            "S14 Canker": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S13 Sooty mould": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 0
+            },
+            "S12 Algal spot and moss": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 1
+            }
+          }
+        },
+        "testC_exploratory": {
+          "n_gt_boxes_total": 602,
+          "n_cand_conf05": 705,
+          "n_cand_fg08": 689,
+          "n_fg08_disagree_all": 194,
+          "fg08_disagree_pct": 28.16,
+          "n_matched_tp_candidates": 601,
+          "n_duplicate_box_candidates": 46,
+          "n_pure_bg_fp_candidates": 42,
+          "matched_disagree_count": 126,
+          "matched_disagree_pct": 20.97,
+          "quadrant_A_both_right": 458,
+          "quadrant_B_dino_right_yolo_wrong": 106,
+          "quadrant_C_yolo_right_dino_wrong": 15,
+          "quadrant_D_both_wrong": 22,
+          "quadrant_D_same_wrong_cls": 17,
+          "quadrant_D_diff_wrong_cls": 5,
+          "quadrant_D_in_top2_union": 14,
+          "per_class_conflict_distribution": {
+            "S1 Healthy fruit": {
+              "n_gt_matched": 42,
+              "caseB_dino_right_yolo_wrong": 4,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S2 Healthy leaf": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 8,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 1
+            },
+            "S3 Blotchy mottling": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 8,
+              "caseC_yolo_right_dino_wrong": 3,
+              "caseD_both_wrong": 3
+            },
+            "S4 Red nose fruit": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S5 Zinc deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S6 Vein yellowing": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 8
+            },
+            "S7 Uniform yellowing": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 8,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 1
+            },
+            "S8 Magnesium deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 14,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 3
+            },
+            "S9 Boron deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 3,
+              "caseD_both_wrong": 0
+            },
+            "S10 Anthracnose": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 7,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S11 Citrus greasy spot": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 6,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 0
+            },
+            "S14 Canker": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 4,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 1
+            },
+            "S13 Sooty mould": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 11,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S12 Algal spot and moss": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 32,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 5
+            }
+          }
+        }
+      },
+      "decomposed_oracles": {
+        "val_source": {
+          "Ref0_Native_YOLOv8n": 90.676,
+          "Ref1_FullDINO_Square_Hard": 90.493,
+          "Ref2_GlobalFixed_ClsOnly_NoNMS": 91.084,
+          "Ref3_GlobalFixed_ClsPlusScore_NoNMS": 91.107,
+          "Ref4_Abl1_GlobalFixed_Full_WithNMS": 91.108,
+          "StepEffect_ScoreReweight_NoNMS": 0.023,
+          "StepEffect_PostReclass_NMS": 0.001,
+          "Oracle_A1_ClassChoice_KeepYoloSc_NoNMS": 91.465,
+          "Oracle_A2_ClassChoice_KeepAbl1Sc_NoNMS": 91.457,
+          "Oracle_A3_ClassChoice_WithScoreAndNMS": 91.491,
+          "Delta_PureClassChoice_Over_Abl1_WithNMS": 0.383,
+          "Delta_PureClassChoice_FixedScore_NoNMS": 0.35,
+          "Oracle_B1_AlphaScoreOnly_FixedClass_NoNMS": 91.314,
+          "Oracle_B2_AlphaScoreOnly_FixedClass_WithNMS": 91.314,
+          "Delta_AlphaScoreOnly_Over_Abl1": 0.206,
+          "Oracle_B3_UnconstrainedIdealRank_FixedBoxesAndClass": 95.073,
+          "Delta_UnconstrainedIdealRank_Over_Abl1": 3.965,
+          "Oracle_C_TrueGateSpace_AlphaIn01_Full_WithNMS": 91.682,
+          "Delta_TrueGateSpace_AlphaIn01_Over_Abl1": 0.574
+        },
+        "testB_exploratory": {
+          "Ref0_Native_YOLOv8n": 74.064,
+          "Ref1_FullDINO_Square_Hard": 77.717,
+          "Ref2_GlobalFixed_ClsOnly_NoNMS": 79.218,
+          "Ref3_GlobalFixed_ClsPlusScore_NoNMS": 80.102,
+          "Ref4_Abl1_GlobalFixed_Full_WithNMS": 80.342,
+          "StepEffect_ScoreReweight_NoNMS": 0.884,
+          "StepEffect_PostReclass_NMS": 0.24,
+          "Oracle_A1_ClassChoice_KeepYoloSc_NoNMS": 81.415,
+          "Oracle_A2_ClassChoice_KeepAbl1Sc_NoNMS": 81.601,
+          "Oracle_A3_ClassChoice_WithScoreAndNMS": 82.327,
+          "Delta_PureClassChoice_Over_Abl1_WithNMS": 1.985,
+          "Delta_PureClassChoice_FixedScore_NoNMS": 1.499,
+          "Oracle_B1_AlphaScoreOnly_FixedClass_NoNMS": 82.426,
+          "Oracle_B2_AlphaScoreOnly_FixedClass_WithNMS": 82.431,
+          "Delta_AlphaScoreOnly_Over_Abl1": 2.089,
+          "Oracle_B3_UnconstrainedIdealRank_FixedBoxesAndClass": 87.235,
+          "Delta_UnconstrainedIdealRank_Over_Abl1": 6.893,
+          "Oracle_C_TrueGateSpace_AlphaIn01_Full_WithNMS": 83.815,
+          "Delta_TrueGateSpace_AlphaIn01_Over_Abl1": 3.473
+        },
+        "testC_exploratory": {
+          "Ref0_Native_YOLOv8n": 71.328,
+          "Ref1_FullDINO_Square_Hard": 85.43,
+          "Ref2_GlobalFixed_ClsOnly_NoNMS": 84.444,
+          "Ref3_GlobalFixed_ClsPlusScore_NoNMS": 84.841,
+          "Ref4_Abl1_GlobalFixed_Full_WithNMS": 85.295,
+          "StepEffect_ScoreReweight_NoNMS": 0.397,
+          "StepEffect_PostReclass_NMS": 0.454,
+          "Oracle_A1_ClassChoice_KeepYoloSc_NoNMS": 88.678,
+          "Oracle_A2_ClassChoice_KeepAbl1Sc_NoNMS": 88.178,
+          "Oracle_A3_ClassChoice_WithScoreAndNMS": 88.904,
+          "Delta_PureClassChoice_Over_Abl1_WithNMS": 3.609,
+          "Delta_PureClassChoice_FixedScore_NoNMS": 3.337,
+          "Oracle_B1_AlphaScoreOnly_FixedClass_NoNMS": 85.848,
+          "Oracle_B2_AlphaScoreOnly_FixedClass_WithNMS": 85.84,
+          "Delta_AlphaScoreOnly_Over_Abl1": 0.545,
+          "Oracle_B3_UnconstrainedIdealRank_FixedBoxesAndClass": 87.822,
+          "Delta_UnconstrainedIdealRank_Over_Abl1": 2.527,
+          "Oracle_C_TrueGateSpace_AlphaIn01_Full_WithNMS": 89.322,
+          "Delta_TrueGateSpace_AlphaIn01_Over_Abl1": 4.027
+        }
+      },
+      "predictability_and_calibration": {
+        "learned_val_weights": {
+          "temp_det": 1.35,
+          "temp_dino": 1.205,
+          "alpha_global": 0.502,
+          "w_unregularized_14cls": [
+            0.711,
+            0.0,
+            0.578,
+            1.0,
+            0.022,
+            0.154,
+            0.694,
+            0.875,
+            0.43,
+            0.51,
+            0.503,
+            0.595,
+            0.788,
+            0.099
+          ],
+          "w_shrinkage_mild_14cls": [
+            0.481,
+            0.322,
+            0.363,
+            0.776,
+            0.349,
+            0.311,
+            0.357,
+            0.464,
+            0.351,
+            0.354,
+            0.388,
+            0.367,
+            0.373,
+            0.305
+          ],
+          "w_shrinkage_strong_14cls": [
+            0.403,
+            0.341,
+            0.354,
+            0.493,
+            0.35,
+            0.338,
+            0.351,
+            0.386,
+            0.35,
+            0.351,
+            0.366,
+            0.355,
+            0.356,
+            0.336
+          ]
+        },
+        "source_val_5fold_OOF": {
+          "predictability_CaseB_vs_CaseC_OOF_LogReg": {
+            "n_total": 14,
+            "n_pos": 7,
+            "n_neg": 7,
+            "pos_rate_pct": 50.0,
+            "roc_auc": 0.6327,
+            "roc_ci95": [
+              0.3061,
+              0.9184
+            ],
+            "pr_auc": 0.6782,
+            "pr_ci95": [
+              0.4841,
+              0.9288
+            ]
+          },
+          "predictability_CaseB_vs_CaseC_ZeroParamMarginDiff": {
+            "n_total": 14,
+            "n_pos": 7,
+            "n_neg": 7,
+            "pos_rate_pct": 50.0,
+            "roc_auc": 0.6531,
+            "roc_ci95": [
+              0.3061,
+              0.9388
+            ],
+            "pr_auc": 0.6694,
+            "pr_ci95": [
+              0.4665,
+              0.9415
+            ]
+          },
+          "predictability_DINO_Error_AllMatched_OOF": {
+            "n_total": 868,
+            "n_pos": 8,
+            "n_neg": 860,
+            "pos_rate_pct": 0.92,
+            "roc_auc": 0.9938,
+            "roc_ci95": [
+              0.9869,
+              0.9988
+            ],
+            "pr_auc": 0.4827,
+            "pr_ci95": [
+              0.3345,
+              0.8758
+            ]
+          },
+          "OOF_AP50_95_comparison": {
+            "Global_Fixed_035_Abl1": 91.108,
+            "OOF_TempScaled_Global": 91.063,
+            "OOF_PerClass_Unregularized": 91.215,
+            "OOF_PerClass_Shrinkage_Mild": 91.215,
+            "OOF_PerClass_Shrinkage_Strong": 91.214,
+            "OOF_PerBox_RidgeGate_14d": 90.508
+          }
+        },
+        "exploratory_posthoc_transfer": {
+          "testB_exploratory": {
+            "predictability_CaseB_vs_CaseC_ValTrainedLogReg": {
+              "n_total": 76,
+              "n_pos": 59,
+              "n_neg": 17,
+              "pos_rate_pct": 77.63,
+              "roc_auc": 0.5065,
+              "roc_ci95": [
+                0.3449,
+                0.664
+              ],
+              "pr_auc": 0.8002,
+              "pr_ci95": [
+                0.7241,
+                0.8789
+              ]
+            },
+            "predictability_CaseB_vs_CaseC_ZeroParamMarginDiff": {
+              "n_total": 76,
+              "n_pos": 59,
+              "n_neg": 17,
+              "pos_rate_pct": 77.63,
+              "roc_auc": 0.7238,
+              "roc_ci95": [
+                0.5732,
+                0.8704
+              ],
+              "pr_auc": 0.8737,
+              "pr_ci95": [
+                0.7954,
+                0.9596
+              ]
+            },
+            "frozen_from_val_AP50_95": {
+              "Global_Fixed_035_Abl1": 80.342,
+              "ValFit_TempScaled_Global": 79.799,
+              "ValFit_PerClass_Unregularized": 78.786,
+              "ValFit_PerClass_Shrinkage_Mild": 80.232,
+              "ValFit_PerClass_Shrinkage_Strong": 80.212,
+              "ValFit_PerBox_RidgeGate_14d": 78.852
+            }
+          },
+          "testC_exploratory": {
+            "predictability_CaseB_vs_CaseC_ValTrainedLogReg": {
+              "n_total": 121,
+              "n_pos": 106,
+              "n_neg": 15,
+              "pos_rate_pct": 87.6,
+              "roc_auc": 0.5522,
+              "roc_ci95": [
+                0.3975,
+                0.7114
+              ],
+              "pr_auc": 0.9006,
+              "pr_ci95": [
+                0.8527,
+                0.9446
+              ]
+            },
+            "predictability_CaseB_vs_CaseC_ZeroParamMarginDiff": {
+              "n_total": 121,
+              "n_pos": 106,
+              "n_neg": 15,
+              "pos_rate_pct": 87.6,
+              "roc_auc": 0.7887,
+              "roc_ci95": [
+                0.6578,
+                0.9007
+              ],
+              "pr_auc": 0.9601,
+              "pr_ci95": [
+                0.9294,
+                0.9851
+              ]
+            },
+            "frozen_from_val_AP50_95": {
+              "Global_Fixed_035_Abl1": 85.295,
+              "ValFit_TempScaled_Global": 81.906,
+              "ValFit_PerClass_Unregularized": 85.174,
+              "ValFit_PerClass_Shrinkage_Mild": 85.293,
+              "ValFit_PerClass_Shrinkage_Strong": 85.439,
+              "ValFit_PerBox_RidgeGate_14d": 85.9
+            }
+          }
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "census": {
+        "val_source": {
+          "n_gt_boxes_total": 869,
+          "n_cand_conf05": 1278,
+          "n_cand_fg08": 1224,
+          "n_fg08_disagree_all": 59,
+          "fg08_disagree_pct": 4.82,
+          "n_matched_tp_candidates": 869,
+          "n_duplicate_box_candidates": 11,
+          "n_pure_bg_fp_candidates": 344,
+          "matched_disagree_count": 18,
+          "matched_disagree_pct": 2.07,
+          "quadrant_A_both_right": 846,
+          "quadrant_B_dino_right_yolo_wrong": 9,
+          "quadrant_C_yolo_right_dino_wrong": 9,
+          "quadrant_D_both_wrong": 5,
+          "quadrant_D_same_wrong_cls": 5,
+          "quadrant_D_diff_wrong_cls": 0,
+          "quadrant_D_in_top2_union": 5,
+          "per_class_conflict_distribution": {
+            "S1 Healthy fruit": {
+              "n_gt_matched": 59,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S2 Healthy leaf": {
+              "n_gt_matched": 59,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S3 Blotchy mottling": {
+              "n_gt_matched": 59,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S4 Red nose fruit": {
+              "n_gt_matched": 50,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 2
+            },
+            "S5 Zinc deficiency": {
+              "n_gt_matched": 69,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S6 Vein yellowing": {
+              "n_gt_matched": 47,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 1
+            },
+            "S7 Uniform yellowing": {
+              "n_gt_matched": 66,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 0
+            },
+            "S8 Magnesium deficiency": {
+              "n_gt_matched": 67,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S9 Boron deficiency": {
+              "n_gt_matched": 64,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S10 Anthracnose": {
+              "n_gt_matched": 72,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S11 Citrus greasy spot": {
+              "n_gt_matched": 54,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 5,
+              "caseD_both_wrong": 2
+            },
+            "S14 Canker": {
+              "n_gt_matched": 74,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S13 Sooty mould": {
+              "n_gt_matched": 84,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S12 Algal spot and moss": {
+              "n_gt_matched": 45,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            }
+          }
+        },
+        "testB_exploratory": {
+          "n_gt_boxes_total": 602,
+          "n_cand_conf05": 1265,
+          "n_cand_fg08": 1163,
+          "n_fg08_disagree_all": 339,
+          "fg08_disagree_pct": 29.15,
+          "n_matched_tp_candidates": 602,
+          "n_duplicate_box_candidates": 76,
+          "n_pure_bg_fp_candidates": 485,
+          "matched_disagree_count": 152,
+          "matched_disagree_pct": 25.25,
+          "quadrant_A_both_right": 439,
+          "quadrant_B_dino_right_yolo_wrong": 98,
+          "quadrant_C_yolo_right_dino_wrong": 30,
+          "quadrant_D_both_wrong": 35,
+          "quadrant_D_same_wrong_cls": 11,
+          "quadrant_D_diff_wrong_cls": 24,
+          "quadrant_D_in_top2_union": 24,
+          "per_class_conflict_distribution": {
+            "S1 Healthy fruit": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S2 Healthy leaf": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 18,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 2
+            },
+            "S3 Blotchy mottling": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 7,
+              "caseC_yolo_right_dino_wrong": 5,
+              "caseD_both_wrong": 3
+            },
+            "S4 Red nose fruit": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 3,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 0
+            },
+            "S5 Zinc deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S6 Vein yellowing": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 25,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 3
+            },
+            "S7 Uniform yellowing": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 8,
+              "caseC_yolo_right_dino_wrong": 6,
+              "caseD_both_wrong": 7
+            },
+            "S8 Magnesium deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 16,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 6
+            },
+            "S9 Boron deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S10 Anthracnose": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 8,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 6
+            },
+            "S11 Citrus greasy spot": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 9,
+              "caseD_both_wrong": 7
+            },
+            "S14 Canker": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 3,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S13 Sooty mould": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 0
+            },
+            "S12 Algal spot and moss": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 3,
+              "caseC_yolo_right_dino_wrong": 4,
+              "caseD_both_wrong": 1
+            }
+          }
+        },
+        "testC_exploratory": {
+          "n_gt_boxes_total": 602,
+          "n_cand_conf05": 710,
+          "n_cand_fg08": 698,
+          "n_fg08_disagree_all": 194,
+          "fg08_disagree_pct": 27.79,
+          "n_matched_tp_candidates": 601,
+          "n_duplicate_box_candidates": 70,
+          "n_pure_bg_fp_candidates": 27,
+          "matched_disagree_count": 140,
+          "matched_disagree_pct": 23.29,
+          "quadrant_A_both_right": 438,
+          "quadrant_B_dino_right_yolo_wrong": 96,
+          "quadrant_C_yolo_right_dino_wrong": 30,
+          "quadrant_D_both_wrong": 37,
+          "quadrant_D_same_wrong_cls": 23,
+          "quadrant_D_diff_wrong_cls": 14,
+          "quadrant_D_in_top2_union": 28,
+          "per_class_conflict_distribution": {
+            "S1 Healthy fruit": {
+              "n_gt_matched": 42,
+              "caseB_dino_right_yolo_wrong": 6,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 0
+            },
+            "S2 Healthy leaf": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 8,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S3 Blotchy mottling": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 6,
+              "caseC_yolo_right_dino_wrong": 11,
+              "caseD_both_wrong": 3
+            },
+            "S4 Red nose fruit": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S5 Zinc deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 0
+            },
+            "S6 Vein yellowing": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 8,
+              "caseC_yolo_right_dino_wrong": 4,
+              "caseD_both_wrong": 5
+            },
+            "S7 Uniform yellowing": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 5,
+              "caseC_yolo_right_dino_wrong": 5,
+              "caseD_both_wrong": 3
+            },
+            "S8 Magnesium deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 18,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 8
+            },
+            "S9 Boron deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S10 Anthracnose": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 7,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 1
+            },
+            "S11 Citrus greasy spot": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 5,
+              "caseD_both_wrong": 1
+            },
+            "S14 Canker": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 2
+            },
+            "S13 Sooty mould": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 5,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 3
+            },
+            "S12 Algal spot and moss": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 26,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 11
+            }
+          }
+        }
+      },
+      "decomposed_oracles": {
+        "val_source": {
+          "Ref0_Native_YOLOv8n": 89.065,
+          "Ref1_FullDINO_Square_Hard": 87.906,
+          "Ref2_GlobalFixed_ClsOnly_NoNMS": 88.498,
+          "Ref3_GlobalFixed_ClsPlusScore_NoNMS": 89.171,
+          "Ref4_Abl1_GlobalFixed_Full_WithNMS": 89.182,
+          "StepEffect_ScoreReweight_NoNMS": 0.673,
+          "StepEffect_PostReclass_NMS": 0.011,
+          "Oracle_A1_ClassChoice_KeepYoloSc_NoNMS": 89.472,
+          "Oracle_A2_ClassChoice_KeepAbl1Sc_NoNMS": 89.693,
+          "Oracle_A3_ClassChoice_WithScoreAndNMS": 89.786,
+          "Delta_PureClassChoice_Over_Abl1_WithNMS": 0.604,
+          "Delta_PureClassChoice_FixedScore_NoNMS": 0.522,
+          "Oracle_B1_AlphaScoreOnly_FixedClass_NoNMS": 89.617,
+          "Oracle_B2_AlphaScoreOnly_FixedClass_WithNMS": 89.619,
+          "Delta_AlphaScoreOnly_Over_Abl1": 0.437,
+          "Oracle_B3_UnconstrainedIdealRank_FixedBoxesAndClass": 94.203,
+          "Delta_UnconstrainedIdealRank_Over_Abl1": 5.021,
+          "Oracle_C_TrueGateSpace_AlphaIn01_Full_WithNMS": 90.286,
+          "Delta_TrueGateSpace_AlphaIn01_Over_Abl1": 1.104
+        },
+        "testB_exploratory": {
+          "Ref0_Native_YOLOv8n": 66.517,
+          "Ref1_FullDINO_Square_Hard": 73.192,
+          "Ref2_GlobalFixed_ClsOnly_NoNMS": 75.362,
+          "Ref3_GlobalFixed_ClsPlusScore_NoNMS": 76.288,
+          "Ref4_Abl1_GlobalFixed_Full_WithNMS": 76.721,
+          "StepEffect_ScoreReweight_NoNMS": 0.926,
+          "StepEffect_PostReclass_NMS": 0.433,
+          "Oracle_A1_ClassChoice_KeepYoloSc_NoNMS": 80.423,
+          "Oracle_A2_ClassChoice_KeepAbl1Sc_NoNMS": 79.596,
+          "Oracle_A3_ClassChoice_WithScoreAndNMS": 81.086,
+          "Delta_PureClassChoice_Over_Abl1_WithNMS": 4.365,
+          "Delta_PureClassChoice_FixedScore_NoNMS": 3.308,
+          "Oracle_B1_AlphaScoreOnly_FixedClass_NoNMS": 78.776,
+          "Oracle_B2_AlphaScoreOnly_FixedClass_WithNMS": 78.809,
+          "Delta_AlphaScoreOnly_Over_Abl1": 2.088,
+          "Oracle_B3_UnconstrainedIdealRank_FixedBoxesAndClass": 84.471,
+          "Delta_UnconstrainedIdealRank_Over_Abl1": 7.75,
+          "Oracle_C_TrueGateSpace_AlphaIn01_Full_WithNMS": 82.468,
+          "Delta_TrueGateSpace_AlphaIn01_Over_Abl1": 5.747
+        },
+        "testC_exploratory": {
+          "Ref0_Native_YOLOv8n": 73.931,
+          "Ref1_FullDINO_Square_Hard": 80.674,
+          "Ref2_GlobalFixed_ClsOnly_NoNMS": 81.458,
+          "Ref3_GlobalFixed_ClsPlusScore_NoNMS": 82.194,
+          "Ref4_Abl1_GlobalFixed_Full_WithNMS": 82.685,
+          "StepEffect_ScoreReweight_NoNMS": 0.736,
+          "StepEffect_PostReclass_NMS": 0.491,
+          "Oracle_A1_ClassChoice_KeepYoloSc_NoNMS": 86.795,
+          "Oracle_A2_ClassChoice_KeepAbl1Sc_NoNMS": 86.681,
+          "Oracle_A3_ClassChoice_WithScoreAndNMS": 87.39,
+          "Delta_PureClassChoice_Over_Abl1_WithNMS": 4.705,
+          "Delta_PureClassChoice_FixedScore_NoNMS": 4.487,
+          "Oracle_B1_AlphaScoreOnly_FixedClass_NoNMS": 83.446,
+          "Oracle_B2_AlphaScoreOnly_FixedClass_WithNMS": 83.497,
+          "Delta_AlphaScoreOnly_Over_Abl1": 0.812,
+          "Oracle_B3_UnconstrainedIdealRank_FixedBoxesAndClass": 85.593,
+          "Delta_UnconstrainedIdealRank_Over_Abl1": 2.908,
+          "Oracle_C_TrueGateSpace_AlphaIn01_Full_WithNMS": 87.867,
+          "Delta_TrueGateSpace_AlphaIn01_Over_Abl1": 5.182
+        }
+      },
+      "predictability_and_calibration": {
+        "learned_val_weights": {
+          "temp_det": 1.35,
+          "temp_dino": 1.285,
+          "alpha_global": 0.673,
+          "w_unregularized_14cls": [
+            0.718,
+            0.087,
+            0.57,
+            1.0,
+            0.576,
+            0.38,
+            0.709,
+            0.769,
+            0.486,
+            0.614,
+            0.885,
+            0.545,
+            0.749,
+            0.089
+          ],
+          "w_shrinkage_mild_14cls": [
+            0.402,
+            0.321,
+            0.385,
+            0.96,
+            0.358,
+            0.432,
+            0.44,
+            0.479,
+            0.369,
+            0.369,
+            0.562,
+            0.358,
+            0.366,
+            0.32
+          ],
+          "w_shrinkage_strong_14cls": [
+            0.378,
+            0.342,
+            0.36,
+            0.519,
+            0.352,
+            0.385,
+            0.383,
+            0.427,
+            0.355,
+            0.356,
+            0.43,
+            0.352,
+            0.354,
+            0.341
+          ]
+        },
+        "source_val_5fold_OOF": {
+          "predictability_CaseB_vs_CaseC_OOF_LogReg": {
+            "n_total": 18,
+            "n_pos": 9,
+            "n_neg": 9,
+            "pos_rate_pct": 50.0,
+            "roc_auc": 0.9753,
+            "roc_ci95": [
+              0.8889,
+              1.0
+            ],
+            "pr_auc": 0.9765,
+            "pr_ci95": [
+              0.9111,
+              1.0
+            ]
+          },
+          "predictability_CaseB_vs_CaseC_ZeroParamMarginDiff": {
+            "n_total": 18,
+            "n_pos": 9,
+            "n_neg": 9,
+            "pos_rate_pct": 50.0,
+            "roc_auc": 0.9753,
+            "roc_ci95": [
+              0.8889,
+              1.0
+            ],
+            "pr_auc": 0.9798,
+            "pr_ci95": [
+              0.9167,
+              1.0
+            ]
+          },
+          "predictability_DINO_Error_AllMatched_OOF": {
+            "n_total": 869,
+            "n_pos": 14,
+            "n_neg": 855,
+            "pos_rate_pct": 1.61,
+            "roc_auc": 0.9063,
+            "roc_ci95": [
+              0.8071,
+              0.9858
+            ],
+            "pr_auc": 0.314,
+            "pr_ci95": [
+              0.1878,
+              0.6117
+            ]
+          },
+          "OOF_AP50_95_comparison": {
+            "Global_Fixed_035_Abl1": 89.182,
+            "OOF_TempScaled_Global": 89.361,
+            "OOF_PerClass_Unregularized": 89.249,
+            "OOF_PerClass_Shrinkage_Mild": 89.372,
+            "OOF_PerClass_Shrinkage_Strong": 89.419,
+            "OOF_PerBox_RidgeGate_14d": 88.253
+          }
+        },
+        "exploratory_posthoc_transfer": {
+          "testB_exploratory": {
+            "predictability_CaseB_vs_CaseC_ValTrainedLogReg": {
+              "n_total": 128,
+              "n_pos": 98,
+              "n_neg": 30,
+              "pos_rate_pct": 76.56,
+              "roc_auc": 0.7796,
+              "roc_ci95": [
+                0.6711,
+                0.8711
+              ],
+              "pr_auc": 0.9131,
+              "pr_ci95": [
+                0.8624,
+                0.9553
+              ]
+            },
+            "predictability_CaseB_vs_CaseC_ZeroParamMarginDiff": {
+              "n_total": 128,
+              "n_pos": 98,
+              "n_neg": 30,
+              "pos_rate_pct": 76.56,
+              "roc_auc": 0.7793,
+              "roc_ci95": [
+                0.6837,
+                0.8755
+              ],
+              "pr_auc": 0.908,
+              "pr_ci95": [
+                0.8526,
+                0.9608
+              ]
+            },
+            "frozen_from_val_AP50_95": {
+              "Global_Fixed_035_Abl1": 76.721,
+              "ValFit_TempScaled_Global": 72.012,
+              "ValFit_PerClass_Unregularized": 74.163,
+              "ValFit_PerClass_Shrinkage_Mild": 76.656,
+              "ValFit_PerClass_Shrinkage_Strong": 76.741,
+              "ValFit_PerBox_RidgeGate_14d": 75.721
+            }
+          },
+          "testC_exploratory": {
+            "predictability_CaseB_vs_CaseC_ValTrainedLogReg": {
+              "n_total": 126,
+              "n_pos": 96,
+              "n_neg": 30,
+              "pos_rate_pct": 76.19,
+              "roc_auc": 0.7646,
+              "roc_ci95": [
+                0.6649,
+                0.8653
+              ],
+              "pr_auc": 0.9067,
+              "pr_ci95": [
+                0.8621,
+                0.9533
+              ]
+            },
+            "predictability_CaseB_vs_CaseC_ZeroParamMarginDiff": {
+              "n_total": 126,
+              "n_pos": 96,
+              "n_neg": 30,
+              "pos_rate_pct": 76.19,
+              "roc_auc": 0.7177,
+              "roc_ci95": [
+                0.6073,
+                0.8146
+              ],
+              "pr_auc": 0.8778,
+              "pr_ci95": [
+                0.8212,
+                0.9319
+              ]
+            },
+            "frozen_from_val_AP50_95": {
+              "Global_Fixed_035_Abl1": 82.685,
+              "ValFit_TempScaled_Global": 78.795,
+              "ValFit_PerClass_Unregularized": 81.382,
+              "ValFit_PerClass_Shrinkage_Mild": 82.388,
+              "ValFit_PerClass_Shrinkage_Strong": 82.72,
+              "ValFit_PerBox_RidgeGate_14d": 82.034
+            }
+          }
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "census": {
+        "val_source": {
+          "n_gt_boxes_total": 869,
+          "n_cand_conf05": 1388,
+          "n_cand_fg08": 1294,
+          "n_fg08_disagree_all": 81,
+          "fg08_disagree_pct": 6.26,
+          "n_matched_tp_candidates": 868,
+          "n_duplicate_box_candidates": 14,
+          "n_pure_bg_fp_candidates": 412,
+          "matched_disagree_count": 21,
+          "matched_disagree_pct": 2.42,
+          "quadrant_A_both_right": 843,
+          "quadrant_B_dino_right_yolo_wrong": 18,
+          "quadrant_C_yolo_right_dino_wrong": 3,
+          "quadrant_D_both_wrong": 4,
+          "quadrant_D_same_wrong_cls": 4,
+          "quadrant_D_diff_wrong_cls": 0,
+          "quadrant_D_in_top2_union": 4,
+          "per_class_conflict_distribution": {
+            "S1 Healthy fruit": {
+              "n_gt_matched": 59,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S2 Healthy leaf": {
+              "n_gt_matched": 59,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S3 Blotchy mottling": {
+              "n_gt_matched": 59,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S4 Red nose fruit": {
+              "n_gt_matched": 50,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 2
+            },
+            "S5 Zinc deficiency": {
+              "n_gt_matched": 69,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S6 Vein yellowing": {
+              "n_gt_matched": 47,
+              "caseB_dino_right_yolo_wrong": 4,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S7 Uniform yellowing": {
+              "n_gt_matched": 66,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 0
+            },
+            "S8 Magnesium deficiency": {
+              "n_gt_matched": 66,
+              "caseB_dino_right_yolo_wrong": 3,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S9 Boron deficiency": {
+              "n_gt_matched": 64,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S10 Anthracnose": {
+              "n_gt_matched": 72,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S11 Citrus greasy spot": {
+              "n_gt_matched": 54,
+              "caseB_dino_right_yolo_wrong": 4,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 2
+            },
+            "S14 Canker": {
+              "n_gt_matched": 74,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S13 Sooty mould": {
+              "n_gt_matched": 84,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S12 Algal spot and moss": {
+              "n_gt_matched": 45,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            }
+          }
+        },
+        "testB_exploratory": {
+          "n_gt_boxes_total": 602,
+          "n_cand_conf05": 1386,
+          "n_cand_fg08": 1269,
+          "n_fg08_disagree_all": 354,
+          "fg08_disagree_pct": 27.9,
+          "n_matched_tp_candidates": 602,
+          "n_duplicate_box_candidates": 62,
+          "n_pure_bg_fp_candidates": 605,
+          "matched_disagree_count": 112,
+          "matched_disagree_pct": 18.6,
+          "quadrant_A_both_right": 482,
+          "quadrant_B_dino_right_yolo_wrong": 62,
+          "quadrant_C_yolo_right_dino_wrong": 32,
+          "quadrant_D_both_wrong": 26,
+          "quadrant_D_same_wrong_cls": 8,
+          "quadrant_D_diff_wrong_cls": 18,
+          "quadrant_D_in_top2_union": 18,
+          "per_class_conflict_distribution": {
+            "S1 Healthy fruit": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S2 Healthy leaf": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 10,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 1
+            },
+            "S3 Blotchy mottling": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 3,
+              "caseC_yolo_right_dino_wrong": 8,
+              "caseD_both_wrong": 4
+            },
+            "S4 Red nose fruit": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 5,
+              "caseC_yolo_right_dino_wrong": 3,
+              "caseD_both_wrong": 0
+            },
+            "S5 Zinc deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 1
+            },
+            "S6 Vein yellowing": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 18,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 3
+            },
+            "S7 Uniform yellowing": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 3,
+              "caseC_yolo_right_dino_wrong": 10,
+              "caseD_both_wrong": 1
+            },
+            "S8 Magnesium deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 3,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 6
+            },
+            "S9 Boron deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S10 Anthracnose": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 5,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 7
+            },
+            "S11 Citrus greasy spot": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 8,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 2
+            },
+            "S14 Canker": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 0
+            },
+            "S13 Sooty mould": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 0
+            },
+            "S12 Algal spot and moss": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 1
+            }
+          }
+        },
+        "testC_exploratory": {
+          "n_gt_boxes_total": 602,
+          "n_cand_conf05": 756,
+          "n_cand_fg08": 732,
+          "n_fg08_disagree_all": 237,
+          "fg08_disagree_pct": 32.38,
+          "n_matched_tp_candidates": 600,
+          "n_duplicate_box_candidates": 82,
+          "n_pure_bg_fp_candidates": 50,
+          "matched_disagree_count": 139,
+          "matched_disagree_pct": 23.17,
+          "quadrant_A_both_right": 445,
+          "quadrant_B_dino_right_yolo_wrong": 95,
+          "quadrant_C_yolo_right_dino_wrong": 29,
+          "quadrant_D_both_wrong": 31,
+          "quadrant_D_same_wrong_cls": 16,
+          "quadrant_D_diff_wrong_cls": 15,
+          "quadrant_D_in_top2_union": 24,
+          "per_class_conflict_distribution": {
+            "S1 Healthy fruit": {
+              "n_gt_matched": 42,
+              "caseB_dino_right_yolo_wrong": 7,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S2 Healthy leaf": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 9,
+              "caseC_yolo_right_dino_wrong": 3,
+              "caseD_both_wrong": 1
+            },
+            "S3 Blotchy mottling": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 13,
+              "caseD_both_wrong": 9
+            },
+            "S4 Red nose fruit": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S5 Zinc deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 3,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 0
+            },
+            "S6 Vein yellowing": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 6,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 8
+            },
+            "S7 Uniform yellowing": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 4,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S8 Magnesium deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 11,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 5
+            },
+            "S9 Boron deficiency": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 2,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 0
+            },
+            "S10 Anthracnose": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 16,
+              "caseC_yolo_right_dino_wrong": 1,
+              "caseD_both_wrong": 0
+            },
+            "S11 Citrus greasy spot": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 5,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 0
+            },
+            "S14 Canker": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 0,
+              "caseC_yolo_right_dino_wrong": 2,
+              "caseD_both_wrong": 1
+            },
+            "S13 Sooty mould": {
+              "n_gt_matched": 43,
+              "caseB_dino_right_yolo_wrong": 1,
+              "caseC_yolo_right_dino_wrong": 4,
+              "caseD_both_wrong": 0
+            },
+            "S12 Algal spot and moss": {
+              "n_gt_matched": 42,
+              "caseB_dino_right_yolo_wrong": 29,
+              "caseC_yolo_right_dino_wrong": 0,
+              "caseD_both_wrong": 7
+            }
+          }
+        }
+      },
+      "decomposed_oracles": {
+        "val_source": {
+          "Ref0_Native_YOLOv8n": 89.595,
+          "Ref1_FullDINO_Square_Hard": 90.922,
+          "Ref2_GlobalFixed_ClsOnly_NoNMS": 90.944,
+          "Ref3_GlobalFixed_ClsPlusScore_NoNMS": 91.02,
+          "Ref4_Abl1_GlobalFixed_Full_WithNMS": 91.021,
+          "StepEffect_ScoreReweight_NoNMS": 0.076,
+          "StepEffect_PostReclass_NMS": 0.001,
+          "Oracle_A1_ClassChoice_KeepYoloSc_NoNMS": 91.338,
+          "Oracle_A2_ClassChoice_KeepAbl1Sc_NoNMS": 91.375,
+          "Oracle_A3_ClassChoice_WithScoreAndNMS": 91.396,
+          "Delta_PureClassChoice_Over_Abl1_WithNMS": 0.375,
+          "Delta_PureClassChoice_FixedScore_NoNMS": 0.355,
+          "Oracle_B1_AlphaScoreOnly_FixedClass_NoNMS": 91.267,
+          "Oracle_B2_AlphaScoreOnly_FixedClass_WithNMS": 91.268,
+          "Delta_AlphaScoreOnly_Over_Abl1": 0.247,
+          "Oracle_B3_UnconstrainedIdealRank_FixedBoxesAndClass": 94.771,
+          "Delta_UnconstrainedIdealRank_Over_Abl1": 3.75,
+          "Oracle_C_TrueGateSpace_AlphaIn01_Full_WithNMS": 91.62,
+          "Delta_TrueGateSpace_AlphaIn01_Over_Abl1": 0.599
+        },
+        "testB_exploratory": {
+          "Ref0_Native_YOLOv8n": 73.161,
+          "Ref1_FullDINO_Square_Hard": 74.24,
+          "Ref2_GlobalFixed_ClsOnly_NoNMS": 75.82,
+          "Ref3_GlobalFixed_ClsPlusScore_NoNMS": 77.355,
+          "Ref4_Abl1_GlobalFixed_Full_WithNMS": 77.619,
+          "StepEffect_ScoreReweight_NoNMS": 1.535,
+          "StepEffect_PostReclass_NMS": 0.264,
+          "Oracle_A1_ClassChoice_KeepYoloSc_NoNMS": 80.877,
+          "Oracle_A2_ClassChoice_KeepAbl1Sc_NoNMS": 80.892,
+          "Oracle_A3_ClassChoice_WithScoreAndNMS": 81.991,
+          "Delta_PureClassChoice_Over_Abl1_WithNMS": 4.372,
+          "Delta_PureClassChoice_FixedScore_NoNMS": 3.537,
+          "Oracle_B1_AlphaScoreOnly_FixedClass_NoNMS": 79.759,
+          "Oracle_B2_AlphaScoreOnly_FixedClass_WithNMS": 79.747,
+          "Delta_AlphaScoreOnly_Over_Abl1": 2.128,
+          "Oracle_B3_UnconstrainedIdealRank_FixedBoxesAndClass": 85.088,
+          "Delta_UnconstrainedIdealRank_Over_Abl1": 7.469,
+          "Oracle_C_TrueGateSpace_AlphaIn01_Full_WithNMS": 83.342,
+          "Delta_TrueGateSpace_AlphaIn01_Over_Abl1": 5.723
+        },
+        "testC_exploratory": {
+          "Ref0_Native_YOLOv8n": 73.053,
+          "Ref1_FullDINO_Square_Hard": 80.183,
+          "Ref2_GlobalFixed_ClsOnly_NoNMS": 82.509,
+          "Ref3_GlobalFixed_ClsPlusScore_NoNMS": 83.339,
+          "Ref4_Abl1_GlobalFixed_Full_WithNMS": 83.911,
+          "StepEffect_ScoreReweight_NoNMS": 0.83,
+          "StepEffect_PostReclass_NMS": 0.572,
+          "Oracle_A1_ClassChoice_KeepYoloSc_NoNMS": 86.627,
+          "Oracle_A2_ClassChoice_KeepAbl1Sc_NoNMS": 86.67,
+          "Oracle_A3_ClassChoice_WithScoreAndNMS": 87.362,
+          "Delta_PureClassChoice_Over_Abl1_WithNMS": 3.451,
+          "Delta_PureClassChoice_FixedScore_NoNMS": 3.331,
+          "Oracle_B1_AlphaScoreOnly_FixedClass_NoNMS": 84.692,
+          "Oracle_B2_AlphaScoreOnly_FixedClass_WithNMS": 84.721,
+          "Delta_AlphaScoreOnly_Over_Abl1": 0.81,
+          "Oracle_B3_UnconstrainedIdealRank_FixedBoxesAndClass": 87.147,
+          "Delta_UnconstrainedIdealRank_Over_Abl1": 3.236,
+          "Oracle_C_TrueGateSpace_AlphaIn01_Full_WithNMS": 88.04,
+          "Delta_TrueGateSpace_AlphaIn01_Over_Abl1": 4.129
+        }
+      },
+      "predictability_and_calibration": {
+        "learned_val_weights": {
+          "temp_det": 1.35,
+          "temp_dino": 1.185,
+          "alpha_global": 0.388,
+          "w_unregularized_14cls": [
+            0.539,
+            0.0,
+            0.0,
+            0.94,
+            0.0,
+            0.441,
+            0.591,
+            0.178,
+            0.371,
+            0.0,
+            0.074,
+            0.282,
+            0.616,
+            0.0
+          ],
+          "w_shrinkage_mild_14cls": [
+            0.46,
+            0.277,
+            0.315,
+            0.796,
+            0.347,
+            0.373,
+            0.425,
+            0.309,
+            0.348,
+            0.332,
+            0.269,
+            0.347,
+            0.353,
+            0.311
+          ],
+          "w_shrinkage_strong_14cls": [
+            0.396,
+            0.328,
+            0.341,
+            0.514,
+            0.349,
+            0.358,
+            0.373,
+            0.338,
+            0.349,
+            0.345,
+            0.328,
+            0.35,
+            0.351,
+            0.336
+          ]
+        },
+        "source_val_5fold_OOF": {
+          "predictability_CaseB_vs_CaseC_OOF_LogReg": {
+            "n_total": 21,
+            "n_pos": 18,
+            "n_neg": 3,
+            "pos_rate_pct": 85.71,
+            "roc_auc": 0.6667,
+            "roc_ci95": [
+              0.4444,
+              0.8611
+            ],
+            "pr_auc": 0.9265,
+            "pr_ci95": [
+              0.8757,
+              0.9671
+            ]
+          },
+          "predictability_CaseB_vs_CaseC_ZeroParamMarginDiff": {
+            "n_total": 21,
+            "n_pos": 18,
+            "n_neg": 3,
+            "pos_rate_pct": 85.71,
+            "roc_auc": 0.7407,
+            "roc_ci95": [
+              0.3514,
+              1.0
+            ],
+            "pr_auc": 0.9419,
+            "pr_ci95": [
+              0.8569,
+              1.0
+            ]
+          },
+          "predictability_DINO_Error_AllMatched_OOF": {
+            "n_total": 868,
+            "n_pos": 7,
+            "n_neg": 861,
+            "pos_rate_pct": 0.81,
+            "roc_auc": 0.7539,
+            "roc_ci95": [
+              0.4708,
+              0.9726
+            ],
+            "pr_auc": 0.0684,
+            "pr_ci95": [
+              0.0264,
+              0.1768
+            ]
+          },
+          "OOF_AP50_95_comparison": {
+            "Global_Fixed_035_Abl1": 91.021,
+            "OOF_TempScaled_Global": 90.717,
+            "OOF_PerClass_Unregularized": 90.768,
+            "OOF_PerClass_Shrinkage_Mild": 90.99,
+            "OOF_PerClass_Shrinkage_Strong": 91.008,
+            "OOF_PerBox_RidgeGate_14d": 91.008
+          }
+        },
+        "exploratory_posthoc_transfer": {
+          "testB_exploratory": {
+            "predictability_CaseB_vs_CaseC_ValTrainedLogReg": {
+              "n_total": 94,
+              "n_pos": 62,
+              "n_neg": 32,
+              "pos_rate_pct": 65.96,
+              "roc_auc": 0.6225,
+              "roc_ci95": [
+                0.5045,
+                0.7404
+              ],
+              "pr_auc": 0.7547,
+              "pr_ci95": [
+                0.6734,
+                0.8462
+              ]
+            },
+            "predictability_CaseB_vs_CaseC_ZeroParamMarginDiff": {
+              "n_total": 94,
+              "n_pos": 62,
+              "n_neg": 32,
+              "pos_rate_pct": 65.96,
+              "roc_auc": 0.7974,
+              "roc_ci95": [
+                0.694,
+                0.8891
+              ],
+              "pr_auc": 0.8804,
+              "pr_ci95": [
+                0.8121,
+                0.9395
+              ]
+            },
+            "frozen_from_val_AP50_95": {
+              "Global_Fixed_035_Abl1": 77.619,
+              "ValFit_TempScaled_Global": 77.683,
+              "ValFit_PerClass_Unregularized": 77.919,
+              "ValFit_PerClass_Shrinkage_Mild": 77.945,
+              "ValFit_PerClass_Shrinkage_Strong": 77.71,
+              "ValFit_PerBox_RidgeGate_14d": 75.884
+            }
+          },
+          "testC_exploratory": {
+            "predictability_CaseB_vs_CaseC_ValTrainedLogReg": {
+              "n_total": 124,
+              "n_pos": 95,
+              "n_neg": 29,
+              "pos_rate_pct": 76.61,
+              "roc_auc": 0.7379,
+              "roc_ci95": [
+                0.6308,
+                0.8425
+              ],
+              "pr_auc": 0.8847,
+              "pr_ci95": [
+                0.8267,
+                0.942
+              ]
+            },
+            "predictability_CaseB_vs_CaseC_ZeroParamMarginDiff": {
+              "n_total": 124,
+              "n_pos": 95,
+              "n_neg": 29,
+              "pos_rate_pct": 76.61,
+              "roc_auc": 0.8134,
+              "roc_ci95": [
+                0.7081,
+                0.9038
+              ],
+              "pr_auc": 0.9231,
+              "pr_ci95": [
+                0.8754,
+                0.9647
+              ]
+            },
+            "frozen_from_val_AP50_95": {
+              "Global_Fixed_035_Abl1": 83.911,
+              "ValFit_TempScaled_Global": 84.23,
+              "ValFit_PerClass_Unregularized": 82.045,
+              "ValFit_PerClass_Shrinkage_Mild": 83.819,
+              "ValFit_PerClass_Shrinkage_Strong": 83.789,
+              "ValFit_PerBox_RidgeGate_14d": 81.491
+            }
+          }
+        }
+      }
+    }
+  ]
+}
