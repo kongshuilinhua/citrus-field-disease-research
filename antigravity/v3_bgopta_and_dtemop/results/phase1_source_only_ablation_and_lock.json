@@ -1,0 +1,127 @@
+{
+  "阶段": "Phase1_纯源域零泄漏训练消融与参数冻结",
+  "耗时秒": 573.8,
+  "严格后端": {
+    "评测版本": "共同进程严格FP32_20261109",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121",
+    "ultralytics": "8.3.245",
+    "CUDA构建版本": "12.1",
+    "cuDNN版本": 90100,
+    "矩阵乘TF32": false,
+    "卷积TF32": false,
+    "cuDNN自动调优": false,
+    "float32矩阵乘策略": "highest"
+  },
+  "源内消融三种子汇总": {
+    "S0_cls_only": {
+      "source_dev_clean_F1": "97.83±0.32",
+      "dev_clean_seeds": [
+        97.57,
+        98.19,
+        97.72
+      ],
+      "source_dev_bgshift_F1": "83.72±0.95",
+      "dev_bgshift_seeds": [
+        84.74,
+        82.87,
+        83.55
+      ],
+      "SciDB_val_AP50_95": "89.63±0.62",
+      "val_seeds": [
+        90.08,
+        88.93,
+        89.89
+      ]
+    },
+    "S1_plain_concat": {
+      "source_dev_clean_F1": "98.41±0.35",
+      "dev_clean_seeds": [
+        98.49,
+        98.71,
+        98.03
+      ],
+      "source_dev_bgshift_F1": "87.44±0.67",
+      "dev_bgshift_seeds": [
+        88.18,
+        86.87,
+        87.27
+      ],
+      "SciDB_val_AP50_95": "89.95±0.77",
+      "val_seeds": [
+        90.22,
+        89.08,
+        90.54
+      ]
+    },
+    "S2_orth_topo_only": {
+      "source_dev_clean_F1": "98.78±0.13",
+      "dev_clean_seeds": [
+        98.88,
+        98.82,
+        98.63
+      ],
+      "source_dev_bgshift_F1": "89.79±0.67",
+      "dev_bgshift_seeds": [
+        90.54,
+        89.57,
+        89.26
+      ],
+      "SciDB_val_AP50_95": "89.92±0.71",
+      "val_seeds": [
+        89.95,
+        89.2,
+        90.62
+      ]
+    },
+    "S3_bgopta_full": {
+      "source_dev_clean_F1": "98.66±0.26",
+      "dev_clean_seeds": [
+        98.48,
+        98.96,
+        98.55
+      ],
+      "source_dev_bgshift_F1": "90.11±0.17",
+      "dev_bgshift_seeds": [
+        90.03,
+        90.0,
+        90.3
+      ],
+      "SciDB_val_AP50_95": "90.23±0.66",
+      "val_seeds": [
+        90.35,
+        89.51,
+        90.82
+      ]
+    }
+  },
+  "冻结权重与参数清单": [
+    {
+      "seed": 0,
+      "ckpt": "D:\\新版柑橘\\Antigravity_BGOPTA_单趟正交Token攻关_20261126\\frozen_models\\bgopta_frozen_seed0.pt",
+      "sha256": "a282b4f2d1a2f480a76f61cc984c94f1675439e7d32531b02c8a5ebd3e2dfaf3",
+      "best_val_ap": 90.6665,
+      "alpha": 0.4,
+      "beta": 0.55,
+      "tau_maha_safe": -0.2235
+    },
+    {
+      "seed": 1,
+      "ckpt": "D:\\新版柑橘\\Antigravity_BGOPTA_单趟正交Token攻关_20261126\\frozen_models\\bgopta_frozen_seed1.pt",
+      "sha256": "1b21848b9cddafb9e944ab6acd62cff8c50d344d8969cee2d425423ea44a02ce",
+      "best_val_ap": 89.6498,
+      "alpha": 0.4,
+      "beta": 0.55,
+      "tau_maha_safe": -0.1905
+    },
+    {
+      "seed": 2,
+      "ckpt": "D:\\新版柑橘\\Antigravity_BGOPTA_单趟正交Token攻关_20261126\\frozen_models\\bgopta_frozen_seed2.pt",
+      "sha256": "e959f69112485c2506e231a6fed8d9638dca396a6a2082797ba385b634a92f30",
+      "best_val_ap": 90.9403,
+      "alpha": 0.32,
+      "beta": 0.55,
+      "tau_maha_safe": -0.1955
+    }
+  ]
+}

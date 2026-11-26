@@ -1,0 +1,502 @@
+{
+  "阶段": "Phase2B_历史冻结多粒度模型同口径补齐与7档零冗余测速",
+  "耗时秒": 196.73,
+  "严格评测后端": {
+    "评测版本": "共同进程严格FP32_20261109",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121",
+    "ultralytics": "8.3.245",
+    "CUDA构建版本": "12.1",
+    "cuDNN版本": 90100,
+    "矩阵乘TF32": false,
+    "卷积TF32": false,
+    "cuDNN自动调优": false,
+    "float32矩阵乘策略": "highest"
+  },
+  "RTX4060Ti_七档零冗余单图延迟": {
+    "Tier1_Native_YOLOv8n": {
+      "val": {
+        "mean_ms": 8.5,
+        "p95_ms": 9.15,
+        "fps": 117.6,
+        "avg_dino_forwards_per_img": 0.0
+      },
+      "testC": {
+        "mean_ms": 8.49,
+        "p95_ms": 9.23,
+        "fps": 117.8,
+        "avg_dino_forwards_per_img": 0.0
+      }
+    },
+    "Tier2_Full_DINOv2_1Crop": {
+      "val": {
+        "mean_ms": 14.73,
+        "p95_ms": 16.18,
+        "fps": 67.9,
+        "avg_dino_forwards_per_img": 1.38
+      },
+      "testC": {
+        "mean_ms": 14.09,
+        "p95_ms": 15.02,
+        "fps": 71.0,
+        "avg_dino_forwards_per_img": 1.14
+      }
+    },
+    "Tier3a_BGOPTA_1Pass": {
+      "val": {
+        "mean_ms": 19.17,
+        "p95_ms": 20.94,
+        "fps": 52.2,
+        "avg_dino_forwards_per_img": 1.26
+      },
+      "testC": {
+        "mean_ms": 18.34,
+        "p95_ms": 19.8,
+        "fps": 54.5,
+        "avg_dino_forwards_per_img": 1.14
+      }
+    },
+    "Tier3b_BGOPTA_SafeBypass": {
+      "val": {
+        "mean_ms": 19.66,
+        "p95_ms": 21.03,
+        "fps": 50.9,
+        "avg_dino_forwards_per_img": 1.26
+      },
+      "testC": {
+        "mean_ms": 19.06,
+        "p95_ms": 20.58,
+        "fps": 52.5,
+        "avg_dino_forwards_per_img": 1.14
+      }
+    },
+    "Tier4a_Disagreement_Esc_Abl2": {
+      "val": {
+        "mean_ms": 19.82,
+        "p95_ms": 28.43,
+        "fps": 50.4,
+        "avg_dino_forwards_per_img": 2.38
+      },
+      "testC": {
+        "mean_ms": 23.48,
+        "p95_ms": 27.76,
+        "fps": 42.6,
+        "avg_dino_forwards_per_img": 3.42
+      }
+    },
+    "Tier4b_TriSignal_TCDMGE_v2": {
+      "val": {
+        "mean_ms": 21.99,
+        "p95_ms": 29.94,
+        "fps": 45.5,
+        "avg_dino_forwards_per_img": 2.94
+      },
+      "testC": {
+        "mean_ms": 24.13,
+        "p95_ms": 28.01,
+        "fps": 41.4,
+        "avg_dino_forwards_per_img": 3.42
+      }
+    },
+    "Tier5_Full_3Crop_Static_Abl3": {
+      "val": {
+        "mean_ms": 19.89,
+        "p95_ms": 26.79,
+        "fps": 50.3,
+        "avg_dino_forwards_per_img": 3.78
+      },
+      "testC": {
+        "mean_ms": 18.61,
+        "p95_ms": 24.8,
+        "fps": 53.7,
+        "avg_dino_forwards_per_img": 3.42
+      }
+    }
+  },
+  "冻结多粒度模型外部与最终盲测汇总": {
+    "zenodo_repaired_zerodrop": {
+      "Abl2_Disagreement_Esc": {
+        "det_2cls_AP50": {
+          "mean": 44.43,
+          "std": 2.26,
+          "mean_std": "44.43±2.26",
+          "seeds": [
+            46.25,
+            41.9,
+            45.14
+          ]
+        },
+        "det_2cls_AP50_95": {
+          "mean": 28.67,
+          "std": 1.43,
+          "mean_std": "28.67±1.43",
+          "seeds": [
+            30.09,
+            27.23,
+            28.69
+          ]
+        },
+        "det_3cls_repaired_AP50": {
+          "mean": 29.67,
+          "std": 1.18,
+          "mean_std": "29.67±1.18",
+          "seeds": [
+            31.01,
+            29.22,
+            28.77
+          ]
+        },
+        "det_3cls_repaired_AP50_95": {
+          "mean": 18.93,
+          "std": 0.98,
+          "mean_std": "18.93±0.98",
+          "seeds": [
+            20.04,
+            18.57,
+            18.17
+          ]
+        },
+        "esc_hi_pct": {
+          "mean": 33.17,
+          "std": 2.13,
+          "mean_std": "33.17±2.13",
+          "seeds": [
+            33.71,
+            30.83,
+            34.98
+          ]
+        }
+      },
+      "TCDMGE_v2_TriSignal": {
+        "det_2cls_AP50": {
+          "mean": 44.87,
+          "std": 2.1,
+          "mean_std": "44.87±2.10",
+          "seeds": [
+            46.69,
+            42.57,
+            45.34
+          ]
+        },
+        "det_2cls_AP50_95": {
+          "mean": 28.96,
+          "std": 1.47,
+          "mean_std": "28.96±1.47",
+          "seeds": [
+            30.46,
+            27.52,
+            28.89
+          ]
+        },
+        "det_3cls_repaired_AP50": {
+          "mean": 30.17,
+          "std": 1.18,
+          "mean_std": "30.17±1.18",
+          "seeds": [
+            31.41,
+            30.02,
+            29.07
+          ]
+        },
+        "det_3cls_repaired_AP50_95": {
+          "mean": 19.23,
+          "std": 1.01,
+          "mean_std": "19.23±1.01",
+          "seeds": [
+            20.33,
+            19.02,
+            18.34
+          ]
+        },
+        "esc_hi_pct": {
+          "mean": 86.58,
+          "std": 1.89,
+          "mean_std": "86.58±1.89",
+          "seeds": [
+            88.39,
+            84.62,
+            86.72
+          ]
+        }
+      },
+      "Abl3_Full_3Crop_Static": {
+        "det_2cls_AP50": {
+          "mean": 45.08,
+          "std": 2.15,
+          "mean_std": "45.08±2.15",
+          "seeds": [
+            46.74,
+            42.65,
+            45.86
+          ]
+        },
+        "det_2cls_AP50_95": {
+          "mean": 29.05,
+          "std": 1.48,
+          "mean_std": "29.05±1.48",
+          "seeds": [
+            30.46,
+            27.51,
+            29.17
+          ]
+        },
+        "det_3cls_repaired_AP50": {
+          "mean": 30.18,
+          "std": 1.22,
+          "mean_std": "30.18±1.22",
+          "seeds": [
+            31.56,
+            29.73,
+            29.24
+          ]
+        },
+        "det_3cls_repaired_AP50_95": {
+          "mean": 19.28,
+          "std": 1.02,
+          "mean_std": "19.28±1.02",
+          "seeds": [
+            20.43,
+            18.91,
+            18.49
+          ]
+        },
+        "esc_hi_pct": {
+          "mean": 100.0,
+          "std": 0.0,
+          "mean_std": "100.00±0.00",
+          "seeds": [
+            100.0,
+            100.0,
+            100.0
+          ]
+        }
+      }
+    },
+    "citrusuat_5cls": {
+      "Abl2_Disagreement_Esc": {
+        "aligned_5cls_acc": {
+          "mean": 75.55,
+          "std": 0.94,
+          "mean_std": "75.55±0.94",
+          "seeds": [
+            76.3,
+            74.49,
+            75.85
+          ]
+        },
+        "aligned_5cls_f1": {
+          "mean": 69.39,
+          "std": 1.72,
+          "mean_std": "69.39±1.72",
+          "seeds": [
+            70.42,
+            67.4,
+            70.34
+          ]
+        },
+        "strict_14cls_acc": {
+          "mean": 65.54,
+          "std": 3.95,
+          "mean_std": "65.54±3.95",
+          "seeds": [
+            61.17,
+            66.59,
+            68.85
+          ]
+        }
+      },
+      "TCDMGE_v2_TriSignal": {
+        "aligned_5cls_acc": {
+          "mean": 75.55,
+          "std": 0.94,
+          "mean_std": "75.55±0.94",
+          "seeds": [
+            76.3,
+            74.49,
+            75.85
+          ]
+        },
+        "aligned_5cls_f1": {
+          "mean": 69.39,
+          "std": 1.62,
+          "mean_std": "69.39±1.62",
+          "seeds": [
+            70.52,
+            67.54,
+            70.11
+          ]
+        },
+        "strict_14cls_acc": {
+          "mean": 65.69,
+          "std": 3.77,
+          "mean_std": "65.69±3.77",
+          "seeds": [
+            61.63,
+            66.37,
+            69.07
+          ]
+        }
+      },
+      "Abl3_Full_3Crop_Static": {
+        "aligned_5cls_acc": {
+          "mean": 75.77,
+          "std": 1.16,
+          "mean_std": "75.77±1.16",
+          "seeds": [
+            76.75,
+            74.49,
+            76.07
+          ]
+        },
+        "aligned_5cls_f1": {
+          "mean": 69.88,
+          "std": 1.85,
+          "mean_std": "69.88±1.85",
+          "seeds": [
+            71.24,
+            67.77,
+            70.63
+          ]
+        },
+        "strict_14cls_acc": {
+          "mean": 65.84,
+          "std": 3.53,
+          "mean_std": "65.84±3.53",
+          "seeds": [
+            62.08,
+            66.37,
+            69.07
+          ]
+        }
+      }
+    },
+    "vault_sweet_orange_1389": {
+      "Abl2_Disagreement_Esc": {
+        "strict_14cls_hit": {
+          "mean": 60.93,
+          "std": 3.17,
+          "mean_std": "60.93±3.17",
+          "seeds": [
+            57.74,
+            64.07,
+            60.98
+          ]
+        },
+        "aligned_3cls_acc": {
+          "mean": 77.9,
+          "std": 1.58,
+          "mean_std": "77.90±1.58",
+          "seeds": [
+            79.05,
+            76.1,
+            78.55
+          ]
+        },
+        "aligned_3cls_f1": {
+          "mean": 69.19,
+          "std": 4.55,
+          "mean_std": "69.19±4.55",
+          "seeds": [
+            73.89,
+            64.8,
+            68.87
+          ]
+        },
+        "esc_pct": {
+          "mean": 33.52,
+          "std": 1.41,
+          "mean_std": "33.52±1.41",
+          "seeds": [
+            35.13,
+            32.97,
+            32.47
+          ]
+        }
+      },
+      "TCDMGE_v2_TriSignal": {
+        "strict_14cls_hit": {
+          "mean": 61.05,
+          "std": 3.24,
+          "mean_std": "61.05±3.24",
+          "seeds": [
+            57.74,
+            64.22,
+            61.2
+          ]
+        },
+        "aligned_3cls_acc": {
+          "mean": 79.41,
+          "std": 2.58,
+          "mean_std": "79.41±2.58",
+          "seeds": [
+            81.79,
+            76.67,
+            79.77
+          ]
+        },
+        "aligned_3cls_f1": {
+          "mean": 72.26,
+          "std": 6.4,
+          "mean_std": "72.26±6.40",
+          "seeds": [
+            79.06,
+            66.34,
+            71.39
+          ]
+        },
+        "esc_pct": {
+          "mean": 98.32,
+          "std": 1.37,
+          "mean_std": "98.32±1.37",
+          "seeds": [
+            99.71,
+            98.27,
+            96.98
+          ]
+        }
+      },
+      "Abl3_Full_3Crop_Static": {
+        "strict_14cls_hit": {
+          "mean": 61.17,
+          "std": 3.46,
+          "mean_std": "61.17±3.46",
+          "seeds": [
+            57.6,
+            64.51,
+            61.41
+          ]
+        },
+        "aligned_3cls_acc": {
+          "mean": 79.67,
+          "std": 1.86,
+          "mean_std": "79.67±1.86",
+          "seeds": [
+            81.35,
+            77.68,
+            79.99
+          ]
+        },
+        "aligned_3cls_f1": {
+          "mean": 73.22,
+          "std": 4.61,
+          "mean_std": "73.22±4.61",
+          "seeds": [
+            78.31,
+            69.33,
+            72.03
+          ]
+        },
+        "esc_pct": {
+          "mean": 100.0,
+          "std": 0.0,
+          "mean_std": "100.00±0.00",
+          "seeds": [
+            100.0,
+            100.0,
+            100.0
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,8 +1,14 @@
-# SCI 小论文真创新方法定稿报告：TCD-MGE（全基线逐种子 3/3 零退步验证版）
+# SCI 小论文候选方法阶段报告：TCD-MGE（附完整复核纠偏与统一论文终稿指引）
 
-- **定稿日期**：2026-11-26
+> [!IMPORTANT]
+> **2026-11-26 严格审计纠偏说明（响应实验规范与消融完备性复核）**：
+> 1. **数据集定位重新校准**：由于早期 `CG-GAR (v1/v2)` 探索阶段曾观察过 `SciDB testC` 与 `Zenodo 11148332` 的失败现象并据此精简了融合架构，本文中 `SciDB testB / testC` 应严格定位为**同源跨条件诊断基准（Cross-Condition Diagnostic Benchmark）**，`Zenodo 11148332` 定位为**外部果园探索性验证集（Exploratory External Benchmark）**，不再宣称为“零接触一次性盲测”。真正从未接触过任何架构迭代的最终盲测（`Sweet Orange V1` 去重原图 `N=1,389`）及修复版全量消融已统一归档于 [`../v3_bgopta_and_dtemop/`](../v3_bgopta_and_dtemop/)。
+> 2. **推理速度与静态三粒度消融（`Abl-3`）实事求是说明**：本阶段三信号版 `TCD-MGE` 在 `testB / testC` 上精度（`79.03% / 84.91%`）稳定优于全量 `DINOv2`（`75.90% / 83.31%`），但因 `testC` 升级率达 `70.4%` 且存在两次串行 ViT 调用，其单图延迟高于全量 `DINOv2`（未达“快于单框 DINOv2”预期），且源内精度略低于 100% 静态三视角差分 `Abl-3`（`79.28% / 85.09%`）；同时无阈值参数的**纯分歧触发版 `Abl-2`（仅当 $\hat{y}_{\text{det}}\neq\hat{y}_{\text{std}}$ 时升级）**在 `val` 上仅需升级 **`3.7%`** 候选框（`testB / testC` 仅升级 **`22.9% / 26.1%`**）即可取得 **`90.52% / 79.09% / 84.80%`**，并在跨域 `CitrusUAT` 与最终盲测集上凭借流形衰减意见池显著优于静态固定融合 `Abl-3`（详见 `v3_bgopta_and_dtemop/`）。
+> 3. **修复 `Zenodo` 3 类映射遗漏 `9–13` 类问题**：本目录早期脚本 `step3_v3_external_and_fast_latency.py` 的 `scidb_to_3cls` 仅定义了 `0..8` 类，导致预测为 `9..13` 类的框在 3 类评测中被过滤。`v3_bgopta_and_dtemop/` 已修复为覆盖全 14 类的 **100% 预测框零丢弃映射与错判惩罚评测**。
+
+- **归档日期**：2026-11-26
 - **方法简称与全称**：**TCD-MGE**（*Target–Context Differential Multi-Granularity Escalation with Manifold-Attenuated Logarithmic Opinion Pooling*，基于目标—环境相对差分表征与流形衰减对数意见池的按需多粒度检测精化方法）
-- **核心验证标准**：**拒绝单靠均值包装**——在 `SciDB`（`val / testB / testC`）与未见外部真实果园盲测集（`Zenodo 11148332`，519 图 / 1,765 框）上，列出全部 3 个独立随机种子 `[seed0, seed1, seed2]` 明细，严格验证相对原生检测器、**全量 `DINOv2` 强基线**及前期 `MGS-v1` 的 **100% 逐种子无退步胜出（3/3 种子全胜）**。
+- **核心验证标准**：在 `SciDB`（`val / testB / testC` 跨条件诊断基准）与外部真实果园集（`Zenodo 11148332`，519 图 / 1,765 框）上，列出全部 3 个独立随机种子 `[seed0, seed1, seed2]` 明细，验证相对原生检测器、**全量 `DINOv2` 强基线**及前期 `MGS-v1` 的 **3/3 种子一致胜出**。
 
 ---
 
