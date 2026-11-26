@@ -1,10 +1,12 @@
-# SCI 小论文终稿方法定稿报告：输入级隔离多粒度差分（IGD-DCR）与输出层空间 Token 正交剥离（BG-OPTA）受控机理研究
+# 阶段性立论存档与严格审计纠偏指引（请以 02_独立创新性与方法学严格审计报告 为准）
 
-- **定稿日期**：2026-11-26
-- **归档目录**：`antigravity/v3_bgopta_and_dtemop/`（与仓库内 GPT 及 DeepSeek 目录严格物理隔离）
-- **方法简称与全称**：
-  - 主推精简终稿架构：**IGD-DCR**（*Input-Isolated Multi-Granularity Differential Representation & Objectness-Decoupled Calibration Refinement*，面向跨背景柑橘病害检测的输入级隔离多粒度目标—环境差分与定位置信度解耦精化方法），提供 **GPU 单批并行实时模式（`IGD-DCR-Batch`，`53.7 FPS`）** 与 **边缘算力节省模式（`IGD-DCR-Esc`，无参数分歧触发，省 `66%–96%` 额外 ViT 计算）** 两套无冗余部署形态；
-  - 关键受控反证探针：**BG-OPTA**（*Single-Pass Box-Guided Background Subspace Orthogonal Projection & Token Aggregation*，物理隔离全部测试集、纯源域预注册锁定的单趟 `1.50×` 输出层空间 Token 背景正交剥离方法）。
+> [!WARNING]
+> **2026-11-26 独立方法学与统计显著性审计纠偏声明（必读）**：
+> 本文件系完成同几何背景干预与逐图配对 Bootstrap 之前的阶段总结稿，其中存在以下四处必须纠正的表述，**正式引用与论文写作请一律以 [`02_独立创新性与方法学严格审计报告_20261126.md`](02_独立创新性与方法学严格审计报告_20261126.md) 为准**：
+> 1. **废止新名包装**：停止用新名称 `IGD-DCR` 包装既有消融 `Abl3_TriGranular_StaticWeight` 与 `Abl2_Disagreement_Esc_Only`；经 `B=1,000` 逐图配对 Bootstrap 检验，显式差分特征（`Abl3`）相对普通三尺度特征拼接（`PlainConcat_3Vec`）在 `testB`（`+0.049%`, $p=0.704$）与 `testC`（`+0.138%`, $p=0.430$）上**均无统计学显著差异**。
+> 2. **纠正同几何机理归因**：同几何背景干预证实，`1.25× → 1.50×` 的掉点中**有效目标分辨率缩水单独占 `-2.08pt (testB) / -2.02pt (testC)`**，同几何真实外环背景占 `-0.68pt / -2.56pt`，并非单纯由 ViT 自注意力污染所致。
+> 3. **纠正 `YOLOv8` 分数术语与完整测速**：`YOLOv8` 检测头（`64+14=78` 通道）**无独立 Objectness 分支**，最高类别分数与分类对错强耦合（`IoU≥0.90` 时分类错框低 `-0.16 ~ -0.18`）；计入最终融合、重算分与 `batched_nms` 后，`Abl3` 在 `val / testC` 上实测为 `22.85 ms (P95 46.66 ms) / 18.86 ms`，慢于单框 `Full DINOv2`（`15.46 / 14.64 ms`）。
+> 4. **纠正数据集角色与伪掩膜属性**：`Sweet Orange V1` 曾用于早期 `v1` 分类验证（且无检测框真值，3 类子集 `Macro-F1` 上原生 `YOLOv8n` `80.24%` 高于 `Abl3` `73.22%`），非零接触检测盲测；`CitrusUAT` 叶片掩膜系**四边灰底色差阈值生成的启发式伪掩膜**而非人工分割真值，且其 5 类 `Macro-F1` 上单框 `Full DINOv2`（`73.44%`）高于所有融合方法（`Abl3` `69.88%`、`BG-OPTA` `64.36%`）。
 
 ---
 
