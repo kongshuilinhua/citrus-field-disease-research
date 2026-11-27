@@ -1,12 +1,14 @@
 {
-  "manifest_version": "2026-11-27_Stage2b_Frozen_C3_Lock_With_A4b_Predeclared_Control",
+  "manifest_version": "2026-11-27_Stage2b_v1.1_Frozen_6Models_With_G2Blur_And_A4b",
   "paper_title_zh_tentative": "面向复杂田间背景的柑橘病害检测：基于双尺度目标表征与校准后验融合的方法",
   "paper_title_en_tentative": "Dual-Scale Target Representation and Calibrated Posterior Fusion for Citrus Disease Detection in Complex Field Environments",
   "primary_method_id": "C3_DualScale_082_125_Calib",
+  "main_table_zero_dof_variant_id": "C3_EqualWeight_082_125_Calib_030_035_035",
   "frozen_stage4_orchard_eval_models": [
     "B0_Native_YOLOv8n",
     "B1_Full_DINOv2_125_Hard",
     "C1_SingleScale_125_Calib",
+    "G2_blur_Single125_BlurRing_Calib",
     "A4b_FlipTTA_125_HFlip_Calib",
     "C3_DualScale_082_125_Calib"
   ],
@@ -14,8 +16,9 @@
     "B0_Native_YOLOv8n": "原始单阶段检测基线",
     "B1_Full_DINOv2_125_Hard": "两阶段硬覆盖强基线",
     "C1_SingleScale_125_Calib": "单尺度校准后验融合主对照",
-    "A4b_FlipTTA_125_HFlip_Calib": "常规双视角水平翻转 TTA 预先指定补充对照（等 ViT 算力）",
-    "C3_DualScale_082_125_Calib": "唯一冻结主方法（主研究问题对比 C1 与 Full DINOv2；A4b 为补充对照）"
+    "G2_blur_Single125_BlurRing_Calib": "单尺度 1.25x + 框外 31x31 高斯模糊遮罩最简机制对照（1.0x ViT 算力）",
+    "A4b_FlipTTA_125_HFlip_Calib": "常规双视角水平翻转 TTA 预先指定补充对照（2.0x ViT 算力）",
+    "C3_DualScale_082_125_Calib": "唯一冻结主方法（附零调参等权版 C3_equal [0.30, 0.35, 0.35] 作主表零自由度汇报口径）"
   },
   "protocol_amendment_log": [
     {
@@ -26,10 +29,15 @@
     {
       "date": "2026-11-27",
       "version": "2026-11-27_Stage2b_Frozen_C3_Lock_With_A4b_Predeclared_Control",
-      "change": "在 190 张真实果园专家标注启动/揭盲前，预先将等算力常规双视角 TTA (A4b: 1.25x + 水平翻转，沿用源域 SciDB val 锁定的种子权重) 增补为第 5 个外部验证补充对照，同时保持 C3 为唯一主方法且全部底层权重哈希与 C3 参数零改动。"
+      "change": "在 190 张真实果园揭盲前，将等算力常规双视角 TTA (A4b: 1.25x + 水平翻转) 增补为第 5 个外部验证补充对照。"
+    },
+    {
+      "date": "2026-11-27",
+      "version": "2026-11-27_Stage2b_v1.1_Frozen_6Models_With_G2Blur_And_A4b",
+      "change": "统计收尾阶段（真实果园标注揭盲前），将单尺度框外高斯模糊遮罩 G2_blur (1.25x + 31x31 sigma=11 框外模糊, [0.30, 0.70]) 增补为第 6 个预注册盲测基线，防止遗漏更低算力的单刀背景抑制对照；底层 12 份权重哈希与 C3 冻结参数零改动。"
     }
   ],
-  "anti_leakage_declaration": "全部模型权重与融合超参数仅由源域 SciDB train/val 锁定并记录 SHA-256；后续真实果园评测仅运行上述 5 个预声明冻结模型（C3 唯一主方法 + 4 个基线/对照），严禁根据盲测表现更换主方法或回调参数。",
+  "anti_leakage_declaration": "全部模型权重与融合超参数仅由源域 SciDB train/val 锁定并记录 SHA-256；后续真实果园盲测仅运行上述 6 个预注册冻结模型（只跑一次），严禁根据盲测表现更换主方法或回调参数。",
   "seeds": {
     "0": {
       "seed": 0,
@@ -69,6 +77,14 @@
           0.35,
           0.65
         ],
+        "G2_blur_Single125_BlurRing_weights_det_stdblur": [
+          0.3,
+          0.7
+        ],
+        "G2_blur_gaussian_ksize_sigma": [
+          31,
+          11.0
+        ],
         "C2_OOD_Pool_prior_det_std": [
           0.35,
           0.65
@@ -87,6 +103,11 @@
           0.3,
           0.2,
           0.5
+        ],
+        "C3_EqualWeight_weights_det_core082_std125": [
+          0.3,
+          0.35,
+          0.35
         ]
       },
       "offline_v4_reference_AP50_95": {
@@ -94,6 +115,11 @@
           "val": 91.13,
           "testB": 80.5,
           "testC": 85.23
+        },
+        "G2_blur": {
+          "val": 90.89,
+          "testB": 80.52,
+          "testC": 85.24
         },
         "C2": {
           "val": 91.02,
@@ -104,6 +130,11 @@
           "val": 90.96,
           "testB": 79.58,
           "testC": 86.36
+        },
+        "C3_equal": {
+          "val": 90.96,
+          "testB": 80.49,
+          "testC": 85.76
         },
         "C3": {
           "val": 91.0,
@@ -150,6 +181,14 @@
           0.35,
           0.65
         ],
+        "G2_blur_Single125_BlurRing_weights_det_stdblur": [
+          0.3,
+          0.7
+        ],
+        "G2_blur_gaussian_ksize_sigma": [
+          31,
+          11.0
+        ],
         "C2_OOD_Pool_prior_det_std": [
           0.35,
           0.65
@@ -168,6 +207,11 @@
           0.3,
           0.2,
           0.5
+        ],
+        "C3_EqualWeight_weights_det_core082_std125": [
+          0.3,
+          0.35,
+          0.35
         ]
       },
       "offline_v4_reference_AP50_95": {
@@ -175,6 +219,11 @@
           "val": 89.03,
           "testB": 76.87,
           "testC": 82.48
+        },
+        "G2_blur": {
+          "val": 88.93,
+          "testB": 77.37,
+          "testC": 84.8
         },
         "C2": {
           "val": 89.0,
@@ -185,6 +234,11 @@
           "val": 89.56,
           "testB": 76.66,
           "testC": 83.77
+        },
+        "C3_equal": {
+          "val": 89.08,
+          "testB": 77.34,
+          "testC": 84.22
         },
         "C3": {
           "val": 89.23,
@@ -231,6 +285,14 @@
           0.35,
           0.65
         ],
+        "G2_blur_Single125_BlurRing_weights_det_stdblur": [
+          0.3,
+          0.7
+        ],
+        "G2_blur_gaussian_ksize_sigma": [
+          31,
+          11.0
+        ],
         "C2_OOD_Pool_prior_det_std": [
           0.35,
           0.65
@@ -249,6 +311,11 @@
           0.3,
           0.2,
           0.5
+        ],
+        "C3_EqualWeight_weights_det_core082_std125": [
+          0.3,
+          0.35,
+          0.35
         ]
       },
       "offline_v4_reference_AP50_95": {
@@ -256,6 +323,11 @@
           "val": 91.01,
           "testB": 77.52,
           "testC": 83.79
+        },
+        "G2_blur": {
+          "val": 90.69,
+          "testB": 79.37,
+          "testC": 83.12
         },
         "C2": {
           "val": 91.01,
@@ -266,6 +338,11 @@
           "val": 91.18,
           "testB": 77.16,
           "testC": 83.73
+        },
+        "C3_equal": {
+          "val": 90.85,
+          "testB": 78.67,
+          "testC": 83.76
         },
         "C3": {
           "val": 91.06,

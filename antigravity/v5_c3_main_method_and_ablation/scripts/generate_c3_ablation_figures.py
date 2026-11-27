@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-绘制 Stage 2 & Stage 2b 全部无重叠论文级图表：
-1. fig1_c3_controlled_scale_ablation_and_bootstrap.png (受控尺度消融含等权对照 & 补齐配对 Bootstrap 森林图)
-2. fig2_c3_fair_end2end_latency_and_pareto.png (统一同会话端到端公平测速，补齐 A4b 与 C1，彻底剔除跨协议混比)
-3. fig3_g1_to_g4_gray_and_blur_ring_mechanism.png (G1–G4 灰环 + G2_blur/G4_blur 高斯模糊外环机制实验与双重差分 DiD 森林图)
+绘制 Stage 2b v1.1 全部无重叠论文级图表（全图叠加 3 随机种子独立散点，杜绝仅报均值掩盖种子差异）：
+1. fig1_c3_controlled_scale_ablation_and_bootstrap.png (受控尺度消融突出零调参等权 C3_equal 主口径 + 冻结 C3 对照 & 配对 Bootstrap)
+2. fig2_c3_fair_end2end_latency_and_pareto.png (含 G2_blur 单刀遮罩与 A4b 的 10 组端到端延迟剖面与精度—延迟权衡)
+3. fig3_g1_to_g4_gray_and_blur_ring_mechanism.png (G1–G4 灰环与模糊外环逐种子散点柱状图 + 含 G3−G2 / G3−G2_blur 关键判决项的森林图)
 """
 import json
 from pathlib import Path
@@ -22,6 +22,13 @@ FIG_DIR = V5_DIR / 'figures'
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 
 
+def overlay_seed_dots(ax, x_centers, seeds_list, color_dot):
+    offsets = [-0.07, 0.0, 0.07]
+    for xc, svals in zip(x_centers, seeds_list):
+        for dx, sv in zip(offsets, svals):
+            ax.scatter(xc + dx, sv, s=16, color=color_dot, edgecolors='white', linewidths=0.45, zorder=6, alpha=0.9)
+
+
 def plot_fig1_scale_ablation_and_bootstrap(data: dict):
     ab = data['ablation_metrics_3seed']
     bt = data['paired_bootstrap_1000_results']
@@ -29,55 +36,64 @@ def plot_fig1_scale_ablation_and_bootstrap(data: dict):
     items = [
         ('B0_Native_YOLOv8n', 'B0: YOLOv8n\n(单阶段基线)'),
         ('B1_Full_DINOv2_125_Hard', 'B1: Full DINOv2\n(1.25x 硬覆盖)'),
-        ('A1_Single_125_Iso30', 'A1: 1.25x 单尺度\n(标准视角, 0.3/0.7)'),
-        ('A2_Single_082_Iso30', 'A2: 0.82x 单尺度\n(紧致视角, 0.3/0.7)'),
+        ('A1_Single_125_Iso30', 'A1: 1.25x 单尺度\n(标准视角 0.3/0.7)'),
+        ('A2_Single_082_Iso30', 'A2: 0.82x 单尺度\n(紧致视角 0.3/0.7)'),
         ('A4a_CloseDual_115_135_Iso30_ValGrid', 'A4a: 1.15x+1.35x\n(相近双裁剪TTA)'),
         ('A4b_FlipTTA_125_HFlip_Iso30_ValGrid', 'A4b: 1.25x+翻转\n(常规双视角TTA)'),
-        ('A3_Dual_082_125_Iso30_Equal', 'C3-Eq: 0.82x+1.25x\n(零调参等权 0.35/0.35)'),
-        ('A3_C3_Locked_082_125_Main', 'A3/C3: 0.82x+1.25x\n(唯一冻结主方法)'),
+        ('A3_Dual_082_125_Iso30_Equal', 'C3_equal: 0.82x+1.25x\n(主表零调参 0.35/0.35)'),
+        ('A3_C3_Locked_082_125_Main', 'C3_frozen: 0.82x+1.25x\n(冻结权重 0.20/0.50)'),
         ('A5_TriScale_082_125_250_Iso30_ValGrid', 'A5: +2.50x 三尺度\n(追加大范围环境)'),
     ]
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(19.2, 7.0), gridspec_kw={'width_ratios': [1.30, 1.08]})
-    fig.subplots_adjust(wspace=0.43, bottom=0.23, top=0.85)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(19.6, 7.1), gridspec_kw={'width_ratios': [1.30, 1.12]})
+    fig.subplots_adjust(wspace=0.45, bottom=0.23, top=0.85)
 
     x = np.arange(len(items))
     w = 0.38
     b_m = [ab[k]['testB']['AP50_95_mean'] for k, _ in items]
     b_s = [ab[k]['testB']['AP50_95_std'] for k, _ in items]
+    b_seeds = [ab[k]['testB']['AP50_95_seeds'] for k, _ in items]
     c_m = [ab[k]['testC']['AP50_95_mean'] for k, _ in items]
     c_s = [ab[k]['testC']['AP50_95_std'] for k, _ in items]
+    c_seeds = [ab[k]['testC']['AP50_95_seeds'] for k, _ in items]
 
-    bars_b = ax1.bar(x - w / 2, b_m, w, yerr=b_s, capsize=3.0, color='#3B82F6', alpha=0.88,
-                     error_kw={'lw': 1.15, 'ecolor': '#1E3A8A'}, label='SciDB testB (自然田间复杂背景)')
-    bars_c = ax1.bar(x + w / 2, c_m, w, yerr=c_s, capsize=3.0, color='#10B981', alpha=0.88,
-                     error_kw={'lw': 1.15, 'ecolor': '#064E3B'}, label='SciDB testC (均匀白板异质背景)')
+    bars_b = ax1.bar(x - w / 2, b_m, w, yerr=b_s, capsize=3.0, color='#3B82F6', alpha=0.86,
+                     error_kw={'lw': 1.1, 'ecolor': '#1E3A8A'}, label='SciDB testB (均值±SD，圆点为3种子)')
+    bars_c = ax1.bar(x + w / 2, c_m, w, yerr=c_s, capsize=3.0, color='#10B981', alpha=0.86,
+                     error_kw={'lw': 1.1, 'ecolor': '#064E3B'}, label='SciDB testC (均值±SD，圆点为3种子)')
 
-    bars_b[7].set_edgecolor('#B91C1C'); bars_b[7].set_linewidth(2.2)
-    bars_c[7].set_edgecolor('#B91C1C'); bars_c[7].set_linewidth(2.2)
+    overlay_seed_dots(ax1, x - w / 2, b_seeds, '#1D4ED8')
+    overlay_seed_dots(ax1, x + w / 2, c_seeds, '#047857')
 
-    for rect, val, sd in zip(bars_b, b_m, b_s):
-        ax1.text(rect.get_x() + rect.get_width() / 2, val + sd + 0.42, f'{val:.2f}',
-                 ha='center', va='bottom', fontsize=7.5, color='#1E3A8A', fontweight='bold')
-    for rect, val, sd in zip(bars_c, c_m, c_s):
-        ax1.text(rect.get_x() + rect.get_width() / 2, val + sd + 0.42, f'{val:.2f}',
-                 ha='center', va='bottom', fontsize=7.5, color='#065F46', fontweight='bold')
+    for hi_idx, col_e in [(6, '#D97706'), (7, '#B91C1C')]:
+        bars_b[hi_idx].set_edgecolor(col_e); bars_b[hi_idx].set_linewidth(2.1)
+        bars_c[hi_idx].set_edgecolor(col_e); bars_c[hi_idx].set_linewidth(2.1)
 
-    ax1.set_ylim(63, 93.2)
-    ax1.set_ylabel('COCO AP50-95 (%, 3随机种子均值±标准差)', fontsize=10.5)
-    ax1.set_title('(a) 严格固定 w_det=0.30 受控尺度消融 (含冻结 C3 与零调参等权对照)', fontsize=11.0, fontweight='bold', pad=12)
+    for rect, val, sd, sds in zip(bars_b, b_m, b_s, b_seeds):
+        top_y = max(val + sd, max(sds))
+        ax1.text(rect.get_x() + rect.get_width() / 2, top_y + 0.42, f'{val:.2f}',
+                 ha='center', va='bottom', fontsize=7.4, color='#1E3A8A', fontweight='bold')
+    for rect, val, sd, sds in zip(bars_c, c_m, c_s, c_seeds):
+        top_y = max(val + sd, max(sds))
+        ax1.text(rect.get_x() + rect.get_width() / 2, top_y + 0.42, f'{val:.2f}',
+                 ha='center', va='bottom', fontsize=7.4, color='#065F46', fontweight='bold')
+
+    ax1.set_ylim(63, 93.5)
+    ax1.set_ylabel('COCO AP50-95 (%, 逐种子散点 + 3种子均值)', fontsize=10.4)
+    ax1.set_title('(a) 固定 w_det=0.30 受控尺度消融 (主表零调参 C3_equal 与冻结 C3 对照)', fontsize=10.9, fontweight='bold', pad=12)
     ax1.set_xticks(x)
-    ax1.set_xticklabels([lbl for _, lbl in items], fontsize=8.3, rotation=24, ha='right')
+    ax1.set_xticklabels([lbl for _, lbl in items], fontsize=8.2, rotation=24, ha='right')
     ax1.grid(axis='y', ls=':', alpha=0.5)
-    ax1.legend(loc='upper left', fontsize=9.1, frameon=True)
+    ax1.legend(loc='upper left', fontsize=8.9, frameon=True)
 
     forest_pairs = [
-        ('A3_C3_Locked_082_125_Main__minus__A1_Single_125_Iso30', 'C3 - A1 (1.25x 标准单尺度)'),
-        ('A3_C3_Locked_082_125_Main__minus__A2_Single_082_Iso30', 'C3 - A2 (0.82x 紧致单尺度)'),
-        ('A3_C3_Locked_082_125_Main__minus__A4a_CloseDual_115_135_Iso30_ValGrid', 'C3 - A4a (1.15x+1.35x 相近TTA)'),
-        ('A3_C3_Locked_082_125_Main__minus__A4b_FlipTTA_125_HFlip_Iso30_ValGrid', 'C3 - A4b (1.25x+翻转 常规TTA)'),
-        ('A3_C3_Locked_082_125_Main__minus__A3_Dual_082_125_Iso30_Equal', 'C3 - C3_equal (冻结 vs 等权 0.35/0.35)'),
-        ('A5_TriScale_082_125_250_Iso30_ValGrid__minus__A3_C3_Locked_082_125_Main', 'A5 (+2.50x 环境视角) - C3'),
+        ('A3_Dual_082_125_Iso30_Equal__minus__A1_Single_125_Iso30', 'C3_equal - A1 (1.25x 标准单尺度)'),
+        ('A3_Dual_082_125_Iso30_Equal__minus__A2_Single_082_Iso30', 'C3_equal - A2 (0.82x 紧致单尺度)'),
+        ('A3_Dual_082_125_Iso30_Equal__minus__A4a_CloseDual_115_135_Iso30_Equal', 'C3_equal - A4a_eq (相近双裁剪TTA)'),
+        ('A3_Dual_082_125_Iso30_Equal__minus__A4b_FlipTTA_125_HFlip_Iso30_Equal', 'C3_equal - A4b_eq (水平翻转TTA)'),
+        ('A3_C3_Locked_082_125_Main__minus__A1_Single_125_Iso30', 'C3_frozen - A1 (冻结版 vs 单尺度)'),
+        ('A3_C3_Locked_082_125_Main__minus__A4b_FlipTTA_125_HFlip_Iso30_ValGrid', 'C3_frozen - A4b (冻结版 vs 翻转TTA)'),
+        ('A5_TriScale_082_125_250_Iso30_Equal__minus__A3_Dual_082_125_Iso30_Equal', 'A5_eq (+2.50x 三尺度) - C3_equal'),
     ]
     y_pos = np.arange(len(forest_pairs))[::-1]
     off = 0.17
@@ -89,50 +105,52 @@ def plot_fig1_scale_ablation_and_bootstrap(data: dict):
         mb, (lb, hb), pb = rb['mean_diff_3seed'], rb['ci95_3seed'], rb['p_value_two_sided']
         mc, (lc, hc), pc = rc['mean_diff_3seed'], rc['ci95_3seed'], rc['p_value_two_sided']
 
-        ax2.errorbar(mb, yi + off, xerr=[[mb - lb], [hb - mb]], fmt='o', color='#2563EB', capsize=3.8, lw=1.7, ms=6.0,
+        ax2.errorbar(mb, yi + off, xerr=[[mb - lb], [hb - mb]], fmt='o', color='#2563EB', capsize=3.5, lw=1.6, ms=5.8,
                      label='SciDB testB (95% CI)' if yi == y_pos[0] else None)
-        ax2.errorbar(mc, yi - off, xerr=[[mc - lc], [hc - mc]], fmt='s', color='#059669', capsize=3.8, lw=1.7, ms=6.0,
+        ax2.errorbar(mc, yi - off, xerr=[[mc - lc], [hc - mc]], fmt='s', color='#059669', capsize=3.5, lw=1.6, ms=5.8,
                      label='SciDB testC (95% CI)' if yi == y_pos[0] else None)
 
-        ax2.text(hb + 0.08, yi + off, f'{mb:+.2f}% (p={pb:.3f})', va='center', ha='left', fontsize=7.9, color='#1E40AF', fontweight='bold')
-        ax2.text(hc + 0.08, yi - off, f'{mc:+.2f}% (p={pc:.3f})', va='center', ha='left', fontsize=7.9, color='#065F46', fontweight='bold')
+        ax2.text(hb + 0.08, yi + off, f'{mb:+.2f}% (p={pb:.3f})', va='center', ha='left', fontsize=7.6, color='#1E40AF', fontweight='bold')
+        ax2.text(hc + 0.08, yi - off, f'{mc:+.2f}% (p={pc:.3f})', va='center', ha='left', fontsize=7.6, color='#065F46', fontweight='bold')
 
     all_hi = [max(bt['testB'][pk]['AP50_95']['ci95_3seed'][1], bt['testC'][pk]['AP50_95']['ci95_3seed'][1]) for pk, _ in forest_pairs]
     all_lo = [min(bt['testB'][pk]['AP50_95']['ci95_3seed'][0], bt['testC'][pk]['AP50_95']['ci95_3seed'][0]) for pk, _ in forest_pairs]
     ax2.set_xlim(min(-1.3, min(all_lo) - 0.5), max(all_hi) + 2.35)
     ax2.set_ylim(-0.65, len(forest_pairs) - 0.20)
     ax2.set_yticks(y_pos)
-    ax2.set_yticklabels([lbl for _, lbl in forest_pairs], fontsize=8.9)
-    ax2.set_xlabel('3种子同步逐图配对 Bootstrap ΔAP50-95 (%) 及 95% 置信区间', fontsize=10.2)
-    ax2.set_title('(b) 等检测器权重 (w_det=0.30) 关键假设配对检验森林图 (B=1,000)', fontsize=11.0, fontweight='bold', pad=12)
+    ax2.set_yticklabels([lbl for _, lbl in forest_pairs], fontsize=8.6)
+    ax2.set_xlabel('配对 Bootstrap ΔAP50-95 (%) 及 95% 置信区间 (B=1,000)', fontsize=10.1)
+    ax2.set_title('(b) 零调参等权 C3_equal 与冻结版关键配对检验森林图', fontsize=10.9, fontweight='bold', pad=12)
     ax2.grid(axis='x', ls=':', alpha=0.5)
-    ax2.legend(loc='lower right', fontsize=8.7, frameon=True)
+    ax2.legend(loc='lower right', fontsize=8.6, frameon=True)
 
-    fig.suptitle('唯一主方法 C3 (0.82× + 1.25× 双尺度校准后验融合) 受控尺度消融与完备配对 Bootstrap 检验', fontsize=13.4, fontweight='bold', y=0.96)
+    fig.suptitle('受控双尺度消融 v1.1：零调参等权 C3_equal 主口径与冻结 C3 逐种子及配对检验', fontsize=13.3, fontweight='bold', y=0.96)
     out_p = FIG_DIR / 'fig1_c3_controlled_scale_ablation_and_bootstrap.png'
     fig.savefig(out_p, dpi=220, bbox_inches='tight')
     plt.close(fig)
     print(f"Saved: {out_p}")
 
 
-def plot_fig2_fair_latency_profile(data: dict):
+def plot_fig2_fair_latency_profile(data: dict, d2b: dict):
     lat = data['fair_end2end_latency_rtx4060ti_fp32']
     ab = data['ablation_metrics_3seed']
+    mm = d2b['g1_to_g4_gray_and_blur_ring_metrics_3seed']
 
     modes = [
-        ('B0_Native_YOLOv8n', 'B0: YOLOv8n', 'B0_Native_YOLOv8n', '#94A3B8'),
-        ('B1_Full_DINOv2_125_Hard', 'B1: Full DINOv2', 'B1_Full_DINOv2_125_Hard', '#64748B'),
-        ('C1_Single_125_035_065', 'C1: 1.25x (0.35/0.65)', 'C1_Historical_125_035_065', '#2563EB'),
-        ('A1_Single_125', 'A1: 1.25x (0.30/0.70)', 'A1_Single_125_Iso30', '#3B82F6'),
-        ('A2_Single_082', 'A2: 0.82x 紧致单尺度', 'A2_Single_082_Iso30', '#0EA5E9'),
-        ('A4a_CloseDual_115_135', 'A4a: 1.15x+1.35x TTA', 'A4a_CloseDual_115_135_Iso30_ValGrid', '#F59E0B'),
-        ('A4b_FlipTTA_125_HFlip', 'A4b: 1.25x+翻转 TTA', 'A4b_FlipTTA_125_HFlip_Iso30_ValGrid', '#EC4899'),
-        ('A3_Dual_082_125_C3_Main', 'A3/C3: 0.82x+1.25x 主方法', 'A3_C3_Locked_082_125_Main', '#10B981'),
-        ('A5_TriScale_082_125_250', 'A5: +2.50x 三尺度', 'A5_TriScale_082_125_250_Iso30_ValGrid', '#8B5CF6'),
+        ('B0_Native_YOLOv8n', 'B0: YOLOv8n', ab['B0_Native_YOLOv8n'], '#94A3B8'),
+        ('B1_Full_DINOv2_125_Hard', 'B1: Full DINOv2', ab['B1_Full_DINOv2_125_Hard'], '#64748B'),
+        ('C1_Single_125_035_065', 'C1: 1.25x (0.35/0.65)', ab['C1_Historical_125_035_065'], '#2563EB'),
+        ('A1_Single_125', 'A1: 1.25x (0.30/0.70)', ab['A1_Single_125_Iso30'], '#3B82F6'),
+        ('G2_blur_Single_125_BlurRing', 'G2_blur: 1.25x+模糊环', mm['G2_blur_125_BlurOuter_Iso30'], '#14B8A6'),
+        ('A2_Single_082', 'A2: 0.82x 紧致单尺度', ab['A2_Single_082_Iso30'], '#0EA5E9'),
+        ('A4a_CloseDual_115_135', 'A4a: 1.15x+1.35x TTA', ab['A4a_CloseDual_115_135_Iso30_ValGrid'], '#F59E0B'),
+        ('A4b_FlipTTA_125_HFlip', 'A4b: 1.25x+翻转 TTA', ab['A4b_FlipTTA_125_HFlip_Iso30_ValGrid'], '#EC4899'),
+        ('A3_Dual_082_125_C3_Main', 'C3: 0.82x+1.25x (等权/冻结)', ab['A3_Dual_082_125_Iso30_Equal'], '#10B981'),
+        ('A5_TriScale_082_125_250', 'A5: +2.50x 三尺度', ab['A5_TriScale_082_125_250_Iso30_ValGrid'], '#8B5CF6'),
     ]
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18.4, 6.9), gridspec_kw={'width_ratios': [1.18, 1.05]})
-    fig.subplots_adjust(wspace=0.25, bottom=0.23, top=0.85)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(19.2, 7.0), gridspec_kw={'width_ratios': [1.18, 1.08]})
+    fig.subplots_adjust(wspace=0.25, bottom=0.24, top=0.85)
 
     x = np.arange(len(modes))
     w = 0.26
@@ -147,54 +165,53 @@ def plot_fig2_fair_latency_profile(data: dict):
     for rects in (r1, r2, r3):
         for r in rects:
             v = r.get_height()
-            ax1.text(r.get_x() + r.get_width() / 2, v + 0.55, f'{v:.1f}', ha='center', va='bottom', fontsize=6.8, fontweight='bold', rotation=35)
+            ax1.text(r.get_x() + r.get_width() / 2, v + 0.55, f'{v:.1f}', ha='center', va='bottom', fontsize=6.4, fontweight='bold', rotation=38)
 
     ax1.set_ylim(0, max(p95_val) * 1.26)
     ax1.set_xticks(x)
-    ax1.set_xticklabels([lbl for _, lbl, _, _ in modes], fontsize=8.3, rotation=24, ha='right')
-    ax1.set_ylabel('同会话端到端单图总推理耗时 (ms, RTX 4060 Ti FP32)', fontsize=10.3)
-    ax1.set_title('(a) 含 A4b 的同会话公平延迟剖面 (SciDB val: 解码+检测+裁剪+分类+融合+NMS)', fontsize=10.7, fontweight='bold', pad=11)
+    ax1.set_xticklabels([lbl for _, lbl, _, _ in modes], fontsize=8.0, rotation=25, ha='right')
+    ax1.set_ylabel('端到端单图总推理耗时 (ms, RTX 4060 Ti FP32)', fontsize=10.3)
+    ax1.set_title('(a) 含 G2_blur 与 A4b 的 10 组端到端延迟剖面 (SciDB val)', fontsize=10.7, fontweight='bold', pad=11)
     ax1.grid(axis='y', ls=':', alpha=0.5)
-    ax1.legend(loc='upper left', fontsize=8.8, frameon=True)
+    ax1.legend(loc='upper left', fontsize=8.7, frameon=True)
 
-    # Right panel: Accuracy on complex field testB vs testC end-to-end latency with clean repelled callouts
     pts = []
-    for mk, mlbl, ab_k, col in modes:
+    for mk, mlbl, m_dict, col in modes:
         ms_c = lat[mk]['testC_all602imgs']['mean_ms']
-        ap_b = ab[ab_k]['testB']['AP50_95_mean']
-        ap_c = ab[ab_k]['testC']['AP50_95_mean']
-        pts.append((mk, mlbl, ms_c, ap_b, ap_c, col))
+        ap_b = m_dict['testB']['AP50_95_mean']
+        ap_c = m_dict['testC']['AP50_95_mean']
+        extra = " [冻结79.19]" if 'C3_Main' in mk else ""
+        pts.append((mk, mlbl + extra, ms_c, ap_b, ap_c, col))
 
     ms_vals = [p[2] for p in pts]
     apb_vals = [p[3] for p in pts]
-    ax2.set_xlim(min(ms_vals) - 2.0, max(ms_vals) + 12.6)
-    y_min, y_max = min(apb_vals) - 1.5, max(apb_vals) + 2.4
+    ax2.set_xlim(min(ms_vals) - 2.0, max(ms_vals) + 16.8)
+    y_min, y_max = min(apb_vals) - 1.5, max(apb_vals) + 2.6
     ax2.set_ylim(y_min, y_max)
 
-    # Sort points by y (testB AP) and assign evenly spaced non-overlapping label y-coordinates on right/left sides
     pts_sorted = sorted(pts, key=lambda z: z[3])
-    label_ys = np.linspace(y_min + 0.7, y_max - 0.6, len(pts_sorted))
+    label_ys = np.linspace(y_min + 0.65, y_max - 0.55, len(pts_sorted))
     for (mk, mlbl, ms_c, ap_b, ap_c, col), ly in zip(pts_sorted, label_ys):
-        is_c3 = 'C3_Main' in mk
-        mk_sz = 150 if is_c3 else 88
-        edge = '#B91C1C' if is_c3 else 'black'
-        ax2.scatter(ms_c, ap_b, s=mk_sz, color=col, edgecolors=edge, linewidths=2.0 if is_c3 else 1.0, zorder=5)
+        is_hi = ('C3_Main' in mk) or ('G2_blur' in mk)
+        mk_sz = 145 if is_hi else 84
+        edge = '#B91C1C' if 'C3_Main' in mk else ('#0F766E' if 'G2_blur' in mk else 'black')
+        ax2.scatter(ms_c, ap_b, s=mk_sz, color=col, edgecolors=edge, linewidths=2.0 if is_hi else 1.0, zorder=5)
         lx = max(ms_vals) + 0.7 if ms_c >= 14.0 else ms_c + 1.2
         ax2.annotate(
             f"{mlbl}: {ms_c:.2f}ms | B={ap_b:.2f}% / C={ap_c:.2f}%",
             xy=(ms_c, ap_b), xytext=(lx, ly),
-            ha='left', va='center', fontsize=7.8,
-            fontweight='bold' if is_c3 else 'normal',
-            arrowprops=dict(arrowstyle='->', color=col, lw=1.0, alpha=0.75),
-            bbox=dict(boxstyle='round,pad=0.22', fc='#FEF2F2' if is_c3 else 'white', ec=edge if is_c3 else col, alpha=0.92),
+            ha='left', va='center', fontsize=7.4,
+            fontweight='bold' if is_hi else 'normal',
+            arrowprops=dict(arrowstyle='->', color=col, lw=0.95, alpha=0.75),
+            bbox=dict(boxstyle='round,pad=0.20', fc='#FEF2F2' if 'C3_Main' in mk else 'white', ec=edge if is_hi else col, alpha=0.92),
         )
 
-    ax2.set_xlabel('同会话端到端单图平均延迟 (ms, SciDB testC 602图实测)', fontsize=10.3)
-    ax2.set_ylabel('复杂自然冠层 SciDB testB AP50-95 (%, 括号附 testC)', fontsize=10.3)
-    ax2.set_title('(b) 复杂背景精度 vs 端到端延迟权衡 (含 A4b 与 C1 同协议对比)', fontsize=10.7, fontweight='bold', pad=11)
+    ax2.set_xlabel('端到端单图平均延迟 (ms, SciDB testC 602图实测)', fontsize=10.3)
+    ax2.set_ylabel('复杂自然冠层 SciDB testB AP50-95 (%, 附 testC)', fontsize=10.3)
+    ax2.set_title('(b) 复杂背景精度 vs 延迟权衡 (含单刀遮罩 G2_blur 与双刀 C3)', fontsize=10.7, fontweight='bold', pad=11)
     ax2.grid(True, ls=':', alpha=0.5)
 
-    fig.suptitle('唯一主方法 C3 与 A4b 等全部基线同会话端到端公平测速（零跨协议延迟混比）', fontsize=13.4, fontweight='bold', y=0.96)
+    fig.suptitle('同硬件同协议 10 组方案端到端公平测速（含 G2_blur 单刀模糊遮罩与 A4b，零跨协议混比）', fontsize=13.2, fontweight='bold', y=0.96)
     out_p = FIG_DIR / 'fig2_c3_fair_end2end_latency_and_pareto.png'
     fig.savefig(out_p, dpi=220, bbox_inches='tight')
     plt.close(fig)
@@ -207,58 +224,68 @@ def plot_fig3_gray_and_blur_ring_mechanism(d2b: dict):
     gm = d2b['outer_ring_125_geometry_stats']
 
     conds = [
-        ('G1_125_RealBG_Iso30', 'G1: 1.25x 原始背景\n(单尺度参考)'),
-        ('G2_125_GrayOuter_Iso30', 'G2: 1.25x 灰色外环\n(框外置 128 中性灰)'),
-        ('G2_blur_125_BlurOuter_Iso30', 'G2_blur: 1.25x 模糊外环\n(框外 31x31 高斯模糊)'),
-        ('G3_082_125_RealBG_C3_Locked', 'G3: 0.82x+1.25x 原背景\n(唯一冻结主方法 C3)'),
-        ('G4_082_125_GrayOuter_C3_Locked', 'G4: 0.82x+1.25x 灰色外环\n(双尺度灰环干预)'),
-        ('G4_blur_082_125_BlurOuter_C3_Locked', 'G4_blur: 0.82x+1.25x 模糊外环\n(双尺度模糊干预)'),
+        ('G1_125_RealBG_Iso30', 'G1: 1.25x 原背景\n(单尺度参考)'),
+        ('G2_125_GrayOuter_Iso30', 'G2: 1.25x 灰色外环\n(单刀置灰)'),
+        ('G2_blur_125_BlurOuter_Iso30', 'G2_blur: 1.25x 模糊环\n(单刀遮罩最简实现)'),
+        ('G3_eq_082_125_RealBG_Equal', 'G3_eq: C3_equal\n(双刀等权 0.35/0.35)'),
+        ('G3_082_125_RealBG_C3_Locked', 'G3: C3_frozen\n(双刀冻结 0.20/0.50)'),
+        ('G4_082_125_GrayOuter_C3_Locked', 'G4: 双刀+灰环\n(冻结权重)'),
+        ('G4_blur_082_125_BlurOuter_C3_Locked', 'G4_blur: 双刀+模糊环\n(冻结权重)'),
     ]
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(19.5, 6.9), gridspec_kw={'width_ratios': [1.10, 1.15]})
-    fig.subplots_adjust(wspace=0.47, bottom=0.23, top=0.84)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(19.8, 7.1), gridspec_kw={'width_ratios': [1.14, 1.18]})
+    fig.subplots_adjust(wspace=0.49, bottom=0.23, top=0.84)
 
     x = np.arange(len(conds))
-    w = 0.36
+    w = 0.37
     b_m = [mm[k]['testB']['AP50_95_mean'] for k, _ in conds]
     b_s = [mm[k]['testB']['AP50_95_std'] for k, _ in conds]
+    b_seeds = [mm[k]['testB']['AP50_95_seeds'] for k, _ in conds]
     c_m = [mm[k]['testC']['AP50_95_mean'] for k, _ in conds]
     c_s = [mm[k]['testC']['AP50_95_std'] for k, _ in conds]
+    c_seeds = [mm[k]['testC']['AP50_95_seeds'] for k, _ in conds]
 
-    bars_b = ax1.bar(x - w / 2, b_m, w, yerr=b_s, capsize=3.2, color='#2563EB', alpha=0.88,
-                     error_kw={'lw': 1.2, 'ecolor': '#1E3A8A'}, label='SciDB testB (自然田间多叶复杂背景)')
-    bars_c = ax1.bar(x + w / 2, c_m, w, yerr=c_s, capsize=3.2, color='#059669', alpha=0.88,
-                     error_kw={'lw': 1.2, 'ecolor': '#064E3B'}, label='SciDB testC (均匀白板摘叶背景)')
+    bars_b = ax1.bar(x - w / 2, b_m, w, yerr=b_s, capsize=3.0, color='#2563EB', alpha=0.86,
+                     error_kw={'lw': 1.15, 'ecolor': '#1E3A8A'}, label='SciDB testB (均值±SD，圆点为3种子)')
+    bars_c = ax1.bar(x + w / 2, c_m, w, yerr=c_s, capsize=3.0, color='#059669', alpha=0.86,
+                     error_kw={'lw': 1.15, 'ecolor': '#064E3B'}, label='SciDB testC (均值±SD，圆点为3种子)')
 
-    bars_b[3].set_edgecolor('#B91C1C'); bars_b[3].set_linewidth(2.2)
-    bars_c[3].set_edgecolor('#B91C1C'); bars_c[3].set_linewidth(2.2)
+    overlay_seed_dots(ax1, x - w / 2, b_seeds, '#1D4ED8')
+    overlay_seed_dots(ax1, x + w / 2, c_seeds, '#047857')
 
-    for rect, val, sd in zip(bars_b, b_m, b_s):
-        ax1.text(rect.get_x() + rect.get_width() / 2, val + sd + 0.35, f'{val:.2f}',
-                 ha='center', va='bottom', fontsize=8.0, color='#1E3A8A', fontweight='bold')
-    for rect, val, sd in zip(bars_c, c_m, c_s):
-        ax1.text(rect.get_x() + rect.get_width() / 2, val + sd + 0.35, f'{val:.2f}',
-                 ha='center', va='bottom', fontsize=8.0, color='#065F46', fontweight='bold')
+    for idx_h, col_h in [(2, '#0F766E'), (3, '#D97706'), (4, '#B91C1C')]:
+        bars_b[idx_h].set_edgecolor(col_h); bars_b[idx_h].set_linewidth(2.1)
+        bars_c[idx_h].set_edgecolor(col_h); bars_c[idx_h].set_linewidth(2.1)
 
-    y_lo = min(min(b_m), min(c_m)) - 3.5
-    y_hi = max(max(b_m) + max(b_s), max(c_m) + max(c_s)) + 2.8
+    for rect, val, sd, sds in zip(bars_b, b_m, b_s, b_seeds):
+        top_y = max(val + sd, max(sds))
+        ax1.text(rect.get_x() + rect.get_width() / 2, top_y + 0.32, f'{val:.2f}',
+                 ha='center', va='bottom', fontsize=7.6, color='#1E3A8A', fontweight='bold')
+    for rect, val, sd, sds in zip(bars_c, c_m, c_s, c_seeds):
+        top_y = max(val + sd, max(sds))
+        ax1.text(rect.get_x() + rect.get_width() / 2, top_y + 0.32, f'{val:.2f}',
+                 ha='center', va='bottom', fontsize=7.6, color='#065F46', fontweight='bold')
+
+    y_lo = min(min(min(s) for s in b_seeds), min(min(s) for s in c_seeds)) - 2.2
+    y_hi = max(max(max(s) for s in b_seeds), max(max(s) for s in c_seeds)) + 2.6
     ax1.set_ylim(y_lo, y_hi)
     ax1.set_xticks(x)
-    ax1.set_xticklabels([lbl for _, lbl in conds], fontsize=8.4, rotation=22, ha='right')
-    ax1.set_ylabel('COCO AP50-95 (%, 3随机种子均值±标准差)', fontsize=10.4)
+    ax1.set_xticklabels([lbl for _, lbl in conds], fontsize=8.1, rotation=23, ha='right')
+    ax1.set_ylabel('COCO AP50-95 (%, 逐种子散点 + 3种子均值)', fontsize=10.3)
     b_ofrac = gm['testB']['mean_outer_ring_area_pct_in_224']
-    ax1.set_title(f'(a) G1–G4 同几何灰环与模糊外环实验 (1.25x 框外平均面积占比 {b_ofrac:.1f}%)', fontsize=10.8, fontweight='bold', pad=12)
+    ax1.set_title(f'(a) G1–G4 同几何干预逐种子与均值对比 (1.25x 框外平均占比 {b_ofrac:.1f}%)', fontsize=10.7, fontweight='bold', pad=12)
     ax1.grid(axis='y', ls=':', alpha=0.5)
-    ax1.legend(loc='upper left', fontsize=9.0, frameon=True)
+    ax1.legend(loc='upper left', fontsize=8.8, frameon=True)
 
     forest_items = [
-        ('G2_125_GrayOuter_Iso30__minus__G1_125_RealBG_Iso30', 'G2 - G1 (单尺度灰环直接效应)'),
-        ('G2_blur_125_BlurOuter_Iso30__minus__G1_125_RealBG_Iso30', 'G2_blur - G1 (单尺度模糊外环直接效应)'),
-        ('G3_082_125_RealBG_C3_Locked__minus__G1_125_RealBG_Iso30', 'Δ_real = G3 - G1 (原始背景双尺度增益)'),
-        ('G4_082_125_GrayOuter_C3_Locked__minus__G2_125_GrayOuter_Iso30', 'Δ_gray = G4 - G2 (灰环后双尺度增益)'),
-        ('G4_blur_082_125_BlurOuter_C3_Locked__minus__G2_blur_125_BlurOuter_Iso30', 'Δ_blur = G4_blur - G2_blur (模糊后双尺度增益)'),
-        ('DiD_Gray_minus_Real_LockedC3', 'DiD_gray = Δ_gray - Δ_real (灰环双重差分)'),
-        ('DiD_Blur_minus_Real_LockedC3', 'DiD_blur = Δ_blur - Δ_real (模糊双重差分)'),
+        ('G2_blur_125_BlurOuter_Iso30__minus__G1_125_RealBG_Iso30', 'G2_blur - G1 (单刀模糊遮罩直接效应)'),
+        ('G3_082_125_RealBG_C3_Locked__minus__G2_125_GrayOuter_Iso30', 'G3(冻结) - G2 (两刀 vs 单刀灰环)'),
+        ('G3_082_125_RealBG_C3_Locked__minus__G2_blur_125_BlurOuter_Iso30', 'G3(冻结) - G2_blur (两刀 vs 单刀模糊环★)'),
+        ('G3_eq_082_125_RealBG_Equal__minus__G2_blur_125_BlurOuter_Iso30', 'G3_eq(等权) - G2_blur (两刀等权 vs 单刀模糊环★)'),
+        ('DiD_Gray_minus_Real_LockedC3', 'DiD_gray (冻结C3, 2/3种子负向, S0=+0.51)'),
+        ('DiD_Blur_minus_Real_LockedC3', 'DiD_blur (冻结C3, 2/3种子负向, S0=-0.15)'),
+        ('DiD_Gray_minus_Real_EqualWeight', 'DiD_gray_eq (等权C3, p=0.122 不显著)'),
+        ('DiD_Blur_minus_Real_EqualWeight', 'DiD_blur_eq (等权C3, p=0.098 不显著)'),
     ]
     y_pos = np.arange(len(forest_items))[::-1]
     off = 0.17
@@ -270,26 +297,26 @@ def plot_fig3_gray_and_blur_ring_mechanism(d2b: dict):
         mb, (lb, hb), pb = rb['mean_diff_3seed'], rb['ci95_3seed'], rb['p_value_two_sided']
         mc, (lc, hc), pc = rc['mean_diff_3seed'], rc['ci95_3seed'], rc['p_value_two_sided']
 
-        ax2.errorbar(mb, yi + off, xerr=[[mb - lb], [hb - mb]], fmt='o', color='#2563EB', capsize=3.8, lw=1.7, ms=6.0,
+        ax2.errorbar(mb, yi + off, xerr=[[mb - lb], [hb - mb]], fmt='o', color='#2563EB', capsize=3.5, lw=1.6, ms=5.6,
                      label='SciDB testB (95% CI)' if yi == y_pos[0] else None)
-        ax2.errorbar(mc, yi - off, xerr=[[mc - lc], [hc - mc]], fmt='s', color='#059669', capsize=3.8, lw=1.7, ms=6.0,
+        ax2.errorbar(mc, yi - off, xerr=[[mc - lc], [hc - mc]], fmt='s', color='#059669', capsize=3.5, lw=1.6, ms=5.6,
                      label='SciDB testC (95% CI)' if yi == y_pos[0] else None)
 
-        ax2.text(hb + 0.07, yi + off, f'{mb:+.2f}% (p={pb:.3f})', va='center', ha='left', fontsize=7.8, color='#1E40AF', fontweight='bold')
-        ax2.text(hc + 0.07, yi - off, f'{mc:+.2f}% (p={pc:.3f})', va='center', ha='left', fontsize=7.8, color='#065F46', fontweight='bold')
+        ax2.text(hb + 0.07, yi + off, f'{mb:+.2f}% (p={pb:.3f})', va='center', ha='left', fontsize=7.5, color='#1E40AF', fontweight='bold')
+        ax2.text(hc + 0.07, yi - off, f'{mc:+.2f}% (p={pc:.3f})', va='center', ha='left', fontsize=7.5, color='#065F46', fontweight='bold')
 
     all_hi = [max(bt['testB'][pk]['AP50_95']['ci95_3seed'][1], bt['testC'][pk]['AP50_95']['ci95_3seed'][1]) for pk, _ in forest_items]
     all_lo = [min(bt['testB'][pk]['AP50_95']['ci95_3seed'][0], bt['testC'][pk]['AP50_95']['ci95_3seed'][0]) for pk, _ in forest_items]
-    ax2.set_xlim(min(-1.5, min(all_lo) - 0.55), max(all_hi) + 2.45)
+    ax2.set_xlim(min(-1.8, min(all_lo) - 0.45), max(all_hi) + 2.45)
     ax2.set_ylim(-0.65, len(forest_items) - 0.20)
     ax2.set_yticks(y_pos)
-    ax2.set_yticklabels([lbl for _, lbl in forest_items], fontsize=8.8)
-    ax2.set_xlabel('3种子同步逐图配对 Bootstrap ΔAP50-95 (%) 及 95% 置信区间', fontsize=10.2)
-    ax2.set_title('(b) 背景干预直接效应、双尺度增益与双重差分 (DiD, B=1,000)', fontsize=10.8, fontweight='bold', pad=12)
+    ax2.set_yticklabels([lbl for _, lbl in forest_items], fontsize=8.4)
+    ax2.set_xlabel('配对 Bootstrap ΔAP50-95 (%) 及 95% 置信区间 (B=1,000)', fontsize=10.1)
+    ax2.set_title('(b) “两刀 vs 单刀遮罩”判决检验与逐种子诚实勘误森林图', fontsize=10.7, fontweight='bold', pad=12)
     ax2.grid(axis='x', ls=':', alpha=0.5)
-    ax2.legend(loc='lower right', fontsize=8.7, frameon=True)
+    ax2.legend(loc='lower right', fontsize=8.6, frameon=True)
 
-    fig.suptitle('主方法 C3 受控同几何灰环与模糊外环背景干预机制实验 (G1–G4)', fontsize=13.4, fontweight='bold', y=0.96)
+    fig.suptitle('G1–G4 同几何背景干预机制实验 v1.1：单刀模糊遮罩 vs 双尺度等效增强检验', fontsize=13.2, fontweight='bold', y=0.96)
     out_p = FIG_DIR / 'fig3_g1_to_g4_gray_and_blur_ring_mechanism.png'
     fig.savefig(out_p, dpi=220, bbox_inches='tight')
     plt.close(fig)
@@ -300,7 +327,7 @@ def main():
     d2 = json.loads(STAGE2_JSON.read_text(encoding='utf-8'))
     d2b = json.loads(STAGE2B_JSON.read_text(encoding='utf-8'))
     plot_fig1_scale_ablation_and_bootstrap(d2)
-    plot_fig2_fair_latency_profile(d2)
+    plot_fig2_fair_latency_profile(d2, d2b)
     plot_fig3_gray_and_blur_ring_mechanism(d2b)
 
 
