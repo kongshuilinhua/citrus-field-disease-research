@@ -506,7 +506,8 @@ def run_preannotate_folder(manifest: dict, image_dir: Path, out_json: Path, cand
                 'requires_pcr_or_expert_note': bool(int(cl) in SUSPECT_HLB_SYMPTOM_SET),
             })
         results_out.append({
-            'file': p.name,
+            'file': p.relative_to(image_dir).as_posix(),
+            'basename': p.name,
             'n_detections_shown': len(cards),
             'review_priority_1_minus_maxp': max([d['uncertainty_1_minus_maxp'] for d in cards]) if cards else 0.0,
             'detections': cards,
@@ -728,22 +729,44 @@ def evaluate_frozen_6models_on_labeled_orchard(manifest: dict, image_dir: Path, 
         'categories': [c for c in raw_gt_dict['categories'] if int(c['id']) >= 0],
     }
 
-    fn2cluster = {}
+    rel2cluster, id2cluster, base_candidates = {}, {}, defaultdict(set)
     cluster_source = 'per_image_fallback_no_cluster_csv'
     if cluster_csv and Path(cluster_csv).exists():
         cluster_source = f'csv:{Path(cluster_csv).name}'
         for r in csv.DictReader(open(cluster_csv, encoding='utf-8-sig')):
-            fn = r.get('file_name') or r.get('文件')
-            cid = r.get('cluster_id') or r.get('簇编号')
-            if fn and cid:
-                fn2cluster[fn] = str(cid)
+            cid = (r.get('sampling_cluster_id') or r.get('cluster_id') or r.get('簇编号') or '').strip()
+            if not cid:
+                continue
+            rel_fn = (r.get('rel_path') or r.get('file_name') or r.get('相对路径') or '').strip().replace('\\', '/')
+            base_fn = (r.get('basename') or r.get('文件名') or Path(rel_fn).name if rel_fn else '').strip()
+            seq_id = (r.get('image_id') or r.get('seq_id') or r.get('序号') or '').strip()
+            if rel_fn:
+                rel2cluster[rel_fn] = str(cid)
+            if seq_id:
+                id2cluster[str(seq_id)] = str(cid)
+                if seq_id.isdigit():
+                    id2cluster[str(int(seq_id))] = str(cid)
+            if base_fn:
+                base_candidates[base_fn].add(str(cid))
     elif any('cluster_id' in im for im in clean_gt_dict['images']):
         cluster_source = 'gt_json_image_cluster_id'
 
-    img_idx_to_cluster = [
-        fn2cluster.get(im['file_name'], str(im.get('cluster_id', im['id'])))
-        for im in clean_gt_dict['images']
-    ]
+    base2cluster = {b: next(iter(cset)) for b, cset in base_candidates.items() if len(cset) == 1}
+
+    def _resolve_img_cluster(im: dict) -> str:
+        if im.get('cluster_id'):
+            return str(im['cluster_id'])
+        fn_norm = str(im.get('file_name', '')).replace('\\', '/')
+        if fn_norm in rel2cluster:
+            return rel2cluster[fn_norm]
+        if str(im.get('id', '')) in id2cluster:
+            return id2cluster[str(im['id'])]
+        bname = Path(fn_norm).name
+        if bname in base2cluster:
+            return base2cluster[bname]
+        return str(im['id'])
+
+    img_idx_to_cluster = [_resolve_img_cluster(im) for im in clean_gt_dict['images']]
 
     models_eval = [
         ('B0', 'YOLOv8n'),

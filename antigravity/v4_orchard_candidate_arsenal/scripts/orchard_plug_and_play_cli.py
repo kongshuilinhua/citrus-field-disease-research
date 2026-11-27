@@ -81,6 +81,10 @@ def fast_letterbox_params(h: int, w: int, new_shape: int = 640):
 
 
 def crop_125_with_outer_blur(rgb: np.ndarray, bbox_xywh: list, ksize: int = 31, sigma: float = 11.0) -> np.ndarray:
+    """
+    G2_blur 专用：与 `crop_square_scale(rgb, bbox_xywh, 1.25)` 几何尺寸及 `1.00x` 框内像素 100% 逐字节恒等，
+    仅将 `1.00x` 检测框外围区域替换为 `31x31 (sigma=11)` 高斯模糊背景。
+    """
     h, w = rgb.shape[:2]
     x, y, bw, bh = bbox_xywh
     max_dim = max(h, w)
@@ -171,6 +175,8 @@ def verify_manifest_hashes(manifest: dict, seeds_to_check=None):
 
 
 class UnifiedOrchardInferenceEngine:
+    """严格统一的端到端在线推理引擎（支持 B0 / B1 / C1 / G2_blur / C2 / A4b / C3 / C3_equal）。"""
+
     def __init__(self, manifest: dict, seed: int = 0, device: str = 'cuda:0'):
         self.manifest = manifest
         self.seed = seed
@@ -339,6 +345,9 @@ class UnifiedOrchardInferenceEngine:
 
     @torch.no_grad()
     def infer_image_detailed(self, bgr: np.ndarray, candidate: str = 'C3'):
+        """
+        统一端到端单图推理 (B0 / B1 / C1 / G2_blur / C2 / A4b / C3 / C3_equal)。
+        """
         h, w = bgr.shape[:2]
         xyxy_t, sc_t, cls_t = self.yolo_detect_square640(bgr)
         N = len(xyxy_t)
@@ -497,7 +506,8 @@ def run_preannotate_folder(manifest: dict, image_dir: Path, out_json: Path, cand
                 'requires_pcr_or_expert_note': bool(int(cl) in SUSPECT_HLB_SYMPTOM_SET),
             })
         results_out.append({
-            'file': p.name,
+            'file': p.relative_to(image_dir).as_posix(),
+            'basename': p.name,
             'n_detections_shown': len(cards),
             'review_priority_1_minus_maxp': max([d['uncertainty_1_minus_maxp'] for d in cards]) if cards else 0.0,
             'detections': cards,
@@ -694,6 +704,10 @@ def paired_cluster_bootstrap_orchard(clean_gt_dict: dict, preds_per_seed_model: 
 
 def evaluate_frozen_6models_on_labeled_orchard(manifest: dict, image_dir: Path, gt_json: Path, out_json: Path,
                                                cluster_csv: str = '', seeds=(0, 1, 2), n_boot: int = 1000):
+    """
+    第三阶段专用：一次性评测预注册冻结六模型（另附零调参等权版 C3_equal 主表对照）
+    (YOLOv8n, Full_DINOv2, C1_SingleScale_125, G2_blur_Single125_BlurRing, A4b_FlipTTA_125_HFlip, C3_DualScale_082_125, C3_equal_082_125)
+    """
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
     raw_gt_dict = json.loads(gt_json.read_text(encoding='utf-8'))
 
@@ -715,22 +729,44 @@ def evaluate_frozen_6models_on_labeled_orchard(manifest: dict, image_dir: Path, 
         'categories': [c for c in raw_gt_dict['categories'] if int(c['id']) >= 0],
     }
 
-    fn2cluster = {}
+    rel2cluster, id2cluster, base_candidates = {}, {}, defaultdict(set)
     cluster_source = 'per_image_fallback_no_cluster_csv'
     if cluster_csv and Path(cluster_csv).exists():
         cluster_source = f'csv:{Path(cluster_csv).name}'
         for r in csv.DictReader(open(cluster_csv, encoding='utf-8-sig')):
-            fn = r.get('file_name') or r.get('文件')
-            cid = r.get('cluster_id') or r.get('簇编号')
-            if fn and cid:
-                fn2cluster[fn] = str(cid)
+            cid = (r.get('sampling_cluster_id') or r.get('cluster_id') or r.get('簇编号') or '').strip()
+            if not cid:
+                continue
+            rel_fn = (r.get('rel_path') or r.get('file_name') or r.get('相对路径') or '').strip().replace('\\', '/')
+            base_fn = (r.get('basename') or r.get('文件名') or Path(rel_fn).name if rel_fn else '').strip()
+            seq_id = (r.get('image_id') or r.get('seq_id') or r.get('序号') or '').strip()
+            if rel_fn:
+                rel2cluster[rel_fn] = str(cid)
+            if seq_id:
+                id2cluster[str(seq_id)] = str(cid)
+                if seq_id.isdigit():
+                    id2cluster[str(int(seq_id))] = str(cid)
+            if base_fn:
+                base_candidates[base_fn].add(str(cid))
     elif any('cluster_id' in im for im in clean_gt_dict['images']):
         cluster_source = 'gt_json_image_cluster_id'
 
-    img_idx_to_cluster = [
-        fn2cluster.get(im['file_name'], str(im.get('cluster_id', im['id'])))
-        for im in clean_gt_dict['images']
-    ]
+    base2cluster = {b: next(iter(cset)) for b, cset in base_candidates.items() if len(cset) == 1}
+
+    def _resolve_img_cluster(im: dict) -> str:
+        if im.get('cluster_id'):
+            return str(im['cluster_id'])
+        fn_norm = str(im.get('file_name', '')).replace('\\', '/')
+        if fn_norm in rel2cluster:
+            return rel2cluster[fn_norm]
+        if str(im.get('id', '')) in id2cluster:
+            return id2cluster[str(im['id'])]
+        bname = Path(fn_norm).name
+        if bname in base2cluster:
+            return base2cluster[bname]
+        return str(im['id'])
+
+    img_idx_to_cluster = [_resolve_img_cluster(im) for im in clean_gt_dict['images']]
 
     models_eval = [
         ('B0', 'YOLOv8n'),
